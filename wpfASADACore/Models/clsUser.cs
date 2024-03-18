@@ -1,10 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Windows;
 
 namespace wpfASADACore.Models
 {
@@ -17,5 +12,36 @@ namespace wpfASADACore.Models
         public string? Password { get; set; }
         public string? UserName { get; set; }
         public string? DNI { get; set; }
+
+        public clsUser(string? name, string? email, string? password, string? userName, string? dNI)
+        {
+            Name = name;
+            Email = email;
+            Password = EstablecerContraseña(password);
+            UserName = userName;
+            DNI = dNI;
+        }
+
+        public clsUser()
+        {
+        }
+
+        public string EstablecerContraseña(string? contraseña)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(contraseña);
+        }
+
+        public bool VerificarContraseña(string contraseña)
+        {
+            bool verificar = false;
+               try { 
+            verificar = BCrypt.Net.BCrypt.Verify(contraseña, this.Password); 
+            
+            }catch(Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+
+            return verificar;
+        }
     }
 }

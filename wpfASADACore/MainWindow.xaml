@@ -4,9 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfASADACore"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Asada Menú Principal"  Width="1450"
+        Height="800" MinWidth="900">
     <Grid>
+        <ui:NavigationView 
+        x:Name = "RootNavigation"                
+        IsBackButtonVisible="Collapsed"
+        PaneTitle = "Asada"
+        PaneDisplayMode="left"
+        OpenPaneLength = "210">
+            <ui:NavigationView.MenuItems>
+                <ui:NavigationViewItem Content="Facturación" Icon="{ui:SymbolIcon WalletCreditCard24}"> </ui:NavigationViewItem>               
+                <ui:NavigationViewItem Content="Clientes" Icon="{ui:SymbolIcon PersonAccounts24}"> </ui:NavigationViewItem> 
+                <ui:NavigationViewItem Content="Tarifas" Icon="{ui:SymbolIcon MoneySettings20}"> </ui:NavigationViewItem> 
+                <ui:NavigationViewItem Content="Usuarios" Icon="{ui:SymbolIcon PersonSettings16}" Click="NavigationViewItem_Click"> </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Configuraciones" Icon="{ui:SymbolIcon Settings16}" Click="NavigationViewItem_Click"></ui:NavigationViewItem>
+                <!--<ui:NavigationViewItem  Content="Acerca de" Icon="{ui:SymbolIcon info16}" Click="NavigationViewItem_Click" VerticalAlignment="Bottom"  ></ui:NavigationViewItem>-->
+
+            </ui:NavigationView.MenuItems>
+            <ui:NavigationView.PaneFooter>
+                <Button Click="AcercaDe_Click" ToolTip="Acerca de" Content="Acerca de" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" x:Name="AcercaDe" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,15" Cursor="Hand"/>
+            </ui:NavigationView.PaneFooter>
+        </ui:NavigationView>
+     
+
+        <ContentPresenter x:Name="RootContentDialog" Grid.Row="0" RenderTransformOrigin="0.5,0.5" Cursor="Hand" />
+
+ <ui:TitleBar
+  x:Name="TitleBar"
+  Title="{Binding ViewModel.ApplicationTitle}"
+  Grid.Row="0"
+  CloseWindowByDoubleClickOnIcon="True">
+     <!--<ui:TitleBar.Icon>
+         --><!--<ui:ImageIcon Source="pack://application:,,,/Assets/wpfui.png" />--><!--
+     </ui:TitleBar.Icon>-->
+ </ui:TitleBar>
 
     </Grid>
 </Window>
