@@ -9,17 +9,21 @@
         Title="Asada Menú Principal"  Width="1450"
         Height="800" MinWidth="900">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1364*"/>
+            <ColumnDefinition Width="87*"/>
+        </Grid.ColumnDefinitions>
         <ui:NavigationView 
         x:Name = "RootNavigation"                
         IsBackButtonVisible="Collapsed"
         PaneTitle = "Asada"
         PaneDisplayMode="left"
-        OpenPaneLength = "210">
+        OpenPaneLength = "210" Grid.ColumnSpan="2">
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="Facturación" Icon="{ui:SymbolIcon WalletCreditCard24}"> </ui:NavigationViewItem>               
-                <ui:NavigationViewItem Content="Clientes" Icon="{ui:SymbolIcon PersonAccounts24}"> </ui:NavigationViewItem> 
-                <ui:NavigationViewItem Content="Tarifas" Icon="{ui:SymbolIcon MoneySettings20}"> </ui:NavigationViewItem> 
-                <ui:NavigationViewItem Content="Usuarios" Icon="{ui:SymbolIcon PersonSettings16}" Click="NavigationViewItem_Click"> </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Facturación" Icon="{ui:SymbolIcon WalletCreditCard24}"></ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Clientes" Icon="{ui:SymbolIcon PersonAccounts24}"></ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Tarifas" Icon="{ui:SymbolIcon MoneySettings20}"></ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Usuarios" Icon="{ui:SymbolIcon PersonSettings16}" Click="NavigationViewItem_Click"></ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Configuraciones" Icon="{ui:SymbolIcon Settings16}" Click="NavigationViewItem_Click"></ui:NavigationViewItem>
                 <!--<ui:NavigationViewItem  Content="Acerca de" Icon="{ui:SymbolIcon info16}" Click="NavigationViewItem_Click" VerticalAlignment="Bottom"  ></ui:NavigationViewItem>-->
 
@@ -28,19 +32,21 @@
                 <Button Click="AcercaDe_Click" ToolTip="Acerca de" Content="Acerca de" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" x:Name="AcercaDe" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,15" Cursor="Hand"/>
             </ui:NavigationView.PaneFooter>
         </ui:NavigationView>
-     
 
-        <ContentPresenter x:Name="RootContentDialog" Grid.Row="0" RenderTransformOrigin="0.5,0.5" Cursor="Hand" />
 
- <ui:TitleBar
+        <ContentPresenter x:Name="RootContentDialog" Grid.Row="0" RenderTransformOrigin="0.5,0.5" Cursor="Hand" Grid.ColumnSpan="2" />
+
+        <ui:TitleBar
   x:Name="TitleBar"
   Title="{Binding ViewModel.ApplicationTitle}"
   Grid.Row="0"
-  CloseWindowByDoubleClickOnIcon="True">
-     <!--<ui:TitleBar.Icon>
-         --><!--<ui:ImageIcon Source="pack://application:,,,/Assets/wpfui.png" />--><!--
+  CloseWindowByDoubleClickOnIcon="True" Grid.ColumnSpan="2">
+            <!--<ui:TitleBar.Icon>
+         -->
+            <!--<ui:ImageIcon Source="pack://application:,,,/Assets/wpfui.png" />-->
+            <!--
      </ui:TitleBar.Icon>-->
- </ui:TitleBar>
+        </ui:TitleBar>
 
     </Grid>
 </Window>

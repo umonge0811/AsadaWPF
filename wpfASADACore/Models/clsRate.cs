@@ -17,4 +17,6 @@ namespace wpfASADACore.Models
         public string? description { get; set; }
         public int idTypeClient { get; set; }
     }
+
+
 }

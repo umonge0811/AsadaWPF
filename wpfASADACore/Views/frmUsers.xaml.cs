@@ -24,5 +24,16 @@ namespace wpfASADACore.Views
         {
             InitializeComponent();
         }
+
+        private void btn_CleanTxt_Click(object sender, RoutedEventArgs e)
+        {
+            txt_NewEmail.Clear();
+            txt_NewId.Clear();
+            txt_NewName.Clear();
+            txt_NewPass.Clear();
+            txt_NewRePass.Clear();
+            txt_NewUser.Clear();
+            
+        }
     }
 }
