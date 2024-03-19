@@ -34,7 +34,7 @@
                         <ColumnDefinition Width="50"/>
                         <ColumnDefinition Width="300"/>
                         <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
+                        <!--<ColumnDefinition Width="100"/>-->
                     </Grid.ColumnDefinitions>
 
                     <ui:SymbolIcon Symbol="Search12"  Grid.Column="0"/>
@@ -43,7 +43,7 @@
 
                     <ui:Button  x:Name="btnBuscarUsuario" Appearance="Primary" Grid.Column="2" Content="Buscar" Icon="Fluent24" HorizontalAlignment="Center" Click="btnBuscarUsuario_Click"/>
 
-                    <ui:Button  x:Name="btnLimpiarUsuario" Grid.Column="3" Content="Limpiar" Icon="Fluent24" HorizontalAlignment="Center"/>
+                    <!--<ui:Button  x:Name="btnLimpiarUsuario" Grid.Column="3" Content="Limpiar" Icon="Fluent24" HorizontalAlignment="Center"/>-->
                 </Grid>
             </ui:Card>
         </Grid>
@@ -84,10 +84,13 @@
         </Grid>
 
         <Grid Grid.Row="4">
-            <ui:Button  x:Name="btn_CreateNewUser"  Grid.Row="4" Height="34" Appearance="Primary"  Content="Crear"  Margin="0,0,100,0" HorizontalAlignment="Center" Width="57" Click="btn_CreateNewUser_Click"/>
-            <ui:Button  x:Name="btn_CleanTxt" Height="34" Content="Limpiar" Margin="100,0,0,0" Click="btn_CleanTxt_Click" HorizontalAlignment="Center" Width="70"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <ui:Button  x:Name="btn_CreateNewUser"  Grid.Row="4" Height="34" Appearance="Primary"  Content="Crear"  Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_CreateNewUser_Click"/>
+                <ui:Button  x:Name="btn_ModifyUser" Height="34" Appearance="Caution"  Content="Modificar" Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_ModifyUser_Click"/>
+                <ui:Button  x:Name="btn_DeleteUser" Height="34" Appearance="Danger"  Content="Eliminar" Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_DeleteUser_Click"/>
+                <ui:Button  x:Name="btn_CleanTxt" Height="34" Content="Limpiar" Appearance="Light" Margin="25,0,25,0" Click="btn_CleanTxt_Click" HorizontalAlignment="Center" Width="70"/>
 
-
+            </StackPanel>
         </Grid>
 
         <!--<ui:Button x:Name="btn_Cancel" Content="Cancelar" Margin="511,0,0,0" Grid.Row="4"  Height="34"/>-->

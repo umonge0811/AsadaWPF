@@ -12,6 +12,7 @@ namespace wpfASADACore.Repository
     public class UsersRepository
     {
         private ContextDataBase context;
+        public string message { get; set; }
 
         public UsersRepository()
         {
@@ -20,26 +21,33 @@ namespace wpfASADACore.Repository
         }
 
 
-        //Metodo para Crear Usuarios
-        public void CreateUsers(clsUser user)
+
+        public async Task<bool> createUser(string name, string username, string dni, string password, string email)
         {
+
             try
             {
-                context.usuarios.Add(user);
-                context.SaveChanges();
 
-            }
-            catch (DbUpdateException ex)
-            {
-                //Captura la exepcion y muestra los detalles
-                Exception? innerException = ex.InnerException;
-
-                while (innerException != null)
+                using (var db = new ContextDataBase())
                 {
-                    Console.WriteLine($"innerException.{innerException.Message}");
-                    innerException = innerException.InnerException;
+
+                    //await db.Database.EnsureCreatedAsync();
+
+                    clsUser usuario1 = new clsUser(name, email, password, username, dni);
+
+                    db.usuarios.Add(usuario1);
+
+                    await db.SaveChangesAsync();
+
+                    return true;
+
                 }
 
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return false;
             }
 
         }
@@ -49,12 +57,118 @@ namespace wpfASADACore.Repository
         public clsUser? GetUserByUserName(string nameUser)
         {
             // u => u  se llama a las creaciones Lambda
-            return context.usuarios.FirstOrDefault(u => u.UserName == nameUser);
+            return context.usuarios.FirstOrDefault(u => u.UserName.Equals(nameUser));
         }
 
 
+        // Obtener el Usuario por el Nombre
+        public clsUser? GetUserByID(int id)
+        {
+            // u => u  se llama a las creaciones Lambda
+            return context.usuarios.FirstOrDefault(u => u.Id == id);
+        }
+
+        public async Task<bool> modifyUser(string name, string username, string dni, string password, string email, int? idUser)
+        {
+
+            bool estado = false;
+            try
+            {
+
+                using (var db = new ContextDataBase())
+                {
+
+                    var user = await db.usuarios.FirstOrDefaultAsync(u => u.Id == idUser);
+
+                    if (user != null)
+                    {
+                        user.Name = name;
+                        user.UserName = username;
+                        user.Password = user.EstablecerContraseña(password);
+                        user.Email = email;
+                        user.DNI = dni;
+
+                        await db.SaveChangesAsync();
+
+                        estado = true;
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                //MessageBox.Show(ex.Message);
+                estado = false;
+            }
+
+            return estado;
+
+        }
 
 
+        //este es el metodo que se creo para hacer la busqueda en la DB, retorna  un objeto de tipo clase (clsUser)
+        public async Task<clsUser?> FindClientByDNI(string dni)
+        {
+
+            //puede que retorne nula si no se encuentra nada
+            clsUser? user = null;
+            try
+            {
+
+                using (var db = new ContextDataBase())
+                {
+
+                    user = await db.usuarios.FirstOrDefaultAsync(u => u.DNI.Equals(dni));
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                user = null;
+
+            }
+            return user;
+
+        }
+
+        public async Task<bool> deleteUser( int? idUser)
+        {
+
+            bool estado = false;
+            try
+            {
+
+                using (var db = new ContextDataBase())
+                {
+
+                    var user = await db.usuarios.FirstOrDefaultAsync(u => u.Id == idUser);
+
+                    if (user != null)
+                    {
+                      
+                        db.usuarios.Remove(user);
+                        await db.SaveChangesAsync();
+
+                        estado = true;
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                //MessageBox.Show(ex.Message);
+                estado = false;
+            }
+
+            return estado;
+
+        }
 
 
     }

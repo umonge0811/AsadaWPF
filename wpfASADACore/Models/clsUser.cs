@@ -10,17 +10,17 @@ namespace wpfASADACore.Models
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
-        public string? UserName { get; set; }
+        public string UserName { get; set; }
         public string DNI { get; set; }
 
         //contructor lleno
-        public clsUser(string? name, string? email, string? password, string? userName, string dNI)
+        public clsUser(string? name, string? email, string? password, string userName, string DNI)
         {
             Name = name;
             Email = email;
             Password = EstablecerContraseña(password);
             UserName = userName;
-            DNI = dNI;
+            this.DNI = DNI;
         }
 
         //constructor vacio
