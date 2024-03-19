@@ -18,6 +18,8 @@ namespace wpfASADACore.Repository
             context = new ContextDataBase();
             context.Database.EnsureCreatedAsync().Wait();
         }
+
+
         //Metodo para Crear Usuarios
         public void CreateUsers(clsUser user)
         {
@@ -41,6 +43,7 @@ namespace wpfASADACore.Repository
             }
 
         }
+
 
         // Obtener el Usuario por el Nombre
         public clsUser? GetUserByUserName(string nameUser)

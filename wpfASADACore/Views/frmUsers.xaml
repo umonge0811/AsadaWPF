@@ -20,13 +20,13 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--#region  Titulo del Formulario -->
+        <!--#region  Titulo del Formulario-->
         <Grid Grid.Row="0">
             <TextBlock Text="Control de Usuarios" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Grid>
         <!--#endregion-->
 
-        <!--#region  Cuadro de Busqueda -->
+        <!--#region  Cuadro de Busqueda-->
         <Grid Grid.Row="1">
             <ui:Card VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Grid HorizontalAlignment="Center">
@@ -41,7 +41,7 @@
 
                     <ui:TextBox x:Name="txtBuscarUsuario" Grid.Column="1" Margin="0,10"   VerticalAlignment="Center" Cursor="IBeam" FontSize="14" PlaceholderEnabled="True"  PlaceholderText="Cédula del Usuario"/>
 
-                    <ui:Button  x:Name="btnBuscarUsuario" Appearance="Primary" Grid.Column="2" Content="Buscar" Icon="Fluent24" HorizontalAlignment="Center"/>
+                    <ui:Button  x:Name="btnBuscarUsuario" Appearance="Primary" Grid.Column="2" Content="Buscar" Icon="Fluent24" HorizontalAlignment="Center" Click="btnBuscarUsuario_Click"/>
 
                     <ui:Button  x:Name="btnLimpiarUsuario" Grid.Column="3" Content="Limpiar" Icon="Fluent24" HorizontalAlignment="Center"/>
                 </Grid>
@@ -75,8 +75,8 @@
                     <ui:TextBox x:Name="txt_NewEmail"  Grid.Column="5" TextWrapping="Wrap"  Width="200" FontSize="12" PlaceholderText="Email" Margin="0,0,0,0" Height="35" />
 
                     <ui:TextBox x:Name="txt_NewUser" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap"  Width="200" FontSize="12" PlaceholderEnabled="True" PlaceholderText="Usuario" Margin="0,0,0,0" Height="35"/>
-                    <ui:TextBox x:Name="txt_NewPass" Grid.Row="1" Grid.Column="3" TextWrapping="Wrap"  Width="200" FontSize="12" PlaceholderText="Contraseña" Margin="0,0,0,0" Height="35"/>
-                    <ui:TextBox x:Name="txt_NewRePass" Grid.Row="1" Grid.Column="5" TextWrapping="Wrap"  Width="200" FontSize="12" PlaceholderText="Repite la Contraseña" Margin="0,0,0,0" Height="35" />
+                    <ui:PasswordBox x:Name="txt_NewPass" Grid.Row="1" Grid.Column="3" TextWrapping="Wrap"  Width="200" FontSize="12" PlaceholderText="Contraseña" Margin="0,0,0,0" Height="35"/>
+                    <ui:PasswordBox x:Name="txt_NewRePass" Grid.Row="1" Grid.Column="5" TextWrapping="Wrap"  Width="200" FontSize="12" PlaceholderText="Repite la Contraseña" Margin="0,0,0,0" Height="35" />
                 </Grid>
             </ui:Card>
 
@@ -84,14 +84,13 @@
         </Grid>
 
         <Grid Grid.Row="4">
-            <ui:Button  x:Name="btn_CreateNewUser"  Grid.Row="4" Height="34" Appearance="Primary"  Content="Crear"  Margin="0,0,100,0" HorizontalAlignment="Center" Width="57" />
+            <ui:Button  x:Name="btn_CreateNewUser"  Grid.Row="4" Height="34" Appearance="Primary"  Content="Crear"  Margin="0,0,100,0" HorizontalAlignment="Center" Width="57" Click="btn_CreateNewUser_Click"/>
             <ui:Button  x:Name="btn_CleanTxt" Height="34" Content="Limpiar" Margin="100,0,0,0" Click="btn_CleanTxt_Click" HorizontalAlignment="Center" Width="70"/>
 
 
         </Grid>
 
-
-
+        <!--<ui:Button x:Name="btn_Cancel" Content="Cancelar" Margin="511,0,0,0" Grid.Row="4"  Height="34"/>-->
 
 
     </Grid>

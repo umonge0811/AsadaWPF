@@ -11,9 +11,10 @@ namespace wpfASADACore.Models
         public string? Email { get; set; }
         public string? Password { get; set; }
         public string? UserName { get; set; }
-        public string? DNI { get; set; }
+        public string DNI { get; set; }
 
-        public clsUser(string? name, string? email, string? password, string? userName, string? dNI)
+        //contructor lleno
+        public clsUser(string? name, string? email, string? password, string? userName, string dNI)
         {
             Name = name;
             Email = email;
@@ -22,14 +23,18 @@ namespace wpfASADACore.Models
             DNI = dNI;
         }
 
+        //constructor vacio
         public clsUser()
         {
         }
+
 
         public string EstablecerContraseña(string? contraseña)
         {
             return BCrypt.Net.BCrypt.HashPassword(contraseña);
         }
+
+
 
         public bool VerificarContraseña(string contraseña)
         {

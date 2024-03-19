@@ -52,21 +52,23 @@ namespace wpfASADACore.Views
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            var Username = txtUser.Text;
-            var Password = txt_Pass.Password;
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            //var Username = txtUser.Text;
+            //var Password = txt_Pass.Password;
 
 
-            bool estado = autenticacionService.AutenticarUsuario(Username, Password);
+            //bool estado = autenticacionService.AutenticarUsuario(Username, Password);
 
-            if (estado)
-            {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                this.Close();
-            }
-            else {
-                MessageBox.Show("Error de login");
-            }
+            //if (estado)
+            //{
+            //    MainWindow mainWindow = new MainWindow();
+            //    mainWindow.Show();
+            //    this.Close();
+            //}
+            //else {
+            //    MessageBox.Show("Error de login");
+            //}
 
         }
 

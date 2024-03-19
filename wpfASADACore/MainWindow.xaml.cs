@@ -26,22 +26,6 @@ namespace wpfASADACore
 
         
 
-        static async Task CrearUsuario() {
-            
-
-            using (var db = new ContextDataBase()) {
-
-                await db.Database.EnsureCreatedAsync();
-
-                var usuario1 = new clsUser("Ulises","umongegds@gmail.com","123","uma","1234567");
-            
-                db.usuarios.Add(usuario1);
-
-               await db.SaveChangesAsync();
-
-            }
-        
-        }
 
         private void NavigationViewItem_Click(object sender, RoutedEventArgs e)
         {
