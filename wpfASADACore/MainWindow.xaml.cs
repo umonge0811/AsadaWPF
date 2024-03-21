@@ -24,7 +24,8 @@ namespace wpfASADACore
             //_ = CrearUsuario();
         }
 
-        
+       
+
 
 
         private void NavigationViewItem_Click(object sender, RoutedEventArgs e)

@@ -20,6 +20,7 @@ namespace wpfASADACore.Repository
             context.Database.EnsureCreatedAsync().Wait();
         }
 
+       
 
 
         public async Task<bool> createUser(string name, string username, string dni, string password, string email)

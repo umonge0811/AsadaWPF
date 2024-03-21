@@ -37,6 +37,8 @@ namespace wpfASADACore.Views
         {
             InitializeComponent();
             usersRepository = new UsersRepository();
+            btn_DeleteUser.IsEnabled = false;
+            btn_ModifyUser.IsEnabled = false;
         }
 
         private void btn_CleanTxt_Click(object sender, RoutedEventArgs e)
@@ -55,6 +57,9 @@ namespace wpfASADACore.Views
             txt_NewRePass.Clear();
             txt_NewUser.Clear();
             idUser = null;
+            txtBuscarUsuario.Clear();
+            btn_DeleteUser.IsEnabled = false;
+            btn_ModifyUser.IsEnabled = false;
         }
 
         // async es para un motodo asyncrono 
@@ -66,6 +71,7 @@ namespace wpfASADACore.Views
             string newPassword = txt_NewPass.Password;
             string newRepPassword = txt_NewRePass.Password;
             string newDNI = txt_NewId.Text;
+            ClearAllData();
 
 
             //Error first 
@@ -206,6 +212,8 @@ namespace wpfASADACore.Views
             txt_NewUser.Text = userFound.UserName;
             txt_NewId.Text = userFound.DNI;
             idUser = userFound.Id;
+            btn_DeleteUser.IsEnabled = true;
+            btn_ModifyUser.IsEnabled = true;
 
         }
 
@@ -281,12 +289,12 @@ namespace wpfASADACore.Views
             }
 
 
-            if (await ValidatedUserRegister(newDNI))
-            {
-                MessageBox.Show($"El usuario con cedula: {newDNI} ya se encuentra registrado... Verifique!!!!!");
-                ClearAllData();
-                return;
-            }
+            //if (await ValidatedUserRegister(newDNI))
+            //{
+            //    MessageBox.Show($"El usuario con cedula: {newDNI} ya se encuentra registrado... Verifique!!!!!");
+            //    ClearAllData();
+            //    return;
+            //}
 
             //await es para esperar a que la tarea termine, en este caso, la funcion/Metodo ejecute para que avance a la siguiente tarea 
             bool estado = await usersRepository.modifyUser(newName, newUser, newDNI, newPassword, newEmail, idUser);
@@ -351,11 +359,11 @@ namespace wpfASADACore.Views
 
             if (estado)
             {
-                MessageBox.Show("Usuario eliminado con existo");
+                MessageBox.Show("Usuario eliminado con Exito!");
                 ClearAllData();
             }
             else {
-                MessageBox.Show($"Error al eliminar el usuario: {usersRepository.message}" );
+                MessageBox.Show($"Error al intentar eliminar el usuario: {usersRepository.message}" );
                 
             }
         }

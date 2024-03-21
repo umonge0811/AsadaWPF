@@ -85,7 +85,7 @@
 
         <Grid Grid.Row="4">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <ui:Button  x:Name="btn_CreateNewUser"  Grid.Row="4" Height="34" Appearance="Primary"  Content="Crear"  Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_CreateNewUser_Click"/>
+            <ui:Button  x:Name="btn_CreateNewUser"  Grid.Row="4" Height="34" Appearance="Primary"  Content="Crear"  Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_CreateNewUser_Click"/> 
                 <ui:Button  x:Name="btn_ModifyUser" Height="34" Appearance="Caution"  Content="Modificar" Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_ModifyUser_Click"/>
                 <ui:Button  x:Name="btn_DeleteUser" Height="34" Appearance="Danger"  Content="Eliminar" Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_DeleteUser_Click"/>
                 <ui:Button  x:Name="btn_CleanTxt" Height="34" Content="Limpiar" Appearance="Light" Margin="25,0,25,0" Click="btn_CleanTxt_Click" HorizontalAlignment="Center" Width="70"/>
