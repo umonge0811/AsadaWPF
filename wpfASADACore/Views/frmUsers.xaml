@@ -1,7 +1,6 @@
 ﻿<Page x:Class="wpfASADACore.Views.frmUsers"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"      
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"      
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:wpfASADACore.Views"
@@ -85,7 +84,7 @@
 
         <Grid Grid.Row="4">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <ui:Button  x:Name="btn_CreateNewUser"  Grid.Row="4" Height="34" Appearance="Primary"  Content="Crear"  Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_CreateNewUser_Click"/> 
+                <ui:Button  x:Name="btn_CreateNewUser"  Grid.Row="4" Height="34" Appearance="Primary"  Content="Crear"  Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_CreateNewUser_Click"/> 
                 <ui:Button  x:Name="btn_ModifyUser" Height="34" Appearance="Caution"  Content="Modificar" Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_ModifyUser_Click"/>
                 <ui:Button  x:Name="btn_DeleteUser" Height="34" Appearance="Danger"  Content="Eliminar" Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_DeleteUser_Click"/>
                 <ui:Button  x:Name="btn_CleanTxt" Height="34" Content="Limpiar" Appearance="Light" Margin="25,0,25,0" Click="btn_CleanTxt_Click" HorizontalAlignment="Center" Width="70"/>

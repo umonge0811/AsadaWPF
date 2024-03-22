@@ -7,12 +7,10 @@
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
         Title="Asada Menú Principal"  Width="1450"
-        Height="800" MinWidth="900" WindowStyle="None">
+        Height="800" MinWidth="900" WindowStyle="None"
+        >
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1364*"/>
-            <ColumnDefinition Width="87*"/>
-        </Grid.ColumnDefinitions>
+      
         <ui:NavigationView 
         x:Name = "RootNavigation"                
         IsBackButtonVisible="Collapsed"
@@ -21,15 +19,15 @@
         OpenPaneLength = "210" Grid.ColumnSpan="2">
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem Content="Facturación" Icon="{ui:SymbolIcon WalletCreditCard24}"></ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Clientes" Icon="{ui:SymbolIcon PersonAccounts24}"></ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Tarifas" Icon="{ui:SymbolIcon MoneySettings20}"></ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Clientes" Icon="{ui:SymbolIcon PersonAccounts24}" Click="NavigationViewItem_Click_1"></ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Tarifas" Icon="{ui:SymbolIcon MoneySettings20}" ></ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Usuarios" Icon="{ui:SymbolIcon PersonSettings16}" Click="NavigationViewItem_Click"></ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Configuraciones" Icon="{ui:SymbolIcon Settings16}" Click="NavigationViewItem_Click"></ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Configuraciones" Icon="{ui:SymbolIcon Settings16}" ></ui:NavigationViewItem>
                 <!--<ui:NavigationViewItem  Content="Acerca de" Icon="{ui:SymbolIcon info16}" Click="NavigationViewItem_Click" VerticalAlignment="Bottom"  ></ui:NavigationViewItem>-->
 
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.PaneFooter>
-                <Button Click="AcercaDe_Click" ToolTip="Acerca de" Content="Acerca de" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" x:Name="AcercaDe" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,15" Cursor="Hand"/>
+                <Button  ToolTip="Acerca de" Content="Acerca de" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" x:Name="AcercaDe" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,15" Cursor="Hand"/>
             </ui:NavigationView.PaneFooter>
         </ui:NavigationView>
 

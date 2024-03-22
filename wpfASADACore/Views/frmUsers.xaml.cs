@@ -74,97 +74,11 @@ namespace wpfASADACore.Views
             ClearAllData();
 
 
-            //Error first 
-            if (newName.Equals(""))
-            {
-                MessageBox.Show("Debe de ingresar el nombre del usuario");
-                txt_NewName.Focus();
-                return;
-            }
-
-            if (!clsUtilities.EsCorreoValido(newEmail))
-            {
-                MessageBox.Show("Debe de ingresar un correo electronico valido");
-                txt_NewEmail.Focus();
-                return;
-            }
-
-            if (newPassword.Equals("") || newRepPassword.Equals(""))
-            {
-                MessageBox.Show("No debes dejar el campo contraseña vacio");
-                txt_NewPass.Focus();
-                return;
-            }
-
-            if (newPassword != newRepPassword)
-            {
-                MessageBox.Show("Las contraseñas no coinciden");
-                txt_NewPass.Focus();
-                return;
-            }
-            if (newDNI.Equals(""))
-            {
-                MessageBox.Show("Deben digitar el numero de cedula");
-                txt_NewPass.Focus();
-                return;
-            }
-
-
-            if (await ValidatedUserRegister(newDNI)) {
-                MessageBox.Show($"El usuario con cedula: {newDNI} ya se encuentra registrado... Verifique!!!!!");
-                ClearAllData();
-                return;
-            }
-
-            //await es para esperar a que la tarea termine, en este caso, la funcion/Metodo ejecute para que avance a la siguiente tarea 
-            bool estado = await usersRepository.createUser(newName, newUser, newDNI, newPassword, newEmail);
-
-            if (estado)
-            {
-                MessageBox.Show("Usuario registrado con exito!!");
-                ClearAllData();
-            }
-            else {
-                MessageBox.Show($"Error al registrar el usuario: {usersRepository.message}");
-            }
-
-        }
+            
 
 
 
 
-        //static async Task<bool> createUser(string name, string username, string dni, string password, string email)
-        //{
-
-
-        //    try
-        //    {
-
-        //        using (var db = new ContextDataBase())
-        //        {
-
-        //            //await db.Database.EnsureCreatedAsync();
-
-        //            var usuario1 = new clsUser(name, email, password, username, dni);
-
-        //            db.usuarios.Add(usuario1);
-
-        //            await db.SaveChangesAsync();
-
-        //            return true;
-
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //        return false;
-        //    }
-
-        //}
-
-        // este es para cuando se esta creando un usuario nuevo, valide  antes de guardar que no exista uno ya con los datos suministrados
         public async Task<bool> ValidatedUserRegister(string dni)
         {
 
@@ -217,31 +131,6 @@ namespace wpfASADACore.Views
 
         }
 
-        ////este es el metodo que se creo para hacer la busqueda en la DB, retorna  un objeto de tipo clase (clsUser)
-        //public async Task<clsUser?> FindClientByDNI(string dni) {
-
-        //    //puede que retorne nula si no se encuentra nada
-        //    clsUser? user = null;
-        //    try
-        //    {              
-
-        //        using (var db = new ContextDataBase())
-        //        {
-
-        //            user = await db.usuarios.FirstOrDefaultAsync(u => u.DNI.Equals(dni));
-                    
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //        user = null;
-
-        //    }
-        //    return user;
-            
-        //}
 
         private async void btn_ModifyUser_Click(object sender, RoutedEventArgs e)
         {
@@ -289,12 +178,6 @@ namespace wpfASADACore.Views
             }
 
 
-            //if (await ValidatedUserRegister(newDNI))
-            //{
-            //    MessageBox.Show($"El usuario con cedula: {newDNI} ya se encuentra registrado... Verifique!!!!!");
-            //    ClearAllData();
-            //    return;
-            //}
 
             //await es para esperar a que la tarea termine, en este caso, la funcion/Metodo ejecute para que avance a la siguiente tarea 
             bool estado = await usersRepository.modifyUser(newName, newUser, newDNI, newPassword, newEmail, idUser);
@@ -310,43 +193,6 @@ namespace wpfASADACore.Views
         }
 
 
-       //private async Task<bool> modifyUser(string name, string username, string dni, string password, string email)
-       // {
-
-       //     bool estado = false;
-       //     try
-       //     {
-
-       //         using (var db = new ContextDataBase())
-       //         {
-
-       //             var user = await db.usuarios.FirstOrDefaultAsync(u => u.Id == idUser);
-
-       //             if (user != null)
-       //             {
-       //                 user.Name = name;
-       //                 user.UserName = username;   
-       //                 user.Password = user.EstablecerContraseña(password);
-       //                 user.Email = email;
-       //                 user.DNI = dni;
-
-       //                await db.SaveChangesAsync();
-
-       //                 estado = true;
-       //             }       
-
-       //         }
-
-       //     }
-       //     catch (Exception ex)
-       //     {
-       //         MessageBox.Show(ex.Message);
-       //         estado = false;
-       //     }
-
-       //     return estado;
-
-       // }
 
         private async void btn_DeleteUser_Click(object sender, RoutedEventArgs e)
         {

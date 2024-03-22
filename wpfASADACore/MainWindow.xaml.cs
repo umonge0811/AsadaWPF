@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using wpfASADACore.Models;
 using wpfASADACore.Services;
 
+
 namespace wpfASADACore
 {
     /// <summary>
@@ -32,10 +33,12 @@ namespace wpfASADACore
         {
             //RootNavigation.Navigate(typeof(View.frmUsuarios));
             RootNavigation.Navigate(typeof(Views.frmUsers));
+
         }
 
-        private void AcercaDe_Click(object sender, RoutedEventArgs e)
+        private void NavigationViewItem_Click_1(object sender, RoutedEventArgs e)
         {
+            RootNavigation.Navigate(typeof(Views.Page1));
 
         }
     }
