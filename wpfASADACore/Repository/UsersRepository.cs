@@ -23,7 +23,7 @@ namespace wpfASADACore.Repository
        
 
 
-        public async Task<bool> createUser(string name, string username, string dni, string password, string email)
+        public async Task<bool> CreateUser(string name, string username, string dni, string password, string email)
         {
 
             try
@@ -34,11 +34,11 @@ namespace wpfASADACore.Repository
 
                     //await db.Database.EnsureCreatedAsync();
 
-                    clsUser usuario1 = new clsUser(name, email, password, username, dni);
+                    clsUser usuario1 = new clsUser(name, email, password, username, dni); //Estás creando una instancia de la clase clsUser con los datos proporcionados (nombre, correo electrónico, contraseña, nombre de usuario y DNI).
 
-                    db.usuarios.Add(usuario1);
+                    db.usuarios.Add(usuario1); //Luego, se agrega este usuario al conjunto de datos (DbSet) de usuarios en el contexto de base de datos (ContextDataBase).
 
-                    await db.SaveChangesAsync();
+                    await db.SaveChangesAsync();//se usa SaveChangesAsync para guardar los cambios en la base de datos.
 
                     return true;
 
@@ -62,7 +62,7 @@ namespace wpfASADACore.Repository
         }
 
 
-        // Obtener el Usuario por el Nombre
+        // Obtener el Usuario por el Id
         public clsUser? GetUserByID(int id)
         {
             // u => u  se llama a las creaciones Lambda

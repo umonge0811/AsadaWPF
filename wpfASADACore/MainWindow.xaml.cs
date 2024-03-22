@@ -38,7 +38,7 @@ namespace wpfASADACore
 
         private void NavigationViewItem_Click_1(object sender, RoutedEventArgs e)
         {
-            RootNavigation.Navigate(typeof(Views.Page1));
+            RootNavigation.Navigate(typeof(Views.frmClient));
 
         }
     }

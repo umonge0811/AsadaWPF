@@ -28,10 +28,10 @@ namespace wpfASADACore.Views
     /// </summary>
     public partial class frmUsers : Page
     {
-        //almacena el id del usuario buscadow
+        //almacena el id del usuario buscado
         int? idUser = null;
 
-         UsersRepository  usersRepository;
+        UsersRepository usersRepository;
 
         public frmUsers()
         {
@@ -44,7 +44,7 @@ namespace wpfASADACore.Views
         private void btn_CleanTxt_Click(object sender, RoutedEventArgs e)
         {
             ClearAllData();
-          
+
         }
 
 
@@ -71,14 +71,102 @@ namespace wpfASADACore.Views
             string newPassword = txt_NewPass.Password;
             string newRepPassword = txt_NewRePass.Password;
             string newDNI = txt_NewId.Text;
-            ClearAllData();
-
-
             
 
 
+            //Error first 
+            if (newName.Equals(""))
+            {
+                MessageBox.Show("Debe de ingresar el nombre del usuario");
+                txt_NewName.Focus();
+                return;
+            }
+
+            if (!clsUtilities.EsCorreoValido(newEmail))
+            {
+                MessageBox.Show("Debe de ingresar un correo electronico valido");
+                txt_NewEmail.Focus();
+                return;
+            }
+
+            if (newPassword.Equals("") || newRepPassword.Equals(""))
+            {
+                MessageBox.Show("No debes dejar el campo contraseña vacio");
+                txt_NewPass.Focus();
+                return;
+            }
+
+            if (newPassword != newRepPassword)
+            {
+                MessageBox.Show("Las contraseñas no coinciden");
+                txt_NewPass.Focus();
+                return;
+            }
+            if (newDNI.Equals(""))
+            {
+                MessageBox.Show("Deben digitar el numero de cedula");
+                txt_NewPass.Focus();
+                return;
+            }
 
 
+            if (await ValidatedUserRegister(newDNI))
+            {
+                MessageBox.Show($"El usuario con cedula: {newDNI} ya se encuentra registrado... Verifique!!!!!");
+                ClearAllData();
+                return;
+            }
+
+            //await es para esperar a que la tarea termine, en este caso, la funcion/Metodo ejecute para que avance a la siguiente tarea 
+            bool estado = await usersRepository.CreateUser(newName, newUser, newDNI, newPassword, newEmail);
+
+            if (estado)
+            {
+                MessageBox.Show("Usuario registrado con exito!!");
+                ClearAllData();
+            }
+            else
+            {
+                MessageBox.Show($"Error al registrar el usuario: {usersRepository.message}");
+            }
+
+        }
+
+
+
+
+        //static async Task<bool> createUser(string name, string username, string dni, string password, string email)
+        //{
+
+
+        //    try
+        //    {
+
+        //        using (var db = new ContextDataBase())
+        //        {
+
+        //            //await db.Database.EnsureCreatedAsync();
+
+        //            var usuario1 = new clsUser(name, email, password, username, dni);
+
+        //            db.usuarios.Add(usuario1);
+
+        //            await db.SaveChangesAsync();
+
+        //            return true;
+
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //        return false;
+        //    }
+
+        //}
+
+        // este es para cuando se esta creando un usuario nuevo, valide  antes de guardar que no exista uno ya con los datos suministrados
         public async Task<bool> ValidatedUserRegister(string dni)
         {
 
@@ -105,7 +193,8 @@ namespace wpfASADACore.Views
             string dni = txtBuscarUsuario.Text;
 
             //si en el txtBuscarUsuario.Text no se ha digitado ninguna cedula, ingresa aca y muestra que se debe ingresar
-            if (string.IsNullOrWhiteSpace(dni)) {
+            if (string.IsNullOrWhiteSpace(dni))
+            {
                 MessageBox.Show("Debes colocar la cedula del usuario a buscar");
                 return;
             }
@@ -131,6 +220,31 @@ namespace wpfASADACore.Views
 
         }
 
+        ////este es el metodo que se creo para hacer la busqueda en la DB, retorna  un objeto de tipo clase (clsUser)
+        //public async Task<clsUser?> FindClientByDNI(string dni) {
+
+        //    //puede que retorne nula si no se encuentra nada
+        //    clsUser? user = null;
+        //    try
+        //    {              
+
+        //        using (var db = new ContextDataBase())
+        //        {
+
+        //            user = await db.usuarios.FirstOrDefaultAsync(u => u.DNI.Equals(dni));
+
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //        user = null;
+
+        //    }
+        //    return user;
+
+        //}
 
         private async void btn_ModifyUser_Click(object sender, RoutedEventArgs e)
         {
@@ -178,6 +292,12 @@ namespace wpfASADACore.Views
             }
 
 
+            //if (await ValidatedUserRegister(newDNI))
+            //{
+            //    MessageBox.Show($"El usuario con cedula: {newDNI} ya se encuentra registrado... Verifique!!!!!");
+            //    ClearAllData();
+            //    return;
+            //}
 
             //await es para esperar a que la tarea termine, en este caso, la funcion/Metodo ejecute para que avance a la siguiente tarea 
             bool estado = await usersRepository.modifyUser(newName, newUser, newDNI, newPassword, newEmail, idUser);
@@ -187,17 +307,56 @@ namespace wpfASADACore.Views
                 MessageBox.Show("Usuario modificado con exito!!");
                 ClearAllData();
             }
-            else {
+            else
+            {
                 MessageBox.Show($"Error al modificar el usuario: {usersRepository.message}");
             }
         }
 
 
+        //private async Task<bool> modifyUser(string name, string username, string dni, string password, string email)
+        // {
+
+        //     bool estado = false;
+        //     try
+        //     {
+
+        //         using (var db = new ContextDataBase())
+        //         {
+
+        //             var user = await db.usuarios.FirstOrDefaultAsync(u => u.Id == idUser);
+
+        //             if (user != null)
+        //             {
+        //                 user.Name = name;
+        //                 user.UserName = username;   
+        //                 user.Password = user.EstablecerContraseña(password);
+        //                 user.Email = email;
+        //                 user.DNI = dni;
+
+        //                await db.SaveChangesAsync();
+
+        //                 estado = true;
+        //             }       
+
+        //         }
+
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         MessageBox.Show(ex.Message);
+        //         estado = false;
+        //     }
+
+        //     return estado;
+
+        // }
 
         private async void btn_DeleteUser_Click(object sender, RoutedEventArgs e)
         {
 
-            if (idUser == null) {
+            if (idUser == null)
+            {
                 MessageBox.Show("Debes buscar un usuario antes de eliminarlo");
                 ClearAllData();
             }
@@ -208,9 +367,10 @@ namespace wpfASADACore.Views
                 MessageBox.Show("Usuario eliminado con Exito!");
                 ClearAllData();
             }
-            else {
-                MessageBox.Show($"Error al intentar eliminar el usuario: {usersRepository.message}" );
-                
+            else
+            {
+                MessageBox.Show($"Error al intentar eliminar el usuario: {usersRepository.message}");
+
             }
         }
     }

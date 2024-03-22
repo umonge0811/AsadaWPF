@@ -13,6 +13,9 @@ namespace wpfASADACore.Services
     {
         static string database = "asada.db";
         public DbSet<clsUser> usuarios { get; set; }
+        public DbSet<clsCliente> clientes { get; set; }
+        public DbSet<clsTypeClient> typeClients { get; set; }
+
 
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -33,6 +36,24 @@ namespace wpfASADACore.Services
             modelBuilder.Entity<clsUser>().ToTable("User");
             modelBuilder.Entity<clsUser>(entity => {
                 entity.HasKey(e => e.Id);
+            });
+            // Mapeo de la entidad de cliente a la tabla "Clientes"
+            modelBuilder.Entity<clsCliente>().ToTable("Clients");
+            modelBuilder.Entity<clsCliente>(entity =>
+            {
+                entity.HasKey(e => e.id);
+                // Define la relación con TypeClient
+                entity.HasOne(e => e.TypeClient)
+                    .WithMany()  // indica que la relación es muchos a uno (un cliente puede tener un tipo de cliente, pero varios clientes pueden compartir el mismo tipo).
+                    .HasForeignKey(e => e.TypeClientId) //especifica que la propiedad TypeClientId en la entidad de cliente es la clave foránea que se relaciona con la tabla de tipos de cliente.
+                    .OnDelete(DeleteBehavior.Restrict);  // establece el comportamiento de eliminación. En este caso, restringe la eliminación del tipo de cliente si hay clientes asociados a él.
+            });
+
+            // Mapeo de la entidad de tipo de cliente a la tabla "TypeClients"
+            modelBuilder.Entity<clsTypeClient>().ToTable("TypeClients");
+            modelBuilder.Entity<clsTypeClient>(entity =>
+            {
+                entity.HasKey(e => e.id);
             });
             base.OnModelCreating(modelBuilder);
         }
