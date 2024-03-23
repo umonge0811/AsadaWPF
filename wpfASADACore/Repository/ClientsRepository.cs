@@ -29,7 +29,7 @@ namespace wpfASADACore.Repository
                 using (var db = new ContextDataBase())
                 {
 
-                    //await db.Database.EnsureCreatedAsync();
+                    
 
                     clsCliente client1 = new clsCliente(name, lastName, secondSurname, DNI, subscribernum, IdtypeClient);
 

@@ -89,7 +89,7 @@ namespace wpfASADACore.Views
 
 
         }
-
+        //btn_CreateNewClient_Click es para crear un nuevo cliente
         private async void btn_CreateNewClient_Click(object sender, RoutedEventArgs e)
         {
             //crear variables para almacenar los datos que digite el usuario en los textbox de clientes

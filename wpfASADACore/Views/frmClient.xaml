@@ -125,9 +125,7 @@
                                     <TextBlock Text="Select Client Type" FontStyle="Italic" Foreground="Gray"/>
                                 </StackPanel>
                             </ComboBoxItem>
-                            <ComboBoxItem Content="Residential"/>
-                            <ComboBoxItem Content="Commercial"/>
-                            <ComboBoxItem Content="Local"/>
+                            
                         </ComboBox>
                     </Grid>
                 </ui:Card>

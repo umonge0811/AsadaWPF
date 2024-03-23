@@ -9,6 +9,8 @@ using wpfASADACore.Models;
 
 namespace wpfASADACore.Services
 {
+
+    //Es la clase que se encarga de la conexión con la base de datos
    public class ContextDataBase : DbContext
     {
         static string database = "asada.db";
@@ -30,12 +32,12 @@ namespace wpfASADACore.Services
             base.OnConfiguring(optionsBuilder);
         }
 
-
+        //En este Metodo se crean las tablas de la base de datos
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<clsUser>().ToTable("User");
             modelBuilder.Entity<clsUser>(entity => {
-                entity.HasKey(e => e.Id);
+                entity.HasKey(e => e.Id); //indica que la propiedad Id es la clave principal de la Tabla User.
             });
             // Mapeo de la entidad de cliente a la tabla "Clientes"
             modelBuilder.Entity<clsCliente>().ToTable("Clients");
