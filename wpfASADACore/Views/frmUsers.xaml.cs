@@ -31,12 +31,12 @@ namespace wpfASADACore.Views
         //almacena el id del usuario buscado
         int? idUser = null;
 
-        UsersRepository usersRepository;
+        UsersRepository usersRepository = new UsersRepository();
 
         public frmUsers()
         {
             InitializeComponent();
-            usersRepository = new UsersRepository();
+            
             btn_DeleteUser.IsEnabled = false;
             btn_ModifyUser.IsEnabled = false;
         }

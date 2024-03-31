@@ -20,7 +20,7 @@
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem Content="Facturación" Icon="{ui:SymbolIcon WalletCreditCard24}"></ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Clientes" Icon="{ui:SymbolIcon PersonAccounts24}" Click="NavigationViewItem_Click_1"></ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Tarifas" Icon="{ui:SymbolIcon MoneySettings20}" ></ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Tipos de Cliente y Tarifas" Icon="{ui:SymbolIcon MoneySettings20}" Click="NavigationViewItem_Click_2" ></ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Usuarios" Icon="{ui:SymbolIcon PersonSettings16}" Click="NavigationViewItem_Click"></ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Configuraciones" Icon="{ui:SymbolIcon Settings16}" ></ui:NavigationViewItem>
                 <!--<ui:NavigationViewItem  Content="Acerca de" Icon="{ui:SymbolIcon info16}" Click="NavigationViewItem_Click" VerticalAlignment="Bottom"  ></ui:NavigationViewItem>-->
