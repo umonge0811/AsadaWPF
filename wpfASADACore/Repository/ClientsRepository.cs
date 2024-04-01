@@ -55,8 +55,10 @@ namespace wpfASADACore.Repository
         // Este metodo es para Obtener 
         public ObservableCollection<clsCliente> GetAllClients()
         {
-            return new ObservableCollection<clsCliente>(context.clientes.ToList());
-        }        //este es el metodo que se creo para hacer la busqueda en la DB, retorna  un objeto de tipo clase (clsUser)
+            return new ObservableCollection<clsCliente>(context.clientes.Include(c => c.TypeClient).ToList());
+        }   
+        
+        //este es el metodo que se creo para hacer la busqueda en la DB, retorna  un objeto de tipo clase (clsUser)
         public async Task<clsCliente?> FindClientBySubscriberNum(string SubscriberNum)
         {
 
@@ -113,6 +115,41 @@ namespace wpfASADACore.Repository
                 estado= false;
             }
             return estado;
-        }           
+        }
+
+        public async Task<bool> deleteClient(int? idClient)
+        {
+
+            bool estado = false;
+            try
+            {
+
+                using (var db = new ContextDataBase())
+                {
+
+                    var client = await db.clientes.FirstOrDefaultAsync(u => u.id == idClient);
+
+                    if (client != null)
+                    {
+
+                        db.clientes.Remove(client);
+                        await db.SaveChangesAsync();
+
+                        estado = true;
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                //MessageBox.Show(ex.Message);
+                estado = false;
+            }
+
+            return estado;
+
+        }
     }
 }
