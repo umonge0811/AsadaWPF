@@ -49,15 +49,13 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50"/>
                         <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="100"/>
                         <!--<ColumnDefinition Width="100"/>-->
                     </Grid.ColumnDefinitions>
 
                     <ui:SymbolIcon Symbol="Search12"  Grid.Column="0"/>
 
-                    <ui:TextBox x:Name="txtBuscarUsuario" Grid.Column="1" Margin="0,10"   VerticalAlignment="Center" Cursor="IBeam" FontSize="14" PlaceholderEnabled="True"  PlaceholderText="Digita el No. Abonado"/>
+                    <ui:TextBox x:Name="txtBuscarCli" TextChanged="txtBuscarCli_TextChanged" Grid.Column="1" Margin="0,10"   VerticalAlignment="Center" Cursor="IBeam" FontSize="14" PlaceholderEnabled="True"  PlaceholderText="Digita el No. Abonado"/>
 
-                    <ui:Button  x:Name="btnBuscarUsuario" Appearance="Primary" Grid.Column="2" Content="Buscar" Icon="Fluent24" HorizontalAlignment="Center"/>
 
 
                     <!--<ui:Button  x:Name="btnLimpiarUsuario" Grid.Column="3" Content="Limpiar" Icon="Fluent24" HorizontalAlignment="Center"/>-->
@@ -122,8 +120,6 @@
                                     Grid.Column="5" VerticalAlignment="Top" Grid.Row="1"  >
                             <ComboBoxItem IsSelected="True">
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                                    <TextBlock Text="Select Client Type" FontStyle="Italic" Foreground="Gray"/>
                                 </StackPanel>
                             </ComboBoxItem>
                             
@@ -170,12 +166,13 @@
         </Grid>
 
 
-        <StackPanel Grid.Row="6">
-            <DataGrid x:Name="dtgClientes" MouseDoubleClick="dtgClientes_MouseDoubleClick" CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="Red" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="6" Margin="0,5,0,0">
+            <DataGrid x:Name="dtgClientes" MouseDoubleClick="dtgClientes_MouseDoubleClick"  CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="Red" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">
                         <Setter Property="BorderBrush" Value="Transparent"/>
                         <Setter Property="Foreground" Value="DarkSlateGray"/>
+                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="LightGray"/>

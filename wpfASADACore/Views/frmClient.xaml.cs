@@ -435,5 +435,24 @@ namespace wpfASADACore.Views
 
         }
         #endregion
+
+        #region Metodo para Busqueda en el TextBox de Busqueda y predicciones en el datagrid
+        //Crear metodo para que al digitar en el txtBuscarCli se vaya filtrando los datos en el datagrid
+        private void txtBuscarCli_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string search = txtBuscarCli.Text;
+            if (search != "")
+            {
+                dtgClientes.ItemsSource = clientsRepository.GetAllClients().Where(c => c.name.ToLower().Contains(search.ToLower()) || c.lastName.ToLower().Contains(search.ToLower()) || c.secondSurname.ToLower().Contains(search.ToLower()) || c.DNI.ToLower().Contains(search.ToLower()) || c.SubscriberNum.ToLower().Contains(search.ToLower())).ToList();
+            }
+            else
+            {
+                dtgClientes.ItemsSource = clientsRepository.GetAllClients();
+            }
+        }  
+        #endregion
+
     }
+
+
 }

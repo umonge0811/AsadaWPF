@@ -31,9 +31,7 @@ namespace wpfASADACore.Views
         {
             InitializeComponent();
             typeClientRepository = new TypeClientRepository();
-        }
-
-       
+        }      
 
 
         //funcion para limpirar todos los TextBlox 
@@ -142,6 +140,17 @@ namespace wpfASADACore.Views
             //Cargar los datos de la tabla de tipos de clientes
             dgvTypeClient.ItemsSource = typeClientRepository.GetAllTypeCliente();
         }
+
+        #region Metodo para restringir el ingreso de caracteres en el TextBox
+        //Metodo para restringir el ingreso de caracteres en el TextBox
+        private void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!char.IsDigit(e.Text.FirstOrDefault()))
+            {
+                e.Handled = true;
+            }
+        }
+        #endregion
 
     }
 }

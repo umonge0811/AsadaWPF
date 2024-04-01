@@ -67,11 +67,13 @@
 
                     <ui:TextBox x:Name="txt_NewRateBaseType" TextWrapping="Wrap" Height="35" Width="200" FontSize="11"
                          PlaceholderEnabled="True" PlaceholderText="Tarifa Base"
-                         Margin="0,5,0,10" Grid.Column="5"/>
+                         Margin="0,5,0,10" Grid.Column="5"
+                         PreviewTextInput="OnPreviewTextInput" />
 
                     <ui:TextBox x:Name="txt_NewRateExcType" TextWrapping="Wrap" Height="35" Width="200" FontSize="11"
                         PlaceholderEnabled="True" PlaceholderText="Tarifa Excedente por M3"
-                        Margin="0,4,0,10" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                        Margin="0,4,0,10" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        PreviewTextInput="OnPreviewTextInput"/>
 
                 </Grid>
             </ui:Card>
@@ -118,6 +120,7 @@
                     <Style TargetType="{x:Type DataGridCell}">
                         <Setter Property="BorderBrush" Value="Transparent"/>
                         <Setter Property="Foreground" Value="DarkSlateGray"/>
+                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="LightGray"/>
