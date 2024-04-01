@@ -29,7 +29,7 @@ namespace wpfASADACore.Models
             this.rateExc = rateExc;
         }
 
-        public clsTypeClient( string? name, string? description, double rate, double rateExc)
+        public clsTypeClient(string? name, string? description, double rate, double rateExc)
         {
             this.id = id;
             this.name = name;

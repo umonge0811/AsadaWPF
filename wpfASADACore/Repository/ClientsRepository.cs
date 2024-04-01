@@ -53,7 +53,7 @@ namespace wpfASADACore.Repository
         // Obtener el Usuario por el Nombre
         public List<clsCliente> GetAllClients()
         {
-            // u => u  se llama a las creaciones Lambda
+            
             return context.clientes.ToList();
         }
     }

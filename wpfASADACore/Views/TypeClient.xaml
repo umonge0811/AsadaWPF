@@ -112,6 +112,29 @@
             </StackPanel>
         </Grid>
 
+        <StackPanel Grid.Row="4">
+            <DataGrid x:Name="dgvTypeClient"  CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="Red" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center" Height="108">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="DarkSlateGray"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path=id}" Header="ID" Width="Auto" MinWidth="25"/>
+                    <DataGridTextColumn Binding="{Binding Path=name}" Header="Tipo de Cliente" Width="Auto" MinWidth="100"/>
+                    <DataGridTextColumn Binding="{Binding Path=description}" Header="Descripción" Width="Auto"/>
+                    <DataGridTextColumn Binding="{Binding Path=rate}" Header="Tarifa Base" Width="Auto"/>
+                    <DataGridTextColumn Binding="{Binding Path=rateExc}" Header="Tarifa Excedente por M3" Width="Auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
 
     </Grid>
 </Page>

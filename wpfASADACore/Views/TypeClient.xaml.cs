@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using wpfASADACore.Models;
 using wpfASADACore.Repository;
 using wpfASADACore.Services;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -25,13 +26,14 @@ namespace wpfASADACore.Views
     /// </summary>
     public partial class TypeClient : Page
     {
-        TypeClientRepository TypeClientRepository = new TypeClientRepository();
+        TypeClientRepository typeClientRepository;
         public TypeClient()
         {
             InitializeComponent();
+            typeClientRepository = new TypeClientRepository();
         }
 
-        
+       
 
 
         //funcion para limpirar todos los TextBlox 
@@ -108,7 +110,7 @@ namespace wpfASADACore.Views
             }
 
             //await es para esperar a que la tarea termine, en este caso, la funcion/Metodo ejecute para que avance a la siguiente tarea 
-            bool estado = await TypeClientRepository.CreateTypeClient(NewtypeClient, NewDescription, RateBase, RateExtra);
+            bool estado = await typeClientRepository.CreateTypeClient(NewtypeClient, NewDescription, RateBase, RateExtra);
 
             if (estado)
             {
@@ -117,7 +119,7 @@ namespace wpfASADACore.Views
             }
             else
             {
-                MessageBox.Show($"Error al registrar el usuario: {TypeClientRepository.message}");
+                MessageBox.Show($"Error al registrar el usuario: {typeClientRepository.message}");
             }
 
 
@@ -130,5 +132,16 @@ namespace wpfASADACore.Views
             ClearAllDataTypeCli();
 
         }
+
+
+        
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            //Cargar los datos de la tabla de tipos de clientes
+            dgvTypeClient.ItemsSource = typeClientRepository.GetAllTypeCliente();
+        }
+
     }
 }

@@ -73,6 +73,8 @@ namespace wpfASADACore.Views
             ClearAllData();
         }
 
+
+        //Este Metodo es para cargar los datos de los tipos de clientes en el combobox
         private void cargarDatos() {
             try {
 
@@ -89,6 +91,7 @@ namespace wpfASADACore.Views
 
 
         }
+
         //btn_CreateNewClient_Click es para crear un nuevo cliente
         private async void btn_CreateNewClient_Click(object sender, RoutedEventArgs e)
         {
@@ -190,5 +193,7 @@ namespace wpfASADACore.Views
 
             dtgClientes.ItemsSource = clientsRepository.GetAllClients();
         }
+
+
     }
 }

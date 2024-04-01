@@ -54,14 +54,14 @@ namespace wpfASADACore.Repository
         // Obtener el Usuario por el Nombre
         public clsTypeClient? GetUserByUserName(string name)
         {
-            // u => u  se llama a las creaciones Lambda
+            
             return context.typeClients.FirstOrDefault(u => u.name.Equals(name));
         }
 
-        // Obtener el Usuario por el Nombre
+        
         public List<clsTypeClient> GetAllTypeCliente()
         {
-            // u => u  se llama a las creaciones Lambda
+            
             return context.typeClients.ToList();
         }
 

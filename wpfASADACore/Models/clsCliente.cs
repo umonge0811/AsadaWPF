@@ -21,7 +21,7 @@ namespace wpfASADACore.Models
         //public int IdtypeClient { get; set; }
 
         public int TypeClientId { get; set; }  //  La propiedad TypeClientId es la clave foránea que se relaciona con la tabla de tipos de cliente.
-        public clsTypeClient TypeClient { get; set; }  // La propiedad TypeClient es una propiedad de navegación que  permite acceder al objeto de tipo de cliente relacionado.
+        public clsTypeClient? TypeClient { get; set; }  // La propiedad TypeClient es una propiedad de navegación que  permite acceder al objeto de tipo de cliente relacionado.
 
         public clsCliente()
         {
