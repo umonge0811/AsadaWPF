@@ -144,7 +144,7 @@
                     </StackPanel>
                 </ui:Button>
 
-                <ui:Button x:Name="btn_ModifyUser"  Height="34" Appearance="Caution" Margin="10,0,0,0" >
+                <ui:Button x:Name="btn_ModifyClient" Click="btn_ModifyClient_Click" Height="34" Appearance="Caution" Margin="10,0,0,0" >
                     <StackPanel Orientation="Horizontal">
                         <iconPacks:PackIconModern Kind="EditAdd" VerticalAlignment="Center" Margin="0,0,5,0"/>
                         <TextBlock Text="Editar" VerticalAlignment="Center"/>
@@ -152,7 +152,7 @@
 
                 </ui:Button>
 
-                <ui:Button x:Name="btn_DeleteUser"  Height="34" Appearance="Danger" Margin="10,0,0,0" >
+                <ui:Button x:Name="btn_DeleteClient"  Height="34" Appearance="Danger" Margin="10,0,0,0" >
                     <StackPanel Orientation="Horizontal">
                         <iconPacks:PackIconModern Kind="UserDelete" VerticalAlignment="Center" Margin="0,0,5,0"/>
                         <TextBlock Text="Eliminar" VerticalAlignment="Center"/>
@@ -171,7 +171,7 @@
 
 
         <StackPanel Grid.Row="6">
-            <DataGrid x:Name="dtgClientes"  CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="Red" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center">
+            <DataGrid x:Name="dtgClientes" MouseDoubleClick="dtgClientes_MouseDoubleClick" CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="Red" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">
                         <Setter Property="BorderBrush" Value="Transparent"/>

@@ -10,7 +10,7 @@
       Background="WhiteSmoke"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="TypeClient">
+      Title="TypeClient" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -112,8 +112,8 @@
             </StackPanel>
         </Grid>
 
-        <StackPanel Grid.Row="4">
-            <DataGrid x:Name="dgvTypeClient"  CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="Red" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center" Height="108">
+        <StackPanel Grid.Row="4" MaxHeight="200" >
+            <DataGrid x:Name="dgvTypeClient"  CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="Red" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center" Height="145">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">
                         <Setter Property="BorderBrush" Value="Transparent"/>

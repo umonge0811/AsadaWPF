@@ -69,6 +69,8 @@ namespace wpfASADACore.Repository
             return context.usuarios.FirstOrDefault(u => u.Id == id);
         }
 
+
+        #region Modificar Usuarios
         public async Task<bool> modifyUser(string name, string username, string dni, string password, string email, int? idUser)
         {
 
@@ -107,6 +109,7 @@ namespace wpfASADACore.Repository
             return estado;
 
         }
+        #endregion
 
 
         //este es el metodo que se creo para hacer la busqueda en la DB, retorna  un objeto de tipo clase (clsUser)

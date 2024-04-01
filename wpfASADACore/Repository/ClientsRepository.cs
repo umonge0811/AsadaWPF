@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,11 +52,67 @@ namespace wpfASADACore.Repository
 
         }
 
-        // Obtener el Usuario por el Nombre
-        public List<clsCliente> GetAllClients()
+        // Este metodo es para Obtener 
+        public ObservableCollection<clsCliente> GetAllClients()
         {
-            
-            return context.clientes.ToList();
+            return new ObservableCollection<clsCliente>(context.clientes.ToList());
+        }        //este es el metodo que se creo para hacer la busqueda en la DB, retorna  un objeto de tipo clase (clsUser)
+        public async Task<clsCliente?> FindClientBySubscriberNum(string SubscriberNum)
+        {
+
+            //puede que retorne nula si no se encuentra nada
+            clsCliente? client = null;
+            try
+            {
+
+                using (var db = new ContextDataBase())
+                {
+
+                    client = await db.clientes.FirstOrDefaultAsync(u => u.SubscriberNum.Equals(SubscriberNum));
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                client = null;
+
+            }
+            return client;
+
         }
+
+        //Metodo para modificar un cliente llamado UpdateClient
+        public async Task<bool> UpdateClient(int? id, string name, string DNI, string lastName, string secondSurname, string subscribernum, int IdtypeClient)
+        {
+            bool estado = false;
+            try
+            {
+                using (var db = new ContextDataBase())
+                {
+                    var client = await db.clientes.FirstOrDefaultAsync(u => u.id == id);
+                    if (client != null)
+                    {
+                        client.name = name;
+                        client.DNI = DNI;
+                        client.lastName = lastName;
+                        client.secondSurname = secondSurname;
+                        client.SubscriberNum = subscribernum;
+                        client.TypeClientId = IdtypeClient;
+
+                        await db.SaveChangesAsync();
+                        estado = true;
+                    
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                estado= false;
+            }
+            return estado;
+        }           
     }
 }
