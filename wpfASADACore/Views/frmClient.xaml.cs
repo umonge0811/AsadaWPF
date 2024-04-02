@@ -144,8 +144,11 @@ namespace wpfASADACore.Views
                 txt_NewDNICli.Focus();
                 return;
             }
+
+
             if (SubscriberNum.Equals(""))
             {
+
                 {
                     //Crear una validacion de que si presiona si, le pregunte si desea asignar el numero de Cedula como numero de abonado, y si presiona no, que le permita ingresar el numero de abonado
                     if (MessageBox.Show("¿Desea asignar el numero de cedula como numero de abonado?", "Advertencia", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
@@ -422,6 +425,8 @@ namespace wpfASADACore.Views
                 btn_ModifyClient.IsEnabled = true;
             }
 
+           
+
         }
 
         private void cmb_TypeClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -449,9 +454,23 @@ namespace wpfASADACore.Views
             {
                 dtgClientes.ItemsSource = clientsRepository.GetAllClients();
             }
-        }  
+        }
+
         #endregion
 
+        #region Metodo para copiar el DNI en el Numero de Abonado
+        private void copySwitch_Checked(object sender, RoutedEventArgs e)
+        {
+            // Copiar el texto
+            txt_NewSubscribe.Text = txt_NewDNICli.Text;
+
+        }
+
+        private void copySwitch_Unchecked(object sender, RoutedEventArgs e)
+        {
+            txt_NewSubscribe.Clear();
+        }
+        #endregion
     }
 
 

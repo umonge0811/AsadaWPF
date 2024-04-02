@@ -3,13 +3,13 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:local="clr-namespace:wpfASADACore.Views"
-       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       Background="WhiteSmoke"
-      d:DesignHeight="650" d:DesignWidth="800"
+      d:DesignHeight="1000" d:DesignWidth="800"
       Title="frmClient" Loaded="Page_Loaded">
 
     <Grid>
@@ -19,11 +19,8 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="150"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="150"/>
-            <RowDefinition Height="40"/>
-
+            <RowDefinition Height="420"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
         <!--#region  Titulo del Formulario-->
@@ -73,7 +70,8 @@
             </Grid.ColumnDefinitions>
 
             <iconPacks:PackIconModern Kind="UserAdd"  RenderTransformOrigin="0.5,0.5" Width="50" Height="30" Foreground="Green" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Text="Clientes Nuevos" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,12,0,0" Grid.RowSpan="2" Grid.Column="2"></TextBlock>
+            <TextBlock Text="Clientes Nuevos" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Grid.RowSpan="2" Grid.Column="2"></TextBlock>
+
         </Grid>
         <!--#endregion-->
 
@@ -83,8 +81,17 @@
                 <ui:Card  VerticalAlignment="Top" HorizontalAlignment="Center">
                     <Grid HorizontalAlignment="Center">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
                             <RowDefinition Height="50"/>
                             <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="70"/>
+                            <RowDefinition Height="*"/>
+
+
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
@@ -93,76 +100,93 @@
                             <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="10"/>
                         </Grid.ColumnDefinitions>
                         <ui:TextBox x:Name="txt_NewNameCli" TextChanged="txt_NewNameCli_TextChanged" TextWrapping="Wrap" Height="35" Width="200" FontSize="11"
-                                    PlaceholderEnabled="True" PlaceholderText="Nombre del Cliente"
-                                    Margin="0,5,0,10" Grid.Column="1"/>
+                             PlaceholderEnabled="True" PlaceholderText="Nombre del Cliente"
+                             Margin="0,5,0,10" Grid.Column="1" Grid.Row="1" />
 
                         <ui:TextBox x:Name="txt_NewFirstNameCli" TextChanged="txt_NewFirstNameCli_TextChanged" TextWrapping="Wrap" Height="35" Width="200" FontSize="11"
-                                    PlaceholderEnabled="True" PlaceholderText="Primer Apellido"
-                                    Margin="0,5,0,10" Grid.Column="3"/>
+                             PlaceholderEnabled="True" PlaceholderText="Primer Apellido"
+                             Margin="0,5,0,10" Grid.Column="1" Grid.Row="2"/>
 
                         <ui:TextBox x:Name="txt_NewsecondSurnameCli" TextChanged="txt_NewsecondSurnameCli_TextChanged" TextWrapping="Wrap" Height="35" Width="200" FontSize="11"
-                                     PlaceholderEnabled="True" PlaceholderText="Segundo Apellido"
-                                     Margin="0,5,0,10" Grid.Column="5"/>
+                              PlaceholderEnabled="True" PlaceholderText="Segundo Apellido"
+                              Margin="0,5,0,10" Grid.Column="1" Grid.Row="3"/>
 
                         <ui:TextBox x:Name="txt_NewDNICli" TextChanged="txt_NewDNICli_TextChanged" TextWrapping="Wrap" Height="35" Width="200" FontSize="11"
-                                    PlaceholderEnabled="True" PlaceholderText="Identificación del Cliente"
-                                    Margin="0,4,0,10" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                             PlaceholderEnabled="True" PlaceholderText="Identificación del Cliente"
+                             Margin="0,4,0,10" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 
                         <ui:TextBox x:Name="txt_NewSubscribe" TextChanged="txt_NewSubscribe_TextChanged" TextWrapping="Wrap" Height="35" Width="200" FontSize="11"
-                                    PlaceholderEnabled="True" PlaceholderText="No. Abonado" 
-                                    Grid.Column="3" Margin="0,5,0,10" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                             PlaceholderEnabled="True" PlaceholderText="No. Abonado" 
+                             Grid.Column="1" Margin="0,5,0,10" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+                        <Label Content="Asignar Cedúla" Grid.Column="3" Margin="17,11,86,11" Grid.Row="5"/>
+                        <ui:ToggleSwitch x:Name="copySwitch" OffContent="Off" OnContent="On" Grid.Column="3" Margin="130,12,0,0" Width="70" Grid.Row="5" VerticalAlignment="Top" Checked="copySwitch_Checked" Unchecked="copySwitch_Unchecked" />
+
 
                         <ComboBox x:Name="cmb_TypeClient" SelectionChanged="cmb_TypeClient_SelectionChanged" Width="200" Height="35" Margin="0,5,0,0"
-                                    Grid.Column="5" VerticalAlignment="Top" Grid.Row="1"  >
+                             Grid.Column="1" VerticalAlignment="Top" Grid.Row="6"  >
                             <ComboBoxItem IsSelected="True">
                                 <StackPanel Orientation="Horizontal">
                                 </StackPanel>
                             </ComboBoxItem>
-                            
+
                         </ComboBox>
+                        
+                        
+                        <Grid Grid.Row="7">
+                            <ui:Card Margin="0,-4,-417,0" VerticalAlignment="Top" Background="LightGray">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="7">
+                                    <ui:Button x:Name="btn_CreateNewClient" Height="34" Appearance="Primary" Margin="5,0,0,0" Click="btn_CreateNewClient_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconModern Kind="uSER" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                            <TextBlock Text="Crear" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </ui:Button>
+
+                                    <ui:Button x:Name="btn_ModifyClient" Click="btn_ModifyClient_Click" Height="34" Appearance="Caution" Margin="10,0,0,0" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconModern Kind="EditAdd" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                            <TextBlock Text="Editar" VerticalAlignment="Center"/>
+                                        </StackPanel>
+
+                                    </ui:Button>
+
+                                    <ui:Button x:Name="btn_DeleteClient" Click="btn_DeleteClient_Click" Height="34" Appearance="Danger" Margin="10,0,0,0" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconModern Kind="UserDelete" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                            <TextBlock Text="Eliminar" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </ui:Button>
+
+                                    <ui:Button x:Name="btn_CleanTxt" Click="btn_CleanTxt_Click"  Height="34" Appearance="Info" Margin="10,0,0,0" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconModern Kind="Clean" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                            <TextBlock Text="Limpiar" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </ui:Button>
+
+                                </StackPanel>
+
+
+                            </ui:Card>
+
+                        </Grid>
+
+                        
+
+
+
                     </Grid>
+                    
+                    
                 </ui:Card>
             </Grid>
 
         </Grid>
 
-
         <Grid Grid.Row="5">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <ui:Button x:Name="btn_CreateNewClient" Height="34" Appearance="Primary" Margin="5,0,0,0" Click="btn_CreateNewClient_Click">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Kind="uSER" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Crear" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </ui:Button>
-
-                <ui:Button x:Name="btn_ModifyClient" Click="btn_ModifyClient_Click" Height="34" Appearance="Caution" Margin="10,0,0,0" >
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Kind="EditAdd" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Editar" VerticalAlignment="Center"/>
-                    </StackPanel>
-
-                </ui:Button>
-
-                <ui:Button x:Name="btn_DeleteClient" Click="btn_DeleteClient_Click" Height="34" Appearance="Danger" Margin="10,0,0,0" >
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Kind="UserDelete" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Eliminar" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </ui:Button>
-
-                <ui:Button x:Name="btn_CleanTxt"  Height="34" Appearance="Info" Margin="10,0,0,0" >
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Kind="Clean" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Limpiar" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </ui:Button>
-
-            </StackPanel>
         </Grid>
 
 
@@ -181,7 +205,7 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path=DNI}" Header="Cédula" Width="Auto" MinWidth="100"/>
+                    <DataGridTextColumn Binding="{Binding Path=DNI}" Header="Cédula" Width="Auto" MinWidth="100" />
                     <DataGridTextColumn Binding="{Binding Path=name}" Header="Nombre" Width="Auto"/>
                     <DataGridTextColumn Binding="{Binding Path=lastName}" Header="Apellido Paterno" Width="Auto"/>
                     <DataGridTextColumn Binding="{Binding Path=secondSurname}" Header="Apellido Materno" Width="Auto"/>
@@ -189,11 +213,16 @@
                     <DataGridTextColumn Binding="{Binding Path=TypeClient.name}" Header="Tipo cliente" Width="Auto"/>
                 </DataGrid.Columns>
             </DataGrid>
+            
+            
         </StackPanel>
 
 
 
-   
+      
+
+
+
     </Grid>
-   
+
 </Page>
