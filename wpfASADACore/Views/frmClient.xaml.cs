@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MaterialDesignThemes.Wpf;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
+using Wpf.Ui.Controls;
 using wpfASADACore.Models;
 using wpfASADACore.Repository;
 using wpfASADACore.Services;
+using MessageBox = System.Windows.MessageBox;
+using MessageBoxButton = System.Windows.MessageBoxButton;
+using MessageBoxResult = System.Windows.MessageBoxResult;
 
 namespace wpfASADACore.Views
 {
@@ -27,6 +33,7 @@ namespace wpfASADACore.Views
     {
         //Se almacena ell id del cliente buscado
         int? idClient = null;
+
 
 
 
@@ -113,80 +120,125 @@ namespace wpfASADACore.Views
         //btn_CreateNewClient_Click es para crear un nuevo cliente
         private async void btn_CreateNewClient_Click(object sender, RoutedEventArgs e)
         {
-            //crear variables para almacenar los datos que digite el usuario en los textbox de clientes
-            string name = txt_NewNameCli.Text;
-            string firstName = txt_NewFirstNameCli.Text;
-            string Surname = txt_NewsecondSurnameCli.Text;
-            string DNI = txt_NewDNICli.Text;
-            string SubscriberNum = txt_NewSubscribe.Text;
-            int ClientType = int.Parse(cmb_TypeClient.SelectedValue.ToString()??"1");
-
-            //Error first 
-
-          
-
-            if (name.Equals(""))
+            try
             {
-                MessageBox.Show("Debe de ingresar el nombre del usuario");
-                txt_NewNameCli.Focus();
-                return;
+                // Mostrar barra de progreso
+                await ShowProgressBarAsync();
+
+                // Variables para almacenar datos del usuario
+                string name = txt_NewNameCli.Text;
+                string firstName = txt_NewFirstNameCli.Text;
+                string Surname = txt_NewsecondSurnameCli.Text;
+                string DNI = txt_NewDNICli.Text;
+                string SubscriberNum = txt_NewSubscribe.Text;
+                int ClientType = int.Parse(cmb_TypeClient.SelectedValue.ToString() ?? "1");
+
+                // Validación de campos
+                if (string.IsNullOrEmpty(name))
+                {
+                    SnackbarMessage.IsActive = true;
+                    SnackbarMessage.Message.Content = "Ingrese el nombre del usuario";
+                    SnackbarMessage.Background = new SolidColorBrush(Colors.Yellow);
+                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
+                    SnackbarMessage.BorderThickness= new Thickness(5);
+                    SnackbarMessage.BorderBrush = new SolidColorBrush(Colors.DarkRed);
+                    txt_NewNameCli.Focus();
+                    await Task.Delay(2000);
+                    SnackbarMessage.IsActive = false;
+                    return;
+                }
+                if (string.IsNullOrEmpty(firstName))
+                {
+                    SnackbarMessage.IsActive = true;
+                    SnackbarMessage.Message.Content = "Ingrese el primer apellido del usuario"; // Use Message property for version 5.0.0
+                    SnackbarMessage.Background = new SolidColorBrush(Colors.Yellow);
+                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
+                    txt_NewFirstNameCli.Focus();
+                    await Task.Delay(2000);
+                    SnackbarMessage.IsActive = false;
+                    return;
+                }
+                if (string.IsNullOrEmpty(Surname))
+                {
+                    SnackbarMessage.IsActive = true;
+                    SnackbarMessage.Message.Content = "Ingrese el segundo apellido del usuario"; // Use Message property for version 5.0.0
+                    SnackbarMessage.Background = new SolidColorBrush(Colors.Yellow);
+                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
+                    txt_NewsecondSurnameCli.Focus();
+                    await Task.Delay(2000);
+                    SnackbarMessage.IsActive = false;
+                    return;
+                }
+                if (string.IsNullOrEmpty(DNI))
+                {
+                    SnackbarMessage.IsActive = true;
+                    SnackbarMessage.Message.Content = "Ingrese el numero de cedula del usuario"; // Use Message property for version 5.0.0
+                    SnackbarMessage.Background = new SolidColorBrush(Colors.Yellow);
+                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
+
+                    txt_NewDNICli.Focus();
+                    await Task.Delay(2000);
+                    SnackbarMessage.IsActive = false;
+                    return;
+                }
+
+
+
+                if (string.IsNullOrEmpty(SubscriberNum))
+                {
+                    SnackbarMessage.IsActive = true;
+                    SnackbarMessage.Message.Content = "Ingrese el número de abonado o active el Switch para asignar la cédula como número de abonado"; // Use Message property for version 5.0.0
+                    SnackbarMessage.Background = new SolidColorBrush(Colors.Yellow);
+                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
+
+                    txt_NewSubscribe.Focus();
+                    await Task.Delay(3000);
+                    SnackbarMessage.IsActive = false;
+                    return;
+                }
+
+                // Crear cliente
+                bool estado = await clientsRepository.CreateClient(name, DNI, firstName, Surname, SubscriberNum, ClientType);
+
+                // Mostrar mensaje de éxito o error
+                if (estado)
+                {
+                    SnackbarMessage.Message.Content = "Cliente creado exitosamente"; // Use Message property for version 5.0.0
+                    SnackbarMessage.Background = new SolidColorBrush(Colors.LightGreen);
+                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
+                    SnackbarMessage.IsActive = true;
+                    await Task.Delay(2000);
+                    SnackbarMessage.IsActive = false;
+                    ClearAllData();
+                    loaddatagrid();
+                }
+                else
+                {
+                    SnackbarMessage.Message.Content = $"Error al crear cliente: {clientsRepository.message}"; // Use Message property for version 5.0.0
+                    SnackbarMessage.Background = new SolidColorBrush(Colors.Red);
+                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
+                    SnackbarMessage.IsActive = true;
+                    await Task.Delay(2000);
+                    SnackbarMessage.IsActive = false;
+                }
             }
-            if (firstName.Equals(""))
+            catch (Exception ex)
             {
-                MessageBox.Show("Debe de ingresar el primer apellido del usuario");
-                txt_NewFirstNameCli.Focus();
-                return;
-            }
-            if (Surname.Equals(""))
-            {
-                MessageBox.Show("Debe de ingresar el segundo apellido del usuario");
-                txt_NewsecondSurnameCli.Focus();
-                return;
-            }
-            if (DNI.Equals(""))
-            {
-                MessageBox.Show("Debe de ingresar el numero de cedula del usuario");
-                txt_NewDNICli.Focus();
-                return;
-            }
-
-
-            if (SubscriberNum.Equals(""))
-            {
+                SnackbarMessage.Message.Content = $"Error inesperado: {ex.Message}"; // Use Message property for version 5.0.0
+                SnackbarMessage.Background = new SolidColorBrush(Colors.Red);
                 SnackbarMessage.IsActive = true;
-                txt_NewSubscribe.Focus();
-
-                //Agregar un temporizador de 3 segundos y que luego se oculte el snackbar
                 await Task.Delay(2000);
                 SnackbarMessage.IsActive = false;
-                txt_NewSubscribe.Focus();
-                return;
-               
-
             }
-
-
-
-
-            //await es para esperar a que la tarea termine, en este caso, la funcion/ Metodo ejecute para que avance a la siguiente tarea
-
-            bool estado = await clientsRepository.CreateClient(name, DNI, firstName, Surname , SubscriberNum, ClientType);
-      
-        
-            if (estado)
+            finally
             {
-                MessageBox.Show("Usuario registrado con exito!!");
-                ClearAllData();
-                loaddatagrid();
-                
-            }
-            else
-            {
-                MessageBox.Show($"Error al registrar el usuario: {clientsRepository.message}");
+                // Ocultar barra de progreso
+                ProgressBarClient.Visibility = Visibility.Collapsed;
             }
 
         }
-        #endregion  
+        #endregion
+
 
         #region Metodo para actualizar la Informacion despues de algun cambio
         //metodo para ejecutar el llebado del datagrid con los datos de los clientes
@@ -207,6 +259,8 @@ namespace wpfASADACore.Views
             loaddatagrid();
             btn_ModifyClient.IsEnabled = false;
             btn_DeleteClient.IsEnabled = false;
+            //Hacer que el toggleswitch este desactivado
+            copySwitch.IsEnabled = false;
         }
         #endregion
 
@@ -413,6 +467,16 @@ namespace wpfASADACore.Views
             if (isModified)
             {
                 btn_ModifyClient.IsEnabled = true;
+                
+
+            }
+            if (!string.IsNullOrEmpty(txt_NewDNICli.Text))
+            {
+                copySwitch.IsEnabled = true;
+            }
+            else
+            {
+                copySwitch.IsEnabled = false;
             }
 
         }
@@ -470,6 +534,19 @@ namespace wpfASADACore.Views
             txt_NewSubscribe.Clear();
         }
         #endregion
+
+        #region Metodo para mostrar la barra de progreso
+        private async Task ShowProgressBarAsync(int durationInMilliseconds = 2000)
+        {
+            ProgressBar progressBar = (ProgressBar)FindName("ProgressBarClient");
+            progressBar.IsIndeterminate = true;
+            progressBar.Visibility = Visibility.Visible;
+
+            await Task.Delay(durationInMilliseconds);
+            progressBar.Visibility = Visibility.Collapsed;
+        }
+        #endregion
+
     }
 
 
