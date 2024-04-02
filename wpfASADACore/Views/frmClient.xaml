@@ -9,10 +9,14 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       Background="WhiteSmoke"
-      d:DesignHeight="1000" d:DesignWidth="800"
+      d:DesignHeight="1000" d:DesignWidth="1500"
       Title="frmClient" Loaded="Page_Loaded">
+    
+    
 
     <Grid>
+        
+        
 
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -183,6 +187,11 @@
                     
                 </ui:Card>
             </Grid>
+            <materialDesign:Snackbar x:Name="SnackbarMessage" HorizontalAlignment="Center" VerticalAlignment="Bottom"   Background="red" FontSize="11" >
+                <materialDesign:SnackbarMessage Content="Ingrese el número de abonado o active el Switch para asignar la cédula como número de abonado" Background="Red" Foreground="White"  />
+            </materialDesign:Snackbar>
+
+
 
         </Grid>
 
@@ -213,13 +222,17 @@
                     <DataGridTextColumn Binding="{Binding Path=TypeClient.name}" Header="Tipo cliente" Width="Auto"/>
                 </DataGrid.Columns>
             </DataGrid>
-            
-            
+
         </StackPanel>
 
+        
 
 
-      
+
+
+
+
+
 
 
 

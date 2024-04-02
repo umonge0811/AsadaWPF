@@ -28,6 +28,8 @@ namespace wpfASADACore.Views
         //Se almacena ell id del cliente buscado
         int? idClient = null;
 
+
+
         //Variable para detectar si se ha cargado informacion de un cliente despues de hacer doble click en el datagrid
         private bool isModified = false;
 
@@ -74,6 +76,9 @@ namespace wpfASADACore.Views
             idClient = null;
             txt_NewSubscribe.Clear();
             cmb_TypeClient.SelectedIndex = 0;
+            btn_CreateNewClient.IsEnabled = true;
+            btn_ModifyClient.IsEnabled = false;
+            btn_DeleteClient.IsEnabled = false;
         }
         #endregion
 
@@ -148,21 +153,15 @@ namespace wpfASADACore.Views
 
             if (SubscriberNum.Equals(""))
             {
+                SnackbarMessage.IsActive = true;
+                txt_NewSubscribe.Focus();
 
-                {
-                    //Crear una validacion de que si presiona si, le pregunte si desea asignar el numero de Cedula como numero de abonado, y si presiona no, que le permita ingresar el numero de abonado
-                    if (MessageBox.Show("¿Desea asignar el numero de cedula como numero de abonado?", "Advertencia", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                    {
-                        txt_NewSubscribe.Text = txt_NewDNICli.Text;
-                    }
-
-                    else
-                    {
-                        txt_NewSubscribe.Text = "Ingrese Numero de Abonado";
-
-                    }
-                    return;
-                }
+                //Agregar un temporizador de 3 segundos y que luego se oculte el snackbar
+                await Task.Delay(2000);
+                SnackbarMessage.IsActive = false;
+                txt_NewSubscribe.Focus();
+                return;
+               
 
             }
 
