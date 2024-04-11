@@ -62,14 +62,38 @@ namespace wpfASADACore.Views
             btn_ModifyUser.IsEnabled = false;
         }
 
+        #region Metodo para mostrar la barra de progreso
+        private async Task ShowProgressBarAsync(int durationInMilliseconds = 2000)
+        {
+            // Obtén una referencia a tu MainWindow
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            if (mainWindow != null)
+            {
+                // Accede a tu ProgressBarPrincipal
+                ProgressBar progressBar = mainWindow.GlobalProgressBar;
+                progressBar.IsIndeterminate = true;
+                progressBar.Visibility = Visibility.Visible;
+
+                await Task.Delay(durationInMilliseconds);
+                progressBar.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                // Manejo de error cuando mainWindow es null
+                Console.WriteLine("MainWindow es null");
+            }
+        }
+        #endregion
+
         // async es para un motodo asyncrono 
         private async void btn_CreateNewUser_Click(object sender, RoutedEventArgs e)
         {
             string newName = txt_NewName.Text;
             string newEmail = txt_NewEmail.Text;
             string newUser = txt_NewUser.Text;
-            string newPassword = txt_NewPass.Password;
-            string newRepPassword = txt_NewRePass.Password;
+            string newPassword = txt_NewPass.Text;
+            string newRepPassword = txt_NewRePass.Text;
             string newDNI = txt_NewId.Text;
             
 
@@ -252,8 +276,8 @@ namespace wpfASADACore.Views
             string newName = txt_NewName.Text;
             string newEmail = txt_NewEmail.Text;
             string newUser = txt_NewUser.Text;
-            string newPassword = txt_NewPass.Password;
-            string newRepPassword = txt_NewRePass.Password;
+            string newPassword = txt_NewPass.Text;
+            string newRepPassword = txt_NewRePass.Text;
             string newDNI = txt_NewId.Text;
 
 

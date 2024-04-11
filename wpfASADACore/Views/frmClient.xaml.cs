@@ -20,6 +20,8 @@ using Wpf.Ui.Controls;
 using wpfASADACore.Models;
 using wpfASADACore.Repository;
 using wpfASADACore.Services;
+using wpfASADACore.Utilities;
+using static MaterialDesignThemes.Wpf.Theme;
 using MessageBox = System.Windows.MessageBox;
 using MessageBoxButton = System.Windows.MessageBoxButton;
 using MessageBoxResult = System.Windows.MessageBoxResult;
@@ -125,6 +127,7 @@ namespace wpfASADACore.Views
                 // Mostrar barra de progreso
                 await ShowProgressBarAsync();
 
+
                 // Variables para almacenar datos del usuario
                 string name = txt_NewNameCli.Text;
                 string firstName = txt_NewFirstNameCli.Text;
@@ -134,108 +137,78 @@ namespace wpfASADACore.Views
                 int ClientType = int.Parse(cmb_TypeClient.SelectedValue.ToString() ?? "1");
 
                 // Validación de campos
-                if (string.IsNullOrEmpty(name))
-                {
-                    SnackbarMessage.IsActive = true;
-                    SnackbarMessage.Message.Content = "Ingrese el nombre del usuario";
-                    SnackbarMessage.Background = new SolidColorBrush(Colors.Yellow);
-                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
-                    SnackbarMessage.BorderThickness= new Thickness(5);
-                    SnackbarMessage.BorderBrush = new SolidColorBrush(Colors.DarkRed);
-                    txt_NewNameCli.Focus();
-                    await Task.Delay(2000);
-                    SnackbarMessage.IsActive = false;
-                    return;
-                }
-                if (string.IsNullOrEmpty(firstName))
-                {
-                    SnackbarMessage.IsActive = true;
-                    SnackbarMessage.Message.Content = "Ingrese el primer apellido del usuario"; // Use Message property for version 5.0.0
-                    SnackbarMessage.Background = new SolidColorBrush(Colors.Yellow);
-                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
-                    txt_NewFirstNameCli.Focus();
-                    await Task.Delay(2000);
-                    SnackbarMessage.IsActive = false;
-                    return;
-                }
-                if (string.IsNullOrEmpty(Surname))
-                {
-                    SnackbarMessage.IsActive = true;
-                    SnackbarMessage.Message.Content = "Ingrese el segundo apellido del usuario"; // Use Message property for version 5.0.0
-                    SnackbarMessage.Background = new SolidColorBrush(Colors.Yellow);
-                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
-                    txt_NewsecondSurnameCli.Focus();
-                    await Task.Delay(2000);
-                    SnackbarMessage.IsActive = false;
-                    return;
-                }
-                if (string.IsNullOrEmpty(DNI))
-                {
-                    SnackbarMessage.IsActive = true;
-                    SnackbarMessage.Message.Content = "Ingrese el numero de cedula del usuario"; // Use Message property for version 5.0.0
-                    SnackbarMessage.Background = new SolidColorBrush(Colors.Yellow);
-                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
+                // Obtén una referencia a tu MainWindow
+                var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
-                    txt_NewDNICli.Focus();
-                    await Task.Delay(2000);
-                    SnackbarMessage.IsActive = false;
-                    return;
-                }
-
-
-
-                if (string.IsNullOrEmpty(SubscriberNum))
+                if (mainWindow != null)
                 {
-                    SnackbarMessage.IsActive = true;
-                    SnackbarMessage.Message.Content = "Ingrese el número de abonado o active el Switch para asignar la cédula como número de abonado"; // Use Message property for version 5.0.0
-                    SnackbarMessage.Background = new SolidColorBrush(Colors.Yellow);
-                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
+                    // Accede a tu SnackbarMessagePrincipal
+                    MaterialDesignThemes.Wpf.Snackbar snackbar = mainWindow.SnackbarMessageGlobal;
+                    MaterialDesignThemes.Wpf.SnackbarMessage snackbarMessage = new MaterialDesignThemes.Wpf.SnackbarMessage();
 
-                    txt_NewSubscribe.Focus();
-                    await Task.Delay(3000);
-                    SnackbarMessage.IsActive = false;
-                    return;
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        await clsUtilities.ShowSnackbarAsync("Debe Ingresar el nombre del usuario!", new SolidColorBrush(Colors.Yellow));
+                        txt_NewNameCli.Focus();
+                        return;
+
+                    }
+                    if (string.IsNullOrEmpty(firstName))
+                    {
+                        await clsUtilities.ShowSnackbarAsync("Debe Ingresar el primer apellido del usuario", new SolidColorBrush(Colors.Yellow));
+                        txt_NewNameCli.Focus();
+                        return;
+                    }
+                    if (string.IsNullOrEmpty(Surname))
+                    {
+                        await clsUtilities.ShowSnackbarAsync("Debe Ingresar el segundo apellido del usuario", new SolidColorBrush(Colors.Yellow));
+                        txt_NewNameCli.Focus();
+                        return;
+
+                    }
+                    if (string.IsNullOrEmpty(DNI))
+                    {
+                        await clsUtilities.ShowSnackbarAsync("Debe Ingresar el numero de cédula del usuario", new SolidColorBrush(Colors.Yellow));
+                        txt_NewNameCli.Focus();
+                        return;
+                    }
+                    if (string.IsNullOrEmpty(SubscriberNum))
+                    {
+                        await clsUtilities.ShowSnackbarAsync("Ingrese el número de abonado o active el Switch para asignar la cédula como número de abonado", new SolidColorBrush(Colors.Yellow));
+                        txt_NewNameCli.Focus();
+                        return;
+
+                    }
                 }
+                else
+                {
+                    // Manejo de error cuando mainWindow es null
+                    Console.WriteLine("MainWindow es null");
+                }
+
 
                 // Crear cliente
                 bool estado = await clientsRepository.CreateClient(name, DNI, firstName, Surname, SubscriberNum, ClientType);
 
+                
                 // Mostrar mensaje de éxito o error
                 if (estado)
                 {
-                    SnackbarMessage.Message.Content = "Cliente creado exitosamente"; // Use Message property for version 5.0.0
-                    SnackbarMessage.Background = new SolidColorBrush(Colors.LightGreen);
-                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
-                    SnackbarMessage.IsActive = true;
-                    await Task.Delay(2000);
-                    SnackbarMessage.IsActive = false;
+                    await clsUtilities.ShowSnackbarAsync("Cliente creado exitosamente", new SolidColorBrush(Colors.LightGreen));
                     ClearAllData();
                     loaddatagrid();
                 }
                 else
                 {
-                    SnackbarMessage.Message.Content = $"Error al crear cliente: {clientsRepository.message}"; // Use Message property for version 5.0.0
-                    SnackbarMessage.Background = new SolidColorBrush(Colors.Red);
-                    SnackbarMessage.Foreground = new SolidColorBrush(Colors.Black);
-                    SnackbarMessage.IsActive = true;
-                    await Task.Delay(2000);
-                    SnackbarMessage.IsActive = false;
+                    string errorMessage = $"Error al crear cliente: {clientsRepository.message}";
+                    await clsUtilities.ShowSnackbarAsync(errorMessage, new SolidColorBrush(Colors.Red));
                 }
             }
             catch (Exception ex)
             {
-                SnackbarMessage.Message.Content = $"Error inesperado: {ex.Message}"; // Use Message property for version 5.0.0
-                SnackbarMessage.Background = new SolidColorBrush(Colors.Red);
-                SnackbarMessage.IsActive = true;
-                await Task.Delay(2000);
-                SnackbarMessage.IsActive = false;
+                string errorMessage = $"Error inesperado: {ex.Message}";
+                await clsUtilities.ShowSnackbarAsync(errorMessage, new SolidColorBrush(Colors.Red));
             }
-            finally
-            {
-                // Ocultar barra de progreso
-                ProgressBarClient.Visibility = Visibility.Collapsed;
-            }
-
         }
         #endregion
 
@@ -538,12 +511,24 @@ namespace wpfASADACore.Views
         #region Metodo para mostrar la barra de progreso
         private async Task ShowProgressBarAsync(int durationInMilliseconds = 2000)
         {
-            ProgressBar progressBar = (ProgressBar)FindName("ProgressBarClient");
-            progressBar.IsIndeterminate = true;
-            progressBar.Visibility = Visibility.Visible;
+            // Obtén una referencia a tu MainWindow
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
-            await Task.Delay(durationInMilliseconds);
-            progressBar.Visibility = Visibility.Collapsed;
+            if (mainWindow != null)
+            {
+                // Accede a tu ProgressBarPrincipal
+                ProgressBar progressBar = mainWindow.GlobalProgressBar;
+                progressBar.IsIndeterminate = true;
+                progressBar.Visibility = Visibility.Visible;
+
+                await Task.Delay(durationInMilliseconds);
+                progressBar.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                // Manejo de error cuando mainWindow es null
+                Console.WriteLine("MainWindow es null");
+            }
         }
         #endregion
 

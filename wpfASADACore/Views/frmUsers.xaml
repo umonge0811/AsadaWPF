@@ -5,6 +5,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:wpfASADACore.Views"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
       mc:Ignorable="d"
       d:DesignHeight="700" d:DesignWidth="800"
       Background="WhiteSmoke"
@@ -15,7 +18,6 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="150"/>
-            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -69,30 +71,75 @@
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="10"/>
                     </Grid.ColumnDefinitions>
-                    <ui:TextBox x:Name="txt_NewName" Grid.Column="1" TextWrapping="Wrap"  Width="200" FontSize="12" PlaceholderEnabled="True" PlaceholderText="Nombre Completo" Margin="0,0,0,0" Height="35"/>
-                    <ui:TextBox x:Name="txt_NewId"  Grid.Column="3" TextWrapping="Wrap"  Width="200" FontSize="12" PlaceholderText="Cédula" Margin="0,0,0,0" Height="35"/>
-                    <ui:TextBox x:Name="txt_NewEmail"  Grid.Column="5" TextWrapping="Wrap"  Width="200" FontSize="12" PlaceholderText="Email" Margin="0,0,0,0" Height="35" />
 
-                    <ui:TextBox x:Name="txt_NewUser" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap"  Width="200" FontSize="12" PlaceholderEnabled="True" PlaceholderText="Usuario" Margin="0,0,0,0" Height="35"/>
-                    <ui:PasswordBox x:Name="txt_NewPass" Grid.Row="1" Grid.Column="3" TextWrapping="Wrap"  Width="200" FontSize="12" PlaceholderText="Contraseña" Margin="0,0,0,0" Height="35"/>
-                    <ui:PasswordBox x:Name="txt_NewRePass" Grid.Row="1" Grid.Column="5" TextWrapping="Wrap"  Width="200" FontSize="12" PlaceholderText="Repite la Contraseña" Margin="0,0,0,0" Height="35" />
+                    <TextBox x:Name="txt_NewName"  Grid.Column="1"  TextWrapping="Wrap" Height="37" FontSize="12"
+                              VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Nombre Completo"
+                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" />
+
+                    <TextBox x:Name="txt_NewId"  Grid.Column="3"  TextWrapping="Wrap" Height="37" FontSize="12"
+                              VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Cedúla"
+                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" />
+
+                    <TextBox x:Name="txt_NewEmail"  Grid.Column="5"  TextWrapping="Wrap" Height="37" FontSize="12"
+                              VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Correo Electrónico"
+                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" />
+
+                    <TextBox x:Name="txt_NewUser"  Grid.Row="1" Grid.Column="1"  TextWrapping="Wrap" Height="37" FontSize="12"
+                              VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Nombre Usuario "
+                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" />
+
+                    <ui:PasswordBox x:Name="txt_NewPass"  Grid.Row="1" Grid.Column="3"  TextWrapping="Wrap" Height="37" FontSize="12"
+                              VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Contraseña"
+                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" />
+
+                    <ui:PasswordBox x:Name="txt_NewRePass"  Grid.Row="1" Grid.Column="5"  TextWrapping="Wrap" Height="37" FontSize="12"
+                              VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Confirma la Contraseña"
+                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" />
+
+
+
+
+
                 </Grid>
             </ui:Card>
 
 
         </Grid>
 
-        <Grid Grid.Row="4">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <ui:Button  x:Name="btn_CreateNewUser"  Grid.Row="4" Height="34" Appearance="Primary"  Content="Crear"  Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_CreateNewUser_Click"/> 
-                <ui:Button  x:Name="btn_ModifyUser" Height="34" Appearance="Caution"  Content="Modificar" Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_ModifyUser_Click"/>
-                <ui:Button  x:Name="btn_DeleteUser" Height="34" Appearance="Danger"  Content="Eliminar" Margin="25,0,25,0" HorizontalAlignment="Center"  Click="btn_DeleteUser_Click"/>
-                <ui:Button  x:Name="btn_CleanTxt" Height="34" Content="Limpiar" Appearance="Light" Margin="25,0,25,0" Click="btn_CleanTxt_Click" HorizontalAlignment="Center" Width="70"/>
+        <Grid Grid.Row="4" Margin="0,10,0,205" Grid.RowSpan="2">
+            <ui:Card Margin="167,28,131,0" VerticalAlignment="Top" HorizontalAlignment="Center" Background="LightGray">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="7">
+                    
+                    <ui:Button x:Name="btn_CreateNewUser" Height="34" Appearance="Primary" Margin="5,0,0,0" Click="btn_CreateNewUser_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconModern Kind="uSER" VerticalAlignment="Center" Margin="0,0,5,0" />
+                            <TextBlock Text="Crear" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </ui:Button>
 
-            </StackPanel>
+                    <ui:Button x:Name="btn_ModifyUser" Click="btn_ModifyUser_Click" Height="34" Appearance="Caution" Margin="10,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconModern Kind="EditAdd" VerticalAlignment="Center" Margin="0,0,5,0" />
+                            <TextBlock Text="Editar" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </ui:Button>
+
+                    <ui:Button x:Name="btn_DeleteUser" Click="btn_DeleteUser_Click" Height="34" Appearance="Danger" Margin="10,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconModern Kind="UserDelete" VerticalAlignment="Center" Margin="0,0,5,0" />
+                            <TextBlock Text="Eliminar" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </ui:Button>
+
+                    <ui:Button x:Name="btn_CleanTxt" Click="btn_CleanTxt_Click" Height="34" Appearance="Info" Margin="10,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconModern Kind="Clean" VerticalAlignment="Center" Margin="0,0,5,0" />
+                            <TextBlock Text="Limpiar" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </ui:Button>
+                </StackPanel>
+            </ui:Card>
         </Grid>
-
-        <!--<ui:Button x:Name="btn_Cancel" Content="Cancelar" Margin="511,0,0,0" Grid.Row="4"  Height="34"/>-->
 
 
     </Grid>

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using MaterialDesignThemes.Wpf;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -25,8 +26,18 @@ namespace wpfASADACore
             //_ = CrearUsuario();
         }
 
-       
 
+        // Propiedad pública para exponer tu ProgressBarPrincipal
+        public ProgressBar GlobalProgressBar
+        {
+            get { return ProgressBarPrincipal; }
+        }
+
+        // Propiedad pública para exponer tu SnackbarMessagePrincipal
+        public Snackbar SnackbarMessageGlobal
+        {
+            get { return SnackbarMessagePrincipal; }
+        }
 
 
         private void NavigationViewItem_Click(object sender, RoutedEventArgs e)
