@@ -18,17 +18,20 @@
 
 
 
+
+
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="350"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="500"/>
+            <RowDefinition Height="100"/>
+
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!--#region  Titulo del Formulario-->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="50"/>
@@ -36,14 +39,15 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+
             <iconPacks:PackIconModern Kind="User" RenderTransformOrigin="0.5,0.5" Width="50" Margin="0,8,0,0" Height="30" Foreground="Orange" Grid.Column="1" HorizontalAlignment="Center" />
 
-            <TextBlock Text="Control de Clientes" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"></TextBlock>
+            <TextBlock Text="Gestión de Clientes" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"></TextBlock>
         </Grid>
         <!--#endregion-->
 
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="4">
 
             <ui:Card VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Grid HorizontalAlignment="Center">
@@ -65,7 +69,7 @@
         </Grid>
 
         <!--#region  Titulo del Formulario-->
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="50"/>
@@ -73,13 +77,15 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+
+
             <iconPacks:PackIconModern Kind="UserAdd"  RenderTransformOrigin="0.5,0.5" Width="50" Height="30" Foreground="Green" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Text="Clientes Nuevos" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Grid.RowSpan="2" Grid.Column="2"></TextBlock>
+            <TextBlock Text="Crear Clientes Nuevos" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Grid.RowSpan="2" Grid.Column="2"></TextBlock>
 
         </Grid>
         <!--#endregion-->
 
-        <Grid Grid.Row="4">
+        <!--<Grid Grid.Row="4">
 
 
             <Grid >
@@ -126,7 +132,7 @@
                         <TextBox x:Name="txt_NewSubscribe" TextChanged="txt_NewSubscribe_TextChanged" TextWrapping="Wrap" Height="35" Width="200" FontSize="11"
                                   VerticalAlignment="Center" materialDesign:HintAssist.Hint="No. Abonado" 
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" Margin="0,5,0,10" Grid.Row="5" HorizontalAlignment="Stretch" />
-
+                        
 
                         <Label Content="Asignar Cedúla" Grid.Column="3" Margin="10,11,85,11" Grid.Row="5" RenderTransformOrigin="-0.006,0.571"/>
                         <ui:ToggleSwitch x:Name="copySwitch" OffContent="Off" OnContent="On" Grid.Column="3" Margin="130,12,0,0" Width="70" Grid.Row="5" VerticalAlignment="Top" Checked="copySwitch_Checked" Unchecked="copySwitch_Unchecked" />
@@ -149,7 +155,7 @@
 
 
                         <Grid Grid.Row="7">
-                            <ui:Card Margin="0,31,-417,0" VerticalAlignment="Top" Background="LightGray">
+                            <ui:Card  Margin="0,31,-417,0" VerticalAlignment="Top" Background="LightGray">
 
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="7">
 
@@ -221,14 +227,126 @@
 
 
 
+        </Grid>-->
+        <Grid Grid.Row="2">
+            <Grid>
+                <ui:Card VerticalAlignment="Top" Height="332" Margin="170,0,212,0">
+                    <Grid HorizontalAlignment="Stretch" Height="Auto">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" MinHeight="7" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" MinHeight="8" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="txt_NewNameCli" TextChanged="txt_NewNameCli_TextChanged" TextWrapping="Wrap" Height="35" FontSize="11"
+                         VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Nombre del Cliente"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="300" />
+
+                        <TextBox x:Name="txt_NewFirstNameCli" TextChanged="txt_NewFirstNameCli_TextChanged" TextWrapping="Wrap" Height="35" FontSize="11"
+                         VerticalAlignment="Center" materialDesign:HintAssist.Hint="Primer Apellido"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Grid.Column="1" Margin="38,0,39,0"   Width="300"/>
+
+                        <TextBox x:Name="txt_NewsecondSurnameCli" TextChanged="txt_NewsecondSurnameCli_TextChanged" TextWrapping="Wrap" Height="35" FontSize="11"
+                         VerticalAlignment="Center"  HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Segundo Apellido"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="1" Width="300"/>
+
+                        <TextBox x:Name="txt_NewDNICli" TextChanged="txt_NewDNICli_TextChanged" TextWrapping="Wrap" Height="35" FontSize="11"
+                         VerticalAlignment="Center" materialDesign:HintAssist.Hint="Identificación del Cliente"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Grid.Column="1" Grid.Row="1" Margin="38,0,39,0"  Width="300"/>
+
+                        <TextBox x:Name="txt_NewSubscribe" TextChanged="txt_NewSubscribe_TextChanged" TextWrapping="Wrap" Height="35" FontSize="11"
+                         VerticalAlignment="Center" materialDesign:HintAssist.Hint="No. Abonado"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="0"  Grid.Row="2" Margin="38,0,39,0"  Width="300"/>
+
+                        <Label Content="Asignar Cedúla" Margin="57,7,120,131" Grid.Row="8" RenderTransformOrigin="-0.006,0.571" />
+                        <ui:ToggleSwitch x:Name="copySwitch" OffContent="Off" OnContent="On" Width="67" Grid.Row="8" Checked="copySwitch_Checked" Unchecked="copySwitch_Unchecked" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="20" />
+
+                        <ComboBox x:Name="cmb_TypeClient" SelectionChanged="cmb_TypeClient_SelectionChanged" Height="45" Grid.Row="2"
+                           Width="300"
+                          materialDesign:ColorZoneAssist.Mode="SecondaryLight"
+                          materialDesign:HintAssist.HelperText="Selecciona Tipo de Cliente"
+                          materialDesign:HintAssist.Hint="Tipo Cliente"
+                          materialDesign:TextFieldAssist.HasClearButton="True"
+                          materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="38,5,39,0" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="6" >
+                            <ComboBoxItem IsSelected="True">
+                                <StackPanel Orientation="Horizontal">
+                                </StackPanel>
+                            </ComboBoxItem>
+                        </ComboBox>
+
+                        <Grid Grid.Row="8" Grid.ColumnSpan="2" Margin="0,49,0,23">
+                            <ui:Card Margin="5,18,5,0" VerticalAlignment="Top" Background="LightGray">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="7">
+                                    <ui:Button x:Name="btn_CreateNewClient" Height="34" Appearance="Primary" Margin="5,0,0,0" Click="btn_CreateNewClient_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconModern Kind="uSER" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                            <TextBlock Text="Crear" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </ui:Button>
+
+                                    <ui:Button x:Name="btn_ModifyClient" Click="btn_ModifyClient_Click" Height="34" Appearance="Caution" Margin="10,0,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconModern Kind="EditAdd" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                            <TextBlock Text="Editar" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </ui:Button>
+
+                                    <ui:Button x:Name="btn_DeleteClient" Click="btn_DeleteClient_Click" Height="34" Appearance="Danger" Margin="10,0,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconModern Kind="UserDelete" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                            <TextBlock Text="Eliminar" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </ui:Button>
+
+                                    <ui:Button x:Name="btn_CleanTxt" Click="btn_CleanTxt_Click" Height="34" Appearance="Info" Margin="10,0,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconModern Kind="Clean" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                            <TextBlock Text="Limpiar" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </ui:Button>
+                                </StackPanel>
+                            </ui:Card>
+                        </Grid>
+
+                    </Grid>
+                </ui:Card>
+                <ProgressBar x:Name="ProgressBarClient" IsIndeterminate="False" Visibility="Hidden" VerticalAlignment="Bottom" Foreground="ForestGreen" Background="GreenYellow" Margin="170,0,212,34" Height="13" RenderTransformOrigin="00,0.5">
+                    <ProgressBar.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="-1" />
+                            <SkewTransform />
+                            <RotateTransform />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </ProgressBar.RenderTransform>
+                </ProgressBar>
+
+            </Grid>
+            <materialDesign:Snackbar x:Name="SnackbarMessage" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="11">
+                <materialDesign:SnackbarMessage Content="Ingrese el número de abonado o active el Switch para asignar la cédula como número de abonado" />
+            </materialDesign:Snackbar>
         </Grid>
-
-
         <Grid Grid.Row="5">
         </Grid>
 
 
         <StackPanel Grid.Row="6" Margin="0,5,0,0">
+            <TextBlock Text="Clientes Registrados" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,0" FontFamily="Arial" FontWeight="Bold" Background="LightGray"/>
+            <Label Content="*Doble Click para editar informacion de clientes" FontSize="10" FontWeight="ExtraLight" HorizontalAlignment="Center" Margin="0,0,0,0"/>
+
             <DataGrid x:Name="dtgClientes" MouseDoubleClick="dtgClientes_MouseDoubleClick"  CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="LightGray" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">
