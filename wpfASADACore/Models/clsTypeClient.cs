@@ -13,14 +13,14 @@ namespace wpfASADACore.Models
         public int id { get; set; }
         public string? name { get; set; }
         public string? description { get; set; }
-        public double rate { get; set; }
-        public double rateExc { get; set; }
+        public double? rate { get; set; }
+        public double? rateExc { get; set; }
 
         public clsTypeClient()
         {
         }
 
-        public clsTypeClient(int id, string? name, string? description, double rate, double rateExc)
+        public clsTypeClient(int id, string? name, string? description, double? rate, double? rateExc)
         {
             this.id = id;
             this.name = name;
@@ -29,7 +29,7 @@ namespace wpfASADACore.Models
             this.rateExc = rateExc;
         }
 
-        public clsTypeClient(string? name, string? description, double rate, double rateExc)
+        public clsTypeClient(string? name, string? description, double? rate, double? rateExc)
         {
             this.id = id;
             this.name = name;

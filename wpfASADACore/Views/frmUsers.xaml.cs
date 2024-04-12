@@ -297,8 +297,6 @@ namespace wpfASADACore.Views
             string newName = txt_NewName.Text;
             string newEmail = txt_NewEmail.Text;
             string newUser = txt_NewUser.Text;
-            string newPassword = txt_NewPass.Text;
-            string newRepPassword = txt_NewRePass.Text;
             string newDNI = txt_NewId.Text;
 
 
@@ -333,7 +331,7 @@ namespace wpfASADACore.Views
            
 
             //await es para esperar a que la tarea termine, en este caso, la funcion/Metodo ejecute para que avance a la siguiente tarea 
-            bool estado = await usersRepository.modifyUser(newName, newUser, newDNI, newPassword, newEmail, userName);
+            bool estado = await usersRepository.modifyUser(newName, newUser, newDNI, newEmail, userName);
 
             if (estado)
             {
@@ -434,6 +432,8 @@ namespace wpfASADACore.Views
         }
         #endregion
 
+        #region Metodo para mostrar la contraseña en el TextBox
+
         private void tglPass_Checked(object sender, RoutedEventArgs e)
         {
             txt_VisiblePass.Text = txt_NewPass.Password; // Copia el texto de la contraseña al TextBox
@@ -459,6 +459,7 @@ namespace wpfASADACore.Views
             txt_NewRePass.Visibility = Visibility.Visible; // Muestra el PasswordBox
             txt_VisibleRePass.Visibility = Visibility.Hidden; // Oculta el TextBox
         }
+        #endregion
 
     }
 

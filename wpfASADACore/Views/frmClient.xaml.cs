@@ -232,7 +232,7 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-        #region Metodo para dar doble Click en el datagrid y cargar los datos en los textbox
+        #region Evento doble Click en el datagrid y cargar los datos en los textbox
         //Metodo para seleccionar con doble click un cliente del datagrid y cargar los datos en los textbox
         private void dtgClientes_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

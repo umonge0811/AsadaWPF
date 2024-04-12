@@ -90,7 +90,7 @@ namespace wpfASADACore.Repository
 
 
         #region Modificar Usuarios
-        public async Task<bool> modifyUser(string name, string username, string dni, string password, string email, string userName)
+        public async Task<bool> modifyUser(string name, string username, string dni,  string email, string userName)
         {
 
             bool estado = false;
@@ -106,7 +106,6 @@ namespace wpfASADACore.Repository
                     {
                         user.Name = name;
                         user.UserName = username;
-                        user.Password = user.EstablecerContraseña(password);
                         user.Email = email;
                         user.DNI = dni;
 

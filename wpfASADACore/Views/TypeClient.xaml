@@ -9,135 +9,108 @@
       xmlns:local="clr-namespace:wpfASADACore.Views"
       Background="WhiteSmoke"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="800"
       Title="TypeClient" Loaded="Page_Loaded">
 
-    <Grid>
+    <Grid Margin="0,0,0,5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="150"/>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--#region  Titulo del Formulario-->
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="450"/>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <materialDesign:Card Grid.Row="0" Margin="20,23,20,0" Height="Auto" Padding="20">
+            <Grid>
+                <StackPanel>
+                    <Grid VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="450" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-            <iconPacks:PackIconModern Kind="Money" RenderTransformOrigin="0.5,0.5" Width="50" Margin="0,0,0,0" Height="30" Foreground="Orange" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" />
-            <iconPacks:PackIconModern Kind="UserTie" RenderTransformOrigin="0.5,0.5" Width="50" Margin="0,0,0,0" Height="30" Foreground="Orange" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" />
+                        <iconPacks:PackIconModern Kind="Money" RenderTransformOrigin="0.5,0.5" Width="50" Margin="0,0,0,0" Height="30" Foreground="Orange" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" />
+                        <iconPacks:PackIconModern Kind="UserTie" RenderTransformOrigin="0.5,0.5" Width="50" Margin="0,0,0,0" Height="30" Foreground="Orange" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" />
 
+                        <TextBlock Text="Tipos de Cliente y Tarifas" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Margin="0,5,0,5" />
+                    </Grid>
 
-            <TextBlock Text="Tipos de Cliente y Tarifas" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"></TextBlock>
-        </Grid>
-        <!--#endregion-->
+                    <ui:Card VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,20">
+                        <Grid HorizontalAlignment="Stretch" Height="Auto">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="10" />
+                            </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="2">
-            <ui:Card  VerticalAlignment="Top" HorizontalAlignment="Center">
-                <Grid HorizontalAlignment="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                    </Grid.RowDefinitions>
+                            <TextBox x:Name="txt_NewTyCli" TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Nombre del tipo Cliente" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" Margin="0,5,0,10" Grid.Column="1" />
+                            <TextBox x:Name="txt_NewDescriptionType" TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Descripción (Opcional)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" Margin="0,5,0,10" Grid.Column="3" />
+                            <TextBox x:Name="txt_NewRateBaseType" TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Tarifa Base" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" Margin="0,5,0,10" Grid.Column="5" PreviewTextInput="OnPreviewTextInput" />
+                            <TextBox x:Name="txt_NewRateExcType" TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Tarifa Excedente M³ por M3" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" Margin="0,4,0,10" Grid.Column="1" Grid.Row="1" PreviewTextInput="OnPreviewTextInput" />
+                        </Grid>
+                    </ui:Card>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="10"/>
-                    </Grid.ColumnDefinitions>
-                    <ui:TextBox x:Name="txt_NewTyCli" TextWrapping="Wrap" Height="35" Width="200" FontSize="11"
-                        PlaceholderEnabled="True" PlaceholderText="Nombre del tipo Cliente"
-                        Margin="0,5,0,10" Grid.Column="1"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0" >
+                        <ui:Button x:Name="btn_CreateNewTypeCli" Height="34" Appearance="Primary" Margin="5,0,0,0" Click="btn_CreateNewTypeCli_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="ListCreate" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                <TextBlock Text="Crear" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </ui:Button>
 
-                    <ui:TextBox x:Name="txt_NewDescriptionType" TextWrapping="Wrap" Height="35" Width="200" FontSize="11"
-                        PlaceholderEnabled="True" PlaceholderText="Descripción"
-                        Margin="0,5,0,10" Grid.Column="3"/>
+                        <ui:Button x:Name="btn_ModifyTypeCli" Height="34" Appearance="Caution" Margin="10,0,0,0" Click="btn_ModifyTypeClient_Click" >
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="EditAdd" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                <TextBlock Text="Editar" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </ui:Button>
 
-                    <ui:TextBox x:Name="txt_NewRateBaseType" TextWrapping="Wrap" Height="35" Width="200" FontSize="11"
-                         PlaceholderEnabled="True" PlaceholderText="Tarifa Base"
-                         Margin="0,5,0,10" Grid.Column="5"
-                         PreviewTextInput="OnPreviewTextInput" />
+                        <ui:Button x:Name="btn_DeleteTypeCli" Height="34" Appearance="Danger" Margin="10,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="Delete" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                <TextBlock Text="Eliminar" VerticalAlignment="Center"  />
+                            </StackPanel>
+                        </ui:Button>
 
-                    <ui:TextBox x:Name="txt_NewRateExcType" TextWrapping="Wrap" Height="35" Width="200" FontSize="11"
-                        PlaceholderEnabled="True" PlaceholderText="Tarifa Excedente por M3"
-                        Margin="0,4,0,10" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                        PreviewTextInput="OnPreviewTextInput"/>
-
-                </Grid>
-            </ui:Card>
-
-        </Grid>
-
-        <Grid Grid.Row="3">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <ui:Button x:Name="btn_CreateNewTypeCli" Height="34" Appearance="Primary" Margin="5,0,0,0" Click="btn_CreateNewTypeCli_Click" >
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Kind="ListCreate" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Crear" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </ui:Button>
-
-                <ui:Button x:Name="btn_ModifyTypeCli"  Height="34" Appearance="Caution" Margin="10,0,0,0" >
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Kind="EditAdd" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Editar" VerticalAlignment="Center"/>
+                        <ui:Button x:Name="btn_CleanTxtCli" Height="34" Appearance="Info" Margin="10,0,0,0" Click="btn_CleanTxtCli_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="Clean" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                <TextBlock Text="Limpiar" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </ui:Button>
                     </StackPanel>
 
-                </ui:Button>
-
-                <ui:Button x:Name="btn_DeleteTypeCli"  Height="34" Appearance="Danger" Margin="10,0,0,0" >
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Kind="Delete" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Eliminar" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </ui:Button>
-
-                <ui:Button x:Name="btn_CleanTxtCli"  Height="34" Appearance="Info" Margin="10,0,0,0" Click="btn_CleanTxtCli_Click">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Kind="Clean" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Limpiar" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </ui:Button>
-
-            </StackPanel>
-        </Grid>
-
-        <StackPanel Grid.Row="4" MaxHeight="200" >
-            <DataGrid x:Name="dgvTypeClient"  CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="Red" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center" Height="145">
-                <DataGrid.Resources>
-                    <Style TargetType="{x:Type DataGridCell}">
-                        <Setter Property="BorderBrush" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="DarkSlateGray"/>
-                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="LightGray"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path=id}" Header="ID" Width="Auto" MinWidth="25"/>
-                    <DataGridTextColumn Binding="{Binding Path=name}" Header="Tipo de Cliente" Width="Auto" MinWidth="100"/>
-                    <DataGridTextColumn Binding="{Binding Path=description}" Header="Descripción" Width="Auto"/>
-                    <DataGridTextColumn Binding="{Binding Path=rate}" Header="Tarifa Base" Width="Auto"/>
-                    <DataGridTextColumn Binding="{Binding Path=rateExc}" Header="Tarifa Excedente por M3" Width="Auto"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
-
-
+                    <DataGrid x:Name="dgvTypeClient" CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="LightGray" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center" Margin="0,20,0,0" Height="Auto" MouseDoubleClick="dgvTypeClient_MouseDoubleClick">
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Setter Property="BorderBrush" Value="Transparent" />
+                                <Setter Property="Foreground" Value="DarkSlateGray" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="LightGray" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Path=id}" Header="ID" Width="Auto" MinWidth="25" />
+                            <DataGridTextColumn Binding="{Binding Path=name}" Header="Tipo de Cliente" Width="Auto" MinWidth="100" />
+                            <DataGridTextColumn Binding="{Binding Path=description}" Header="Descripción" Width="Auto" />
+                            <DataGridTextColumn Binding="{Binding Path=rate}" Header="Tarifa Base" Width="Auto" />
+                            <DataGridTextColumn Binding="{Binding Path=rateExc}" Header="Tarifa Excedente por M3" Width="Auto" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
     </Grid>
 </Page>

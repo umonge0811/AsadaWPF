@@ -65,6 +65,35 @@ namespace wpfASADACore.Repository
             return context.typeClients.ToList();
         }
 
+        //Metodo para modificar un tipo de cliente llamado 
+        public  async Task<bool> UpdateTypeClient(string newNameType, string newDescription, int? newRate, int? ExtRate, int idTypeClient)
+        {
+            bool estado = false;
+            try
+            {
+                using (var db = new ContextDataBase())
+                {
+                    var TypeClient = await db.typeClients.FirstOrDefaultAsync(u => u.id == idTypeClient);
+                    if (TypeClient != null)
+                    {
+                        TypeClient.name = newNameType;
+                        TypeClient.description = newDescription;
+                        TypeClient.rate = newRate ;
+                        TypeClient.rateExc = ExtRate;
+
+                        await db.SaveChangesAsync();
+                        estado = true;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                estado = false;
+            }
+            return estado;
+        }
 
 
     }
