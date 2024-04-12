@@ -1,21 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 using wpfASADACore.Models;
 using wpfASADACore.Repository;
 using wpfASADACore.Services;
@@ -41,13 +27,15 @@ namespace wpfASADACore.Views
             btn_ModifyUser.IsEnabled = false;
         }
 
+        #region evento click del boton de limpiar los campos de texto
         private void btn_CleanTxt_Click(object sender, RoutedEventArgs e)
         {
             ClearAllData();
 
         }
+        #endregion
 
-
+        #region metodo para limpiar los campos de texto
         private void ClearAllData()
         {
             txt_NewEmail.Clear();
@@ -61,31 +49,9 @@ namespace wpfASADACore.Views
             btn_DeleteUser.IsEnabled = false;
             btn_ModifyUser.IsEnabled = false;
         }
-
-        #region Metodo para mostrar la barra de progreso
-        private async Task ShowProgressBarAsync(int durationInMilliseconds = 2000)
-        {
-            // Obtén una referencia a tu MainWindow
-            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            if (mainWindow != null)
-            {
-                // Accede a tu ProgressBarPrincipal
-                ProgressBar progressBar = mainWindow.GlobalProgressBar;
-                progressBar.IsIndeterminate = true;
-                progressBar.Visibility = Visibility.Visible;
-
-                await Task.Delay(durationInMilliseconds);
-                progressBar.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                // Manejo de error cuando mainWindow es null
-                Console.WriteLine("MainWindow es null");
-            }
-        }
         #endregion
 
+        #region Evento click del boton de crear un Usuario Nuevo
         // async es para un motodo asyncrono 
         private async void btn_CreateNewUser_Click(object sender, RoutedEventArgs e)
         {
@@ -101,34 +67,43 @@ namespace wpfASADACore.Views
             //Error first 
             if (newName.Equals(""))
             {
-                MessageBox.Show("Debe de ingresar el nombre del usuario");
+                await clsUtilities.ShowSnackbarAsync("Debe de ingresar el nombre del usuario!", new SolidColorBrush(Colors.Yellow));
+                //MessageBox.Show("Debe de ingresar el nombre del usuario");
                 txt_NewName.Focus();
                 return;
             }
 
             if (!clsUtilities.EsCorreoValido(newEmail))
             {
-                MessageBox.Show("Debe de ingresar un correo electronico valido");
+                await clsUtilities.ShowSnackbarAsync("Debe de ingresar un correo electronico valido!", new SolidColorBrush(Colors.Yellow));
+
+                //MessageBox.Show("Debe de ingresar un correo electronico valido");
                 txt_NewEmail.Focus();
                 return;
             }
 
             if (newPassword.Equals("") || newRepPassword.Equals(""))
             {
-                MessageBox.Show("No debes dejar el campo contraseña vacio");
+                //MessageBox.Show("No debes dejar el campo contraseña vacio");
+                await clsUtilities.ShowSnackbarAsync("No debes dejar el campo contraseña vacio!", new SolidColorBrush(Colors.Yellow));
+
                 txt_NewPass.Focus();
                 return;
             }
 
             if (newPassword != newRepPassword)
             {
-                MessageBox.Show("Las contraseñas no coinciden");
+                //MessageBox.Show("Las contraseñas no coinciden");
+                await clsUtilities.ShowSnackbarAsync("Las contraseñas no coinciden!", new SolidColorBrush(Colors.Yellow));
+
                 txt_NewPass.Focus();
                 return;
             }
             if (newDNI.Equals(""))
             {
-                MessageBox.Show("Deben digitar el numero de cedula");
+                //MessageBox.Show("Deben digitar el numero de cedula");
+                await clsUtilities.ShowSnackbarAsync("Debes digitar el número de cédula!", new SolidColorBrush(Colors.Yellow));
+
                 txt_NewPass.Focus();
                 return;
             }
@@ -136,7 +111,8 @@ namespace wpfASADACore.Views
 
             if (await ValidatedUserRegister(newDNI))
             {
-                MessageBox.Show($"El usuario con cedula: {newDNI} ya se encuentra registrado... Verifique!!!!!");
+                string message = $"El usuario con cedula: {newDNI} ya se encuentra registrado... Verifique!";
+                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Red));
                 ClearAllData();
                 return;
             }
@@ -146,52 +122,24 @@ namespace wpfASADACore.Views
 
             if (estado)
             {
-                MessageBox.Show("Usuario registrado con exito!!");
+                string message = $"El usuario : {usersRepository} fue  registrado con Exito!";                
+                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Green));
+
                 ClearAllData();
             }
             else
             {
-                MessageBox.Show($"Error al registrar el usuario: {usersRepository.message}");
+                string message = $"Error al Crear usuario : {usersRepository.message} !";
+
+                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Red));
+
+                //MessageBox.Show($"Error al registrar el usuario: {usersRepository.message}");
             }
 
         }
+        #endregion
 
-
-
-
-        //static async Task<bool> createUser(string name, string username, string dni, string password, string email)
-        //{
-
-
-        //    try
-        //    {
-
-        //        using (var db = new ContextDataBase())
-        //        {
-
-        //            //await db.Database.EnsureCreatedAsync();
-
-        //            var usuario1 = new clsUser(name, email, password, username, dni);
-
-        //            db.usuarios.Add(usuario1);
-
-        //            await db.SaveChangesAsync();
-
-        //            return true;
-
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //        return false;
-        //    }
-
-        //}
-
-        // este es para cuando se esta creando un usuario nuevo, valide  antes de guardar que no exista uno ya con los datos suministrados
-
+        #region metodo para validar si el usuario ya se encuentra registrado
         public async Task<bool> ValidatedUserRegister(string dni)
         {
 
@@ -210,7 +158,9 @@ namespace wpfASADACore.Views
                 throw; // Reenviar la excepción para un tratamiento superior
             }
         }
+        #endregion
 
+        #region Evento click del boton de Buscar Usuario
         //Es para buscar los usuarios en la Base de Datos
         private async void btnBuscarUsuario_Click(object sender, RoutedEventArgs e)
         {
@@ -220,7 +170,9 @@ namespace wpfASADACore.Views
             //si en el txtBuscarUsuario.Text no se ha digitado ninguna cedula, ingresa aca y muestra que se debe ingresar
             if (string.IsNullOrWhiteSpace(dni))
             {
-                MessageBox.Show("Debes colocar la cedula del usuario a buscar");
+                //MessageBox.Show("Debes colocar la cedula del usuario a buscar");
+                await clsUtilities.ShowSnackbarAsync("Debes colocar la cédula del Usuario a buscar!", new SolidColorBrush(Colors.Yellow));
+
                 return;
             }
 
@@ -229,7 +181,9 @@ namespace wpfASADACore.Views
             if (userFound == null)
             {
 
-                MessageBox.Show("No existe un usuario con la cedula ingresada!!");
+                //MessageBox.Show("No existe un usuario con la cedula ingresada!!");
+                await clsUtilities.ShowSnackbarAsync("No existe usuario con la cédula ingresada!", new SolidColorBrush(Colors.Yellow));
+
                 return;
             }
 
@@ -244,33 +198,9 @@ namespace wpfASADACore.Views
             btn_ModifyUser.IsEnabled = true;
 
         }
+        #endregion
 
-        ////este es el metodo que se creo para hacer la busqueda en la DB, retorna  un objeto de tipo clase (clsUser)
-        //public async Task<clsUser?> FindClientByDNI(string dni) {
-
-        //    //puede que retorne nula si no se encuentra nada
-        //    clsUser? user = null;
-        //    try
-        //    {              
-
-        //        using (var db = new ContextDataBase())
-        //        {
-
-        //            user = await db.usuarios.FirstOrDefaultAsync(u => u.DNI.Equals(dni));
-
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //        user = null;
-
-        //    }
-        //    return user;
-
-        //}
-
+        #region Evento click para editar el usuario
         private async void btn_ModifyUser_Click(object sender, RoutedEventArgs e)
         {
             string newName = txt_NewName.Text;
@@ -284,34 +214,43 @@ namespace wpfASADACore.Views
             //Error first 
             if (newName.Equals(""))
             {
-                MessageBox.Show("Debe de ingresar el nombre del usuario");
+                //MessageBox.Show("Debe de ingresar el nombre del usuario");
+                await clsUtilities.ShowSnackbarAsync("Debe de ingresar el nombre del usuario!", new SolidColorBrush(Colors.Yellow));
+
                 txt_NewName.Focus();
                 return;
             }
 
             if (!clsUtilities.EsCorreoValido(newEmail))
             {
-                MessageBox.Show("Debe de ingresar un correo electronico valido");
+                //MessageBox.Show("Debe de ingresar un correo electronico valido");
+                await clsUtilities.ShowSnackbarAsync("Debe de ingresar un correo electronico valido!", new SolidColorBrush(Colors.Yellow));
+
                 txt_NewEmail.Focus();
                 return;
             }
 
             if (newPassword.Equals("") || newRepPassword.Equals(""))
             {
-                MessageBox.Show("No debes dejar el campo contraseña vacio");
+                //MessageBox.Show("No debes dejar el campo contraseña vacio");
+                await clsUtilities.ShowSnackbarAsync("No debes dejar el campo contraseña vacio!", new SolidColorBrush(Colors.Yellow));
+
                 txt_NewPass.Focus();
                 return;
             }
 
             if (newPassword != newRepPassword)
             {
-                MessageBox.Show("Las contraseñas no coinciden");
+                //MessageBox.Show("Las contraseñas no coinciden");
+                await clsUtilities.ShowSnackbarAsync("Las contraseñas no coinciden!", new SolidColorBrush(Colors.Yellow));
+
                 txt_NewPass.Focus();
                 return;
             }
             if (newDNI.Equals(""))
             {
-                MessageBox.Show("Deben digitar el numero de cedula");
+                //MessageBox.Show("Deben digitar el numero de cedula");
+                await clsUtilities.ShowSnackbarAsync("Debes digitar el número de cédula!", new SolidColorBrush(Colors.Yellow));
                 txt_NewPass.Focus();
                 return;
             }
@@ -324,39 +263,46 @@ namespace wpfASADACore.Views
 
             if (estado)
             {
-                MessageBox.Show("Usuario modificado con exito!!");
+                //MessageBox.Show("Usuario modificado con exito!!");
+                await clsUtilities.ShowSnackbarAsync("Usuario modificado con Exito!", new SolidColorBrush(Colors.Green));
                 ClearAllData();
             }
             else
             {
-                MessageBox.Show($"Error al modificar el usuario: {usersRepository.message}");
+                //MessageBox.Show($"Error al modificar el usuario: {usersRepository.message}");
+                await clsUtilities.ShowSnackbarAsync($"Error al modificar el usuario: {usersRepository.message}", new SolidColorBrush(Colors.Red));
+
             }
         }
+        #endregion
 
-
-      
-
+        #region Evento click del boton Eliminar usuario
         private async void btn_DeleteUser_Click(object sender, RoutedEventArgs e)
         {
 
             if (idUser == null)
             {
-                MessageBox.Show("Debes buscar un usuario antes de eliminarlo");
+                //MessageBox.Show("Debes buscar un usuario antes de eliminarlo");
+                await clsUtilities.ShowSnackbarAsync("Debes buscar un usuario antes de eliminarlo!", new SolidColorBrush(Colors.Yellow));
                 ClearAllData();
             }
             bool estado = await usersRepository.deleteUser(idUser);
 
             if (estado)
             {
-                MessageBox.Show("Usuario eliminado con Exito!");
+                //MessageBox.Show("Usuario eliminado con Exito!");
+                await clsUtilities.ShowSnackbarAsync("Usuario ELIMINADO con Exito!", new SolidColorBrush(Colors.Green));
                 ClearAllData();
             }
             else
             {
-                MessageBox.Show($"Error al intentar eliminar el usuario: {usersRepository.message}");
+                //MessageBox.Show($"Error al intentar eliminar el usuario: {usersRepository.message}");
+                await clsUtilities.ShowSnackbarAsync($"Error al intentar eliminar el usuario: {usersRepository.message}", new SolidColorBrush(Colors.Red));
+
 
             }
         }
+        #endregion
     }
 
 

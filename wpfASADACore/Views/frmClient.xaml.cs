@@ -1,27 +1,12 @@
-﻿using MaterialDesignThemes.Wpf;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
-using Wpf.Ui.Controls;
 using wpfASADACore.Models;
 using wpfASADACore.Repository;
 using wpfASADACore.Services;
 using wpfASADACore.Utilities;
-using static MaterialDesignThemes.Wpf.Theme;
 using MessageBox = System.Windows.MessageBox;
 using MessageBoxButton = System.Windows.MessageBoxButton;
 using MessageBoxResult = System.Windows.MessageBoxResult;
@@ -50,8 +35,19 @@ namespace wpfASADACore.Views
             InitializeComponent();
             clientsRepository = new ClientsRepository();
             typeClientRepository = new TypeClientRepository();
-        
+
+            #region Simplificacion de la verificacion si el texto cambia para habilitar el boton de modificar
+            txt_NewNameCli.TextChanged += Input_Changed;
+            txt_NewFirstNameCli.TextChanged += Input_Changed;
+            txt_NewsecondSurnameCli.TextChanged += Input_Changed;
+            txt_NewDNICli.TextChanged += Input_Changed;
+            txt_NewSubscribe.TextChanged += Input_Changed;
+            cmb_TypeClient.SelectionChanged += Input_Changed;
+            #endregion
+
         }
+
+       
 
         #region Metodo para validar el numero de abonado
         public async Task<bool> ValidatedClientRegister(string Subscribernum)
@@ -125,7 +121,7 @@ namespace wpfASADACore.Views
             try
             {
                 // Mostrar barra de progreso
-                await ShowProgressBarAsync();
+                await clsUtilities.ShowProgressBarAsync();
 
 
                 // Variables para almacenar datos del usuario
@@ -142,12 +138,14 @@ namespace wpfASADACore.Views
 
                 if (mainWindow != null)
                 {
-                    // Accede a tu SnackbarMessagePrincipal
-                    MaterialDesignThemes.Wpf.Snackbar snackbar = mainWindow.SnackbarMessageGlobal;
-                    MaterialDesignThemes.Wpf.SnackbarMessage snackbarMessage = new MaterialDesignThemes.Wpf.SnackbarMessage();
+                    //// Accede a tu SnackbarMessagePrincipal
+                    //MaterialDesignThemes.Wpf.Snackbar snackbar = mainWindow.SnackbarMessageGlobal;
+                    //MaterialDesignThemes.Wpf.SnackbarMessage snackbarMessage = new MaterialDesignThemes.Wpf.SnackbarMessage();
+
 
                     if (string.IsNullOrEmpty(name))
                     {
+
                         await clsUtilities.ShowSnackbarAsync("Debe Ingresar el nombre del usuario!", new SolidColorBrush(Colors.Yellow));
                         txt_NewNameCli.Focus();
                         return;
@@ -212,7 +210,6 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-
         #region Metodo para actualizar la Informacion despues de algun cambio
         //metodo para ejecutar el llebado del datagrid con los datos de los clientes
         private void loaddatagrid()
@@ -276,8 +273,10 @@ namespace wpfASADACore.Views
             clsCliente? userFound = await clientsRepository.FindClientBySubscriberNum(SubscriberNum);
             if (userFound == null)
             {
+                await clsUtilities.ShowSnackbarAsync("No existe Cliente con el Número de Abonado ingresado!!!", new SolidColorBrush(Colors.Yellow));
 
-                MessageBox.Show("No existe Cliente con el Número de Abonado ingresado!!");
+
+                //MessageBox.Show("No existe Cliente con el Número de Abonado ingresado!!");
                 return;
             }
 
@@ -290,46 +289,33 @@ namespace wpfASADACore.Views
 
             if (name.Equals(""))
             {
-                MessageBox.Show("Debe de ingresar el nombre del usuario");
+                //MessageBox.Show("Debe de ingresar el nombre del usuario");
                 txt_NewNameCli.Focus();
                 return;
             }
             if (lastName.Equals(""))
             {
-                MessageBox.Show("Debe de ingresar el primer apellido del usuario");
+                await clsUtilities.ShowSnackbarAsync("Debe de ingresar el Primer Apellido del Cliente a Modificar!", new SolidColorBrush(Colors.Yellow));
+
+                //MessageBox.Show("Debe de ingresar el primer apellido del usuario");
                 txt_NewFirstNameCli.Focus();
                 return;
             }
             if (Surname.Equals(""))
             {
-                MessageBox.Show("Debe de ingresar el segundo apellido del usuario");
+                await clsUtilities.ShowSnackbarAsync("Debe de ingresar el Segundo Apellido del Cliente a Modificar!", new SolidColorBrush(Colors.Yellow));
+                //MessageBox.Show("Debe de ingresar el segundo apellido del usuario");
                 txt_NewsecondSurnameCli.Focus();
                 return;
             }
             if (DNI.Equals(""))
             {
-                MessageBox.Show("Debe de ingresar el numero de cedula del usuario");
+                await clsUtilities.ShowSnackbarAsync("Debe de ingresar el Numero de Cédula del Cliente a Modificar!", new SolidColorBrush(Colors.Yellow));
+                //MessageBox.Show("Debe de ingresar el numero de cedula del usuario");
                 txt_NewDNICli.Focus();
                 return;
             }
-            if (SubscriberNum.Equals(""))
-            {
-                {
-                    //Crear una validacion de que si presiona si, le pregunte si desea asignar el numero de Cedula como numero de abonado, y si presiona no, que le permita ingresar el numero de abonado
-                    if (MessageBox.Show("¿Desea asignar el numero de cedula como numero de abonado?", "Advertencia", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                    {
-                        txt_NewSubscribe.Text = txt_NewDNICli.Text;
-                    }
-
-                    else
-                    {
-                        txt_NewSubscribe.Text = "Ingrese Numero de Abonado";
-
-                    }
-                    return;
-                }
-
-            }
+            
 
 
 
@@ -338,7 +324,10 @@ namespace wpfASADACore.Views
 
             if (estado)
             {
-                MessageBox.Show("Cliente modificado con exito!!");
+                // Utiliza tu MessageBox personalizado
+                var messageBox = new clsMessageBox("Cliente modificado con exito!!", "OK", "CANCEL", "CheckCircleOutline", "Éxito", Brushes.Green);
+                messageBox.ShowDialog();
+
                 ClearAllData();
                 //Recargar los datos del datagrid
                 loaddatagrid();
@@ -346,13 +335,13 @@ namespace wpfASADACore.Views
                 btn_ModifyClient.IsEnabled = false;
                 btn_CreateNewClient.IsEnabled = true;
                 isModified = false;
-
-
             }
             else
             {
-                MessageBox.Show($"Error al modificar el Cliente: {clientsRepository.message}");
-            }         
+                // Utiliza tu MessageBox personalizado
+                var messageBox = new clsMessageBox($"Error al modificar el Cliente: {clientsRepository.message}", "OK", "", "AlertOutline", "Error", Brushes.Red);
+                messageBox.ShowDialog();
+            }
 
         }
         #endregion
@@ -360,18 +349,21 @@ namespace wpfASADACore.Views
         #region Eliminar Cliente
         private async void btn_DeleteClient_Click(object sender, RoutedEventArgs e)
         {
-            //Mostrar un mensaje de confirmación para eliminar el cliente
-            if (MessageBox.Show("¿Está seguro de eliminar el cliente?", "Advertencia", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            // Mostrar un mensaje de confirmación para eliminar el cliente
+            var confirmationBox = new clsMessageBox("¿Está seguro de eliminar el cliente?", "Sí", "No", "AlertOctagonOutline","Advertencia", Brushes.Yellow);
+            var confirmationResult = confirmationBox.ShowDialog();
+            if (confirmationResult != true)
             {
                 return;
             }
+
             string SubscriberNum = txt_NewSubscribe.Text;
-            //aca se muestra un mensaje si el usuario no se encuentra registrado
+
+            // Aquí se muestra un mensaje si el usuario no se encuentra registrado
             clsCliente? userFound = await clientsRepository.FindClientBySubscriberNum(SubscriberNum);
             if (userFound == null)
             {
-
-                MessageBox.Show("No existe Cliente con el Número de Abonado ingresado!!");
+                await clsUtilities.ShowSnackbarAsync("No existe Cliente con el Número de Abonado ingresado!!!", new SolidColorBrush(Colors.Red));
                 return;
             }
 
@@ -383,24 +375,30 @@ namespace wpfASADACore.Views
 
             if (idClient == null)
             {
-                MessageBox.Show("Debes buscar un usuario antes de eliminarlo");
+                await clsUtilities.ShowSnackbarAsync("Debes buscar un usuario antes de eliminarlo!", new SolidColorBrush(Colors.Yellow));
+                //MessageBox.Show("Debes buscar un usuario antes de eliminarlo");
                 ClearAllData();
             }
             bool estado = await clientsRepository.deleteClient(idClient);
 
             if (estado)
             {
-                MessageBox.Show("Cliente eliminado con Exito!");
+                string message = $" Cliente ELIMINADO con Exito!";
+                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Green));
                 ClearAllData();
                 loaddatagrid();
                 btn_DeleteClient.IsEnabled = false;
                 btn_ModifyClient.IsEnabled = false;
                 btn_CreateNewClient.IsEnabled = true;
                 isModified = false;
+                return;
             }
             else
             {
-                MessageBox.Show($"Error al intentar eliminar el usuario: {clientsRepository.message}");
+                string message = $"Error Intentar ELIMINAR el cliente : {clientsRepository.message} !";
+
+                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Red));
+                //MessageBox.Show($"Error al intentar eliminar el usuario: {clientsRepository.message}");
 
             }
 
@@ -408,73 +406,26 @@ namespace wpfASADACore.Views
         #endregion
 
         #region Metodos para deteccion de Cambios en los TextBox y en combobox para que se habilite el boton de Editar
-        private void txt_NewNameCli_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (isModified)
-            {
-                btn_ModifyClient.IsEnabled = true;
-            }
-                
-        }
-
-        private void txt_NewFirstNameCli_TextChanged(object sender, TextChangedEventArgs e)
+        private void Input_Changed(object sender, EventArgs e)
         {
             if (isModified)
             {
                 btn_ModifyClient.IsEnabled = true;
             }
 
-        }
-
-        private void txt_NewsecondSurnameCli_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (isModified)
+            if (sender == txt_NewDNICli)
             {
-                btn_ModifyClient.IsEnabled = true;
+                copySwitch.IsEnabled = !string.IsNullOrEmpty(txt_NewDNICli.Text);
             }
 
+            if (sender == cmb_TypeClient)
+            {
+                cmb_TypeClient.Background = Brushes.Yellow;
+            }
         }
 
-        private void txt_NewDNICli_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (isModified)
-            {
-                btn_ModifyClient.IsEnabled = true;
-                
 
-            }
-            if (!string.IsNullOrEmpty(txt_NewDNICli.Text))
-            {
-                copySwitch.IsEnabled = true;
-            }
-            else
-            {
-                copySwitch.IsEnabled = false;
-            }
-
-        }
-
-        private void txt_NewSubscribe_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (isModified)
-            {
-                btn_ModifyClient.IsEnabled = true;
-            }
-
-           
-
-        }
-
-        private void cmb_TypeClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cmb_TypeClient.SelectedIndex != 0)
-
-                if (isModified)
-                {
-                    btn_ModifyClient.IsEnabled = true;
-                }
-
-        }
+        
         #endregion
 
         #region Metodo para Busqueda en el TextBox de Busqueda y predicciones en el datagrid
@@ -508,29 +459,7 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-        #region Metodo para mostrar la barra de progreso
-        private async Task ShowProgressBarAsync(int durationInMilliseconds = 2000)
-        {
-            // Obtén una referencia a tu MainWindow
-            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            if (mainWindow != null)
-            {
-                // Accede a tu ProgressBarPrincipal
-                ProgressBar progressBar = mainWindow.GlobalProgressBar;
-                progressBar.IsIndeterminate = true;
-                progressBar.Visibility = Visibility.Visible;
-
-                await Task.Delay(durationInMilliseconds);
-                progressBar.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                // Manejo de error cuando mainWindow es null
-                Console.WriteLine("MainWindow es null");
-            }
-        }
-        #endregion
+       
 
     }
 

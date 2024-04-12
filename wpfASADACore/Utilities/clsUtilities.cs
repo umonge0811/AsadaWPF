@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace wpfASADACore.Utilities
@@ -32,6 +33,7 @@ namespace wpfASADACore.Utilities
                 // Accede a tu SnackbarMessagePrincipal
                 MaterialDesignThemes.Wpf.Snackbar snackbar = mainWindow.SnackbarMessageGlobal;
                 snackbar.IsActive = true;
+                snackbar.FontSize = 25;
                 snackbar.Message.Content = message;
                 snackbar.Background = backgroundColor;
                 snackbar.Foreground = new SolidColorBrush(Colors.Black);
@@ -46,7 +48,29 @@ namespace wpfASADACore.Utilities
         }
         #endregion
 
+        #region Metodo para mostrar la barra de progreso
+        public static async Task ShowProgressBarAsync(int durationInMilliseconds = 2000)
+        {
+            // Obtén una referencia a tu MainWindow
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
+            if (mainWindow != null)
+            {
+                // Accede a tu ProgressBarPrincipal
+                ProgressBar progressBar = mainWindow.GlobalProgressBar;
+                progressBar.IsIndeterminate = true;
+                progressBar.Visibility = Visibility.Visible;
+
+                await Task.Delay(durationInMilliseconds);
+                progressBar.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                // Manejo de error cuando mainWindow es null
+                Console.WriteLine("MainWindow es null");
+            }
+        }
+        #endregion
 
     }
 }

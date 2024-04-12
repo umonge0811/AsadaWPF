@@ -1,23 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
-using wpfASADACore.Models;
 using wpfASADACore.Repository;
 using wpfASADACore.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using wpfASADACore.Utilities;
 
 namespace wpfASADACore.Views
 {
@@ -31,9 +19,16 @@ namespace wpfASADACore.Views
         {
             InitializeComponent();
             typeClientRepository = new TypeClientRepository();
-        }      
+        }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
 
+            //Cargar los datos de la tabla de tipos de clientes
+            dgvTypeClient.ItemsSource = typeClientRepository.GetAllTypeCliente();
+        }
+
+        #region Metodo que llamar el btn de limpiar los TextBox
         //funcion para limpirar todos los TextBlox 
         private void ClearAllDataTypeCli()
         {
@@ -42,8 +37,9 @@ namespace wpfASADACore.Views
             txt_NewRateBaseType.Text=string.Empty;
             txt_NewRateExcType.Text= string.Empty;
         }
+        #endregion
 
-
+        #region Metodo para validar si el tipo de cliente ya existe
         public async Task<bool> ValidatedTypeCliRegister(string NewtypeClient)
         {
 
@@ -58,11 +54,13 @@ namespace wpfASADACore.Views
             catch (Exception ex)
             {
                 // Manejar errores de conexión u otras excepciones
-                Console.WriteLine("Error al validar usuario: " + ex.Message);
+                Console.WriteLine("Error al validar: " + ex.Message);
                 throw; // Reenviar la excepción para un tratamiento superior
             }
         }
+        #endregion
 
+        #region Evento click para crear un nuevo tipo de cliente
         private async void btn_CreateNewTypeCli_Click(object sender, RoutedEventArgs e)
         {
             string NewtypeClient = txt_NewTyCli.Text;
@@ -73,35 +71,45 @@ namespace wpfASADACore.Views
             //Error first 
             if (NewtypeClient.Equals(""))
             {
-                MessageBox.Show("Debe de ingresar el nombre del tipo de Cliente Valido");
+                await clsUtilities.ShowSnackbarAsync("Debe de ingresar el nombre del tipo de Cliente Valido!", new SolidColorBrush(Colors.Yellow));
+
+                //MessageBox.Show("Debe de ingresar el nombre del tipo de Cliente Valido");
                 txt_NewTyCli.Focus();
                 return;
             }
 
             if (NewDescription.Equals(""))
             {
-                MessageBox.Show("Debe de ingresar la descripcion del tipo de Cliente Valido");
+                await clsUtilities.ShowSnackbarAsync("Debe de ingresar la descripcion del tipo de Cliente Valido!", new SolidColorBrush(Colors.Yellow));
+
+                //MessageBox.Show("Debe de ingresar la descripcion del tipo de Cliente Valido");
                 txt_NewDescriptionType.Focus();
                 return;
             }
 
             if (RateBase.Equals(""))
             {
-                MessageBox.Show("Debe de ingresar la tarifa base del tipo de Cliente Valido");
+                await clsUtilities.ShowSnackbarAsync("Debe de ingresar la tarifa base del tipo de Cliente Valido!", new SolidColorBrush(Colors.Yellow));
+
+                //MessageBox.Show("Debe de ingresar la tarifa base del tipo de Cliente Valido");
                 txt_NewRateBaseType.Focus();
                 return;
             }
 
             if (RateExtra.Equals(""))
             {
-                MessageBox.Show("Debe de ingresar la tarifa extra del tipo de Cliente Valido");
+                await clsUtilities.ShowSnackbarAsync("Debe de ingresar la tarifa extra del tipo de Cliente Valido!", new SolidColorBrush(Colors.Yellow));
+
+                //MessageBox.Show("Debe de ingresar la tarifa extra del tipo de Cliente Valido");
                 txt_NewRateExcType.Focus();
                 return;
             }
 
             if (await ValidatedTypeCliRegister(NewtypeClient))
             {
-                MessageBox.Show($"El Tipo de Cliente: {NewtypeClient} ya se encuentra registrado... Verifique!!!!!");
+                string message = $"El Tipo de Cliente: {NewtypeClient} ya se encuentra registrado... Verifique!";
+                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Red));
+                //MessageBox.Show($"El Tipo de Cliente: {NewtypeClient} ya se encuentra registrado... Verifique!!!!!");
 
                 ClearAllDataTypeCli();
                 return;
@@ -112,34 +120,34 @@ namespace wpfASADACore.Views
 
             if (estado)
             {
-                MessageBox.Show("Tipo de Cliente registrado con exito!!");
+                string message = $"{NewtypeClient} fue  registrado con Exito!";
+                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Green));
+
+                //MessageBox.Show("Tipo de Cliente registrado con exito!!");
                 ClearAllDataTypeCli();
             }
             else
             {
-                MessageBox.Show($"Error al registrar el usuario: {typeClientRepository.message}");
+                string message = $"Error al Crear usuario : {typeClientRepository.message} !";
+
+                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Red));
+
+                //MessageBox.Show($"Error al registrar el usuario: {typeClientRepository.message}");
             }
 
 
 
 
         }
+        #endregion
 
+        #region Evento click del boton de limpiar los TextBox
         private void btn_CleanTxtCli_Click(object sender, RoutedEventArgs e)
         {
             ClearAllDataTypeCli();
 
         }
-
-
-        
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            //Cargar los datos de la tabla de tipos de clientes
-            dgvTypeClient.ItemsSource = typeClientRepository.GetAllTypeCliente();
-        }
+        #endregion             
 
         #region Metodo para restringir el ingreso de caracteres en el TextBox
         //Metodo para restringir el ingreso de caracteres en el TextBox

@@ -10,15 +10,8 @@
         Title="Asada Menú Principal"  Width="1450" Height="800" MinWidth="900" WindowStyle="None" WindowStartupLocation="CenterScreen"
         >
     <Grid>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
-        </Grid.RowDefinitions>-->
 
-
-
-        <ui:NavigationView 
-        
+        <ui:NavigationView        
             
         x:Name = "RootNavigation"                
         IsBackButtonVisible="Collapsed"
@@ -60,15 +53,6 @@
         </ui:TitleBar>
 
 
-
-
-
-
-
-
-
-
-
         <ProgressBar x:Name="ProgressBarPrincipal" IsIndeterminate="False" Visibility="Hidden" VerticalAlignment="Bottom" 
        Foreground="Blue" Background="LightBlue" Margin="219,0,3,0" Height="8" RenderTransformOrigin="00,0.5">
             <ProgressBar.RenderTransform>
@@ -81,8 +65,8 @@
             </ProgressBar.RenderTransform>
         </ProgressBar>
 
-        <materialDesign:Snackbar x:Name="SnackbarMessagePrincipal" FontSize="20" Height="60" Margin="220,0,0,10" HorizontalAlignment="Stretch"  HorizontalContentAlignment="Stretch" >
-            <materialDesign:SnackbarMessage  Width="1220" Content="fd" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" >
+        <materialDesign:Snackbar x:Name="SnackbarMessagePrincipal" FontSize="40" Height="60" Margin="220,0,0,10" HorizontalAlignment="Stretch"  HorizontalContentAlignment="Stretch" >
+            <materialDesign:SnackbarMessage  Width="1220" Content="fd" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" FontSize="40" >
                 <materialDesign:SnackbarMessage.Template>
                     <ControlTemplate TargetType="{x:Type materialDesign:SnackbarMessage}">
                         <Border Background="{TemplateBinding Background}"
