@@ -259,6 +259,8 @@ namespace wpfASADACore.Views
         private async void btn_ModifyClient_Click(object sender, RoutedEventArgs e)
 
         {
+            // Mostrar barra de progreso
+            await clsUtilities.ShowProgressBarAsync();
             //crear variables para almacenar los datos que digite el usuario en los textbox de clientes
 
             string name = txt_NewNameCli.Text;
@@ -349,6 +351,8 @@ namespace wpfASADACore.Views
         #region Eliminar Cliente
         private async void btn_DeleteClient_Click(object sender, RoutedEventArgs e)
         {
+            // Mostrar barra de progreso
+            await clsUtilities.ShowProgressBarAsync();
             // Mostrar un mensaje de confirmación para eliminar el cliente
             var confirmationBox = new clsMessageBox("¿Está seguro de eliminar el cliente?", "Sí", "No", "AlertOctagonOutline","Advertencia", Brushes.Yellow);
             var confirmationResult = confirmationBox.ShowDialog();
@@ -420,8 +424,8 @@ namespace wpfASADACore.Views
 
             if (sender == cmb_TypeClient)
             {
-                cmb_TypeClient.Background = Brushes.Yellow;
             }
+               
         }
 
 

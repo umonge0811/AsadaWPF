@@ -55,11 +55,14 @@ namespace wpfASADACore.Views
         // async es para un motodo asyncrono 
         private async void btn_CreateNewUser_Click(object sender, RoutedEventArgs e)
         {
+            // Mostrar barra de progreso
+            await clsUtilities.ShowProgressBarAsync();
+
             string newName = txt_NewName.Text;
             string newEmail = txt_NewEmail.Text;
             string newUser = txt_NewUser.Text;
-            string newPassword = txt_NewPass.Text;
-            string newRepPassword = txt_NewRePass.Text;
+            string newPassword = txt_NewPass.Password;
+            string newRepPassword = txt_NewRePass.Password;
             string newDNI = txt_NewId.Text;
             
 
@@ -72,6 +75,14 @@ namespace wpfASADACore.Views
                 txt_NewName.Focus();
                 return;
             }
+            if (newDNI.Equals(""))
+            {
+                //MessageBox.Show("Deben digitar el numero de cedula");
+                await clsUtilities.ShowSnackbarAsync("Debes digitar el número de cédula!", new SolidColorBrush(Colors.Yellow));
+
+                txt_NewId.Focus();
+                return;
+            }
 
             if (!clsUtilities.EsCorreoValido(newEmail))
             {
@@ -81,6 +92,16 @@ namespace wpfASADACore.Views
                 txt_NewEmail.Focus();
                 return;
             }
+
+            if (newUser.Equals(""))
+            {
+                //MessageBox.Show("Deben digitar el numero de cedula");
+                await clsUtilities.ShowSnackbarAsync("Debes digitar un nombre de Usuario Valido!", new SolidColorBrush(Colors.Yellow));
+
+                txt_NewUser.Focus();
+                return;
+            }
+
 
             if (newPassword.Equals("") || newRepPassword.Equals(""))
             {
@@ -99,14 +120,7 @@ namespace wpfASADACore.Views
                 txt_NewPass.Focus();
                 return;
             }
-            if (newDNI.Equals(""))
-            {
-                //MessageBox.Show("Deben digitar el numero de cedula");
-                await clsUtilities.ShowSnackbarAsync("Debes digitar el número de cédula!", new SolidColorBrush(Colors.Yellow));
-
-                txt_NewPass.Focus();
-                return;
-            }
+           
 
 
             if (await ValidatedUserRegister(newDNI))
@@ -114,6 +128,7 @@ namespace wpfASADACore.Views
                 string message = $"El usuario con cedula: {newDNI} ya se encuentra registrado... Verifique!";
                 await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Red));
                 ClearAllData();
+                txt_NewId.Focus();
                 return;
             }
 
@@ -122,7 +137,7 @@ namespace wpfASADACore.Views
 
             if (estado)
             {
-                string message = $"El usuario : {usersRepository} fue  registrado con Exito!";                
+                string message = $"El usuario : {newUser} fue registrado con Exito!";                
                 await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Green));
 
                 ClearAllData();
@@ -164,6 +179,9 @@ namespace wpfASADACore.Views
         //Es para buscar los usuarios en la Base de Datos
         private async void btnBuscarUsuario_Click(object sender, RoutedEventArgs e)
         {
+            // Mostrar barra de progreso
+            await clsUtilities.ShowProgressBarAsync();
+
             //variable para almacenar el parametro de busqueda que se realizara, en este caso se buscala con la Cedula
             string dni = txtBuscarUsuario.Text;
 
@@ -203,6 +221,9 @@ namespace wpfASADACore.Views
         #region Evento click para editar el usuario
         private async void btn_ModifyUser_Click(object sender, RoutedEventArgs e)
         {
+            // Mostrar barra de progreso
+            await clsUtilities.ShowProgressBarAsync();
+
             string newName = txt_NewName.Text;
             string newEmail = txt_NewEmail.Text;
             string newUser = txt_NewUser.Text;
@@ -279,6 +300,8 @@ namespace wpfASADACore.Views
         #region Evento click del boton Eliminar usuario
         private async void btn_DeleteUser_Click(object sender, RoutedEventArgs e)
         {
+            // Mostrar barra de progreso
+            await clsUtilities.ShowProgressBarAsync();
 
             if (idUser == null)
             {
