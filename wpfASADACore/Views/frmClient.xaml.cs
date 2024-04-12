@@ -45,9 +45,7 @@ namespace wpfASADACore.Views
             cmb_TypeClient.SelectionChanged += Input_Changed;
             #endregion
 
-        }
-
-       
+        }       
 
         #region Metodo para validar el numero de abonado
         public async Task<bool> ValidatedClientRegister(string Subscribernum)
@@ -114,7 +112,7 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-        #region Metodo para crear los Clientes con el Boton btn_CreateNewClient_Click
+        #region Evento Click crear los Clientes btn_CreateNewClient_Click
         //btn_CreateNewClient_Click es para crear un nuevo cliente
         private async void btn_CreateNewClient_Click(object sender, RoutedEventArgs e)
         {
@@ -254,7 +252,7 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-        #region Modificar la Información del Cliente
+        #region Evento Click btn Editar Modificar la Información del Cliente
         //Metodo para el btn_ModifyClient_Click para modificar un cliente
         private async void btn_ModifyClient_Click(object sender, RoutedEventArgs e)
 
@@ -426,10 +424,7 @@ namespace wpfASADACore.Views
             {
             }
                
-        }
-
-
-        
+        }        
         #endregion
 
         #region Metodo para Busqueda en el TextBox de Busqueda y predicciones en el datagrid

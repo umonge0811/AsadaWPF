@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace wpfASADACore.Repository
     {
         private ContextDataBase context;
         public string message { get; set; }
+        
 
         public UsersRepository()
         {
@@ -20,7 +22,24 @@ namespace wpfASADACore.Repository
             context.Database.EnsureCreatedAsync().Wait();
         }
 
-       
+
+
+        // Este metodo es para Obtener 
+        public ObservableCollection<clsUser> GetAllUser()
+        {
+            // Proyectar las propiedades deseadas, excluyendo la contraseña
+            var projectedUsers = context.usuarios.Select(u => new clsUser
+            {
+                DNI = u.DNI,
+                Name = u.Name,
+                UserName = u.UserName,
+                Email = u.Email,
+                // ... Otras propiedades que desees incluir
+            });
+
+            // Convertir la proyección a una lista observable
+            return new ObservableCollection<clsUser>(projectedUsers.ToList());
+        }
 
 
         public async Task<bool> CreateUser(string name, string username, string dni, string password, string email)
@@ -71,7 +90,7 @@ namespace wpfASADACore.Repository
 
 
         #region Modificar Usuarios
-        public async Task<bool> modifyUser(string name, string username, string dni, string password, string email, int? idUser)
+        public async Task<bool> modifyUser(string name, string username, string dni, string password, string email, string userName)
         {
 
             bool estado = false;
@@ -81,7 +100,7 @@ namespace wpfASADACore.Repository
                 using (var db = new ContextDataBase())
                 {
 
-                    var user = await db.usuarios.FirstOrDefaultAsync(u => u.Id == idUser);
+                    var user = await db.usuarios.FirstOrDefaultAsync(u => u.UserName == userName);
 
                     if (user != null)
                     {
@@ -139,7 +158,7 @@ namespace wpfASADACore.Repository
 
         }
 
-        public async Task<bool> deleteUser( int? idUser)
+        public async Task<bool> deleteUser( string? userName)
         {
 
             bool estado = false;
@@ -149,7 +168,7 @@ namespace wpfASADACore.Repository
                 using (var db = new ContextDataBase())
                 {
 
-                    var user = await db.usuarios.FirstOrDefaultAsync(u => u.Id == idUser);
+                    var user = await db.usuarios.FirstOrDefaultAsync(u => u.UserName == userName);
 
                     if (user != null)
                     {
@@ -172,6 +191,12 @@ namespace wpfASADACore.Repository
 
             return estado;
 
+        }
+
+        // Este metodo es para Obtener 
+        public ObservableCollection<clsUser> GetAllUsers()
+        {
+            return new ObservableCollection<clsUser>(context.usuarios.ToList());
         }
 
 
