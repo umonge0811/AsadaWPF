@@ -24,6 +24,7 @@ namespace wpfASADACore
         {
             InitializeComponent();
             //_ = CrearUsuario();
+            lbl_FechaPrincipal.Text = DateTime.Now.ToString("dd/MM/yyyy");
         }
 
 
@@ -57,5 +58,12 @@ namespace wpfASADACore
         {
             RootNavigation.Navigate(typeof(Views.TypeClient));
         }
+
+        private void NavigationViewItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            RootNavigation.Navigate(typeof(Views.frmPay));
+        }
+
+
     }
 }

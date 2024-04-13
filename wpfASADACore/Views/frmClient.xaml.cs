@@ -19,13 +19,11 @@ namespace wpfASADACore.Views
     public partial class frmClient : Page
     {
         //Se almacena ell id del cliente buscado
-        int? idClient = null;
-
-
-
+        int idClient = 0;
 
         //Variable para detectar si se ha cargado informacion de un cliente despues de hacer doble click en el datagrid
         private bool isModified = false;
+        BillingsRepository billingsRepository = new BillingsRepository();
 
         ClientsRepository clientsRepository;
         TypeClientRepository typeClientRepository;
@@ -76,7 +74,7 @@ namespace wpfASADACore.Views
             txt_NewFirstNameCli.Clear();
             txt_NewsecondSurnameCli.Clear();
             txt_NewDNICli.Clear();
-            idClient = null;
+            idClient = 0;
             txt_NewSubscribe.Clear();
             cmb_TypeClient.SelectedIndex = 0;
             btn_CreateNewClient.IsEnabled = true;
@@ -184,12 +182,44 @@ namespace wpfASADACore.Views
 
 
                 // Crear cliente
-                bool estado = await clientsRepository.CreateClient(name, DNI, firstName, Surname, SubscriberNum, ClientType);
+                int idClient = await clientsRepository.CreateClient(name, DNI, firstName, Surname, SubscriberNum, ClientType);
 
                 
                 // Mostrar mensaje de éxito o error
-                if (estado)
+                if (idClient > 0)
                 {
+                    // Crear cliente
+                    DateTime fechaActual = DateTime.Now;
+                    DateTime fechaLecturaAnterior = DateTime.Now.AddMonths(-1);
+                    double AmountBase = 0.0;
+                    double AmountExc = 0.0;
+                    double AmountTotal = 0.0;
+                    double AmountIva = 0.0;
+                    int LecturaActual = 0;
+                    int lecturaAnterior = 0;
+                    //usuario que realiza el cobro                   
+                    int IdUser = 0; // ID del usuario actual
+                    string Remarks = "";
+                    idClient = 0;
+                    if (txt_Observaciones.Text == "")
+                    {
+                        Remarks = "Ingreso a Sistema";
+                    }   
+                    
+
+                    if (tgs_UltimaLectura.IsChecked == true)
+                    { 
+                        lecturaAnterior = Convert.ToInt32(txt_UltimaLectura.Text);
+                        Remarks = "Ingreso al Sistema con lectura Anterior: " + lecturaAnterior;
+                        
+                    }
+                    else
+                    {
+
+                    }
+                    var primeraFactura = await billingsRepository.CreateBilling(fechaActual, fechaLecturaAnterior, AmountBase,
+                        AmountExc, AmountTotal, AmountIva, LecturaActual, lecturaAnterior, IdUser, Remarks, idClient);
+
                     await clsUtilities.ShowSnackbarAsync("Cliente creado exitosamente", new SolidColorBrush(Colors.LightGreen));
                     ClearAllData();
                     loaddatagrid();
@@ -198,6 +228,7 @@ namespace wpfASADACore.Views
                 {
                     string errorMessage = $"Error al crear cliente: {clientsRepository.message}";
                     await clsUtilities.ShowSnackbarAsync(errorMessage, new SolidColorBrush(Colors.Red));
+                    return;
                 }
             }
             catch (Exception ex)
@@ -229,6 +260,7 @@ namespace wpfASADACore.Views
             btn_DeleteClient.IsEnabled = false;
             //Hacer que el toggleswitch este desactivado
             copySwitch.IsEnabled = false;
+            
         }
         #endregion
 
@@ -458,8 +490,23 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-       
+        #region Metodo para que se visualice el txt_UltimaLectura
+        private void tgs_UltimaLectura_Checked(object sender, RoutedEventArgs e)
+        {
+            // Visualizar el txt_UltimaLectura
+            txt_UltimaLectura.Visibility = Visibility.Visible;
 
+        }
+
+        private void tgs_UltimaLectura_Unchecked(object sender, RoutedEventArgs e)
+        {
+            txt_UltimaLectura.Visibility = Visibility.Hidden;
+        }
+
+
+        #endregion
+
+        
     }
 
 

@@ -1,0 +1,108 @@
+﻿<Page x:Class="wpfASADACore.Views.frmPay"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:wpfASADACore.Views"
+      xmlns:utilities="clr-namespace:wpfASADACore.Utilities"
+      mc:Ignorable="d" 
+      d:DesignHeight="746" d:DesignWidth="1178"
+      Background="WhiteSmoke"
+      Title="frmPay">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Sección de Búsqueda y Datos del Cliente -->
+        <materialDesign:Card Grid.Row="0" Margin="20,20,20,10">
+            <Grid Background="LightGray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ui:SymbolIcon Symbol="Search12" Grid.Column="0" Margin="10,0,10,0" VerticalAlignment="Center" />
+
+                <ComboBox                    
+                          MinWidth="72"
+                          materialDesign:HintAssist.Hint="(Cliente)"
+                          IsEditable="True"
+                          ItemsSource="{Binding LongListToTestComboVirtualization}" Margin="367,4,319,0" Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Top">
+                    <ComboBox.Text>
+                        <Binding
+                              Mode="TwoWay"
+                              Path="SelectedTextTwo"
+                              UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <utilities:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ComboBox.Text>
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+
+                <!--<ui:TextBox x:Name="txtBuscarCliente" Grid.Column="1" Margin="0,10,10,10" VerticalAlignment="Center" Cursor="IBeam" FontSize="14" PlaceholderEnabled="True" PlaceholderText="Ingresa el número de cliente" />-->
+                <ui:Button x:Name="btnBuscarCliente" Grid.Column="2" Margin="10,0,10,0" Content="Buscar"  />
+
+                <ListBox
+                      Style="{StaticResource MaterialDesignFilterChipListBox}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+                    <ListBoxItem
+                            Content="Mercury" />
+                    <ListBoxItem
+                            Content="Venus" IsSelected="True" />
+                    <ListBoxItem
+                            Content="Earth" />
+                    <ListBoxItem  Content="Pluto"
+    IsEnabled="False" />
+                </ListBox>
+            </Grid>
+        </materialDesign:Card>
+
+
+
+        <!-- Sección de Información del Cliente -->
+        <materialDesign:Card Grid.Row="1" Margin="20,10,20,20" Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+
+                <Border Background="{DynamicResource MaterialDesignBackground}" >
+                    <GroupBox
+                          
+                        Margin="708,16,16,16"
+                        Header="Fecha"
+                        Style="{StaticResource MaterialDesignGroupBox}"
+                        UseLayoutRounding="True">
+                        <TextBlock Text="My Content" />
+                    </GroupBox>
+                </Border>
+            </Grid>
+
+
+
+
+
+        </materialDesign:Card>
+        <ui:Button x:Name="btnGenerarFactura" Content="Generar Factura" Appearance="Primary"   Margin="253,307,0,0" Grid.Row="1" VerticalAlignment="Top"  />
+        <ui:Button x:Name="btnLimpiar" Content="Limpiar" Appearance="Info" Margin="392,307,0,0"  Grid.Row="1" VerticalAlignment="Top" />
+    </Grid>
+</Page>

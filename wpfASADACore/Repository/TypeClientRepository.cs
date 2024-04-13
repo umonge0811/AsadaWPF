@@ -95,6 +95,41 @@ namespace wpfASADACore.Repository
             return estado;
         }
 
+        public async Task<bool> DeleteTypeClient(int idTypeClient)
+        {
+
+            bool estado = false;
+            try
+            {
+
+                using (var db = new ContextDataBase())
+                {
+
+                    var TypeClient = await db.typeClients.FirstOrDefaultAsync(u => u.id == idTypeClient);
+
+                    if (TypeClient != null)
+                    {
+
+                        db.typeClients.Remove(TypeClient);
+                        await db.SaveChangesAsync();
+
+                        estado = true;
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                //MessageBox.Show(ex.Message);
+                estado = false;
+            }
+
+            return estado;
+
+        }
+
 
     }
 }

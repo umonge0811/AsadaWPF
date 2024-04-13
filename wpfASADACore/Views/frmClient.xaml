@@ -24,10 +24,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <materialDesign:Card Grid.Row="0" Margin="20,40,20,20">
-            <materialDesign:Card.Effect>
-                <DropShadowEffect/>
-            </materialDesign:Card.Effect>
+        <materialDesign:Card Grid.Row="0" Margin="20,40,20,10">
 
             <Grid Grid.Row="0" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
@@ -53,8 +50,8 @@
                 </Grid>
                 <!--#endregion-->
                 <Grid Grid.Row="1">
-                    <ui:Card Height="332" Margin="212,0,212,0">
-                        <Grid HorizontalAlignment="Stretch" Height="Auto">
+                    <ui:Card Margin="212,0,212,103" VerticalAlignment="Stretch">
+                        <Grid Height="235">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -89,10 +86,10 @@
                                      VerticalAlignment="Center" materialDesign:HintAssist.Hint="No. Abonado"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="0"  Grid.Row="2" HorizontalAlignment="Center" Width="300" Grid.ColumnSpan="2"/>
 
-                            <Label Content="Asignar Cedúla" Margin="34,7,120,131" Grid.Row="3" RenderTransformOrigin="-0.006,0.571" Grid.Column="1" />
-                            <ui:ToggleSwitch x:Name="copySwitch" OffContent="Off" OnContent="On" Width="67" Grid.Row="3" Checked="copySwitch_Checked" Unchecked="copySwitch_Unchecked" Margin="136,10,0,0" VerticalAlignment="Top" Height="20" Grid.Column="1" />
+                            <Label Content="Asignar Cedúla" Margin="34,7,120,96" Grid.Row="3" RenderTransformOrigin="-0.006,0.571" Grid.Column="1" />
+                            <ui:ToggleSwitch x:Name="copySwitch" OffContent="Off" OnContent="On" Width="67" Grid.Row="3" Checked="copySwitch_Checked" Unchecked="copySwitch_Unchecked" Margin="220,11,0,0" VerticalAlignment="Top" Height="20" Grid.Column="1" />
 
-                            <ComboBox x:Name="cmb_TypeClient"  Height="39" Grid.Row="2"
+                            <ComboBox x:Name="cmb_TypeClient"  Height="39" Grid.Row="2" 
                                       materialDesign:ColorZoneAssist.Mode="SecondaryLight"
                                       materialDesign:HintAssist.HelperText="Selecciona Tipo de Cliente"
                                       materialDesign:HintAssist.Hint="Tipo Cliente"
@@ -104,40 +101,14 @@
                                     </StackPanel>
                                 </ComboBoxItem>
                             </ComboBox>
-
-                            <Grid Grid.Row="3" Grid.ColumnSpan="3" Margin="0,49,0,23">
-                                <ui:Card Margin="5,18,5,0" VerticalAlignment="Top" Background="LightGray">
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="7">
-                                        <ui:Button x:Name="btn_CreateNewClient" Height="34" Appearance="Primary" Margin="5,0,0,0" Click="btn_CreateNewClient_Click">
-                                            <StackPanel Orientation="Horizontal">
-                                                <iconPacks:PackIconModern Kind="uSER" VerticalAlignment="Center" Margin="0,0,5,0" />
-                                                <TextBlock Text="Crear" VerticalAlignment="Center" />
-                                            </StackPanel>
-                                        </ui:Button>
-
-                                        <ui:Button x:Name="btn_ModifyClient" Click="btn_ModifyClient_Click" Height="34" Appearance="Caution" Margin="10,0,0,0">
-                                            <StackPanel Orientation="Horizontal">
-                                                <iconPacks:PackIconModern Kind="EditAdd" VerticalAlignment="Center" Margin="0,0,5,0" />
-                                                <TextBlock Text="Editar" VerticalAlignment="Center" />
-                                            </StackPanel>
-                                        </ui:Button>
-
-                                        <ui:Button x:Name="btn_DeleteClient" Click="btn_DeleteClient_Click" Height="34" Appearance="Danger" Margin="10,0,0,0">
-                                            <StackPanel Orientation="Horizontal">
-                                                <iconPacks:PackIconModern Kind="UserDelete" VerticalAlignment="Center" Margin="0,0,5,0" />
-                                                <TextBlock Text="Eliminar" VerticalAlignment="Center" />
-                                            </StackPanel>
-                                        </ui:Button>
-
-                                        <ui:Button x:Name="btn_CleanTxt" Click="btn_CleanTxt_Click" Height="34" Appearance="Info" Margin="10,0,0,0">
-                                            <StackPanel Orientation="Horizontal">
-                                                <iconPacks:PackIconModern Kind="Clean" VerticalAlignment="Center" Margin="0,0,5,0" />
-                                                <TextBlock Text="Limpiar" VerticalAlignment="Center" />
-                                            </StackPanel>
-                                        </ui:Button>
-                                    </StackPanel>
-                                </ui:Card>
-                            </Grid>
+                            <Label Content="Ingresar Lectura Anterior" Margin="34,39,120,65" Grid.Row="3" RenderTransformOrigin="-0.006,0.571" Grid.Column="1" />
+                            <ui:ToggleSwitch x:Name="tgs_UltimaLectura" OffContent="Off" OnContent="On" Width="67" Grid.Row="3"  Margin="220,42,0,0" VerticalAlignment="Top" Height="20" Grid.Column="1" Checked="tgs_UltimaLectura_Checked" Unchecked="tgs_UltimaLectura_Unchecked" />
+                            <TextBox x:Name="txt_UltimaLectura"  TextWrapping="Wrap" Height="35" FontSize="11" Visibility="Hidden"
+                                VerticalAlignment="Top" materialDesign:HintAssist.Hint="Ultima Lectura Medidor"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Grid.Column="2" Grid.Row="3" Margin="38,25,39,0"/>
+                            <TextBox x:Name="txt_Observaciones"  TextWrapping="Wrap" Height="35" FontSize="11"
+                                VerticalAlignment="Top" materialDesign:HintAssist.Hint="Observaciones:"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1"  Grid.Row="3" HorizontalAlignment="Left" Width="300" Grid.ColumnSpan="2" Margin="174,85,0,0"/>
 
                         </Grid>
                     </ui:Card>
@@ -218,6 +189,37 @@
             </StackPanel>
 
         </materialDesign:Card>
+        <ui:Card Margin="258,397,246,0" Background="LightGray" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="7">
+                <ui:Button x:Name="btn_CreateNewClient" Height="34" Appearance="Primary" Margin="5,0,0,0" Click="btn_CreateNewClient_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconModern Kind="uSER" VerticalAlignment="Center" Margin="0,0,5,0" />
+                        <TextBlock Text="Crear" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ui:Button>
+
+                <ui:Button x:Name="btn_ModifyClient" Click="btn_ModifyClient_Click" Height="34" Appearance="Caution" Margin="10,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconModern Kind="EditAdd" VerticalAlignment="Center" Margin="0,0,5,0" />
+                        <TextBlock Text="Editar" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ui:Button>
+
+                <ui:Button x:Name="btn_DeleteClient" Click="btn_DeleteClient_Click" Height="34" Appearance="Danger" Margin="10,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconModern Kind="UserDelete" VerticalAlignment="Center" Margin="0,0,5,0" />
+                        <TextBlock Text="Eliminar" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ui:Button>
+
+                <ui:Button x:Name="btn_CleanTxt" Click="btn_CleanTxt_Click" Height="34" Appearance="Info" Margin="10,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconModern Kind="Clean" VerticalAlignment="Center" Margin="0,0,5,0" />
+                        <TextBlock Text="Limpiar" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ui:Button>
+            </StackPanel>
+        </ui:Card>
 
 
 

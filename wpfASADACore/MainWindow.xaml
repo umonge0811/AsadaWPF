@@ -19,7 +19,7 @@
         PaneDisplayMode="left"            
         OpenPaneLength = "210" Grid.ColumnSpan="2">
             <ui:NavigationView.MenuItems >
-                <ui:NavigationViewItem Content="Facturación" Icon="{ui:SymbolIcon WalletCreditCard24}"></ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Facturación" Icon="{ui:SymbolIcon WalletCreditCard24}" Click="NavigationViewItem_Click_3"></ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Clientes" Icon="{ui:SymbolIcon PersonAccounts24}" Click="NavigationViewItem_Click_1"></ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Tipos de Cliente y Tarifas" Icon="{ui:SymbolIcon MoneySettings20}" Click="NavigationViewItem_Click_2" ></ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Usuarios" Icon="{ui:SymbolIcon PersonSettings16}" Click="NavigationViewItem_Click"></ui:NavigationViewItem>
@@ -75,11 +75,11 @@
                      CornerRadius="1">
 
                             <ContentPresenter Content="{TemplateBinding Content}"
-               ContentTemplate="{TemplateBinding ContentTemplate}"
-               ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-               ContentStringFormat="{TemplateBinding ContentStringFormat}"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"
+                                               ContentTemplate="{TemplateBinding ContentTemplate}"
+                                               ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                               ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
                 />
                         </Border>
                     </ControlTemplate>
@@ -87,6 +87,8 @@
             </materialDesign:SnackbarMessage>
         </materialDesign:Snackbar>
 
+
+        <TextBlock x:Name="lbl_FechaPrincipal" Text="Fecha" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" FontWeight="Bold" Foreground="Black" Margin="77,776,0,0" />
 
 
     </Grid>

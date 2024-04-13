@@ -22,32 +22,27 @@ namespace wpfASADACore.Repository
             context.Database.EnsureCreatedAsync().Wait();
         }
 
-        public async Task<bool> CreateClient(string name, string DNI, string lastName, string secondSurname, string subscribernum, int IdtypeClient)
+        public async Task<int> CreateClient(string name, string DNI, string lastName, string secondSurname, string subscribernum, int IdtypeClient)
         {
 
             try
             {
-
                 using (var db = new ContextDataBase())
                 {
-
-                    
-
                     clsCliente client1 = new clsCliente(name, lastName, secondSurname, DNI, subscribernum, IdtypeClient);
 
                     db.clientes.Add(client1);
 
                     await db.SaveChangesAsync();
 
-                    return true;
-
+                    return client1.id; // Devuelve el id del cliente recién creado.
                 }
 
             }
             catch (Exception ex)
             {
                 message = ex.Message;
-                return false;
+                return -1; // Devuelve un valor que indica que hubo un error.
             }
 
         }

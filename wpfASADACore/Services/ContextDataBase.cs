@@ -17,6 +17,7 @@ namespace wpfASADACore.Services
         public DbSet<clsUser> usuarios { get; set; }
         public DbSet<clsCliente> clientes { get; set; }
         public DbSet<clsTypeClient> typeClients { get; set; }
+        public DbSet<clsBilling> billings { get; set; }
 
 
         
@@ -56,6 +57,19 @@ namespace wpfASADACore.Services
             modelBuilder.Entity<clsTypeClient>(entity =>
             {
                 entity.HasKey(e => e.id);
+            });
+
+
+            // Mapeo de la entidad de facturación a la tabla "Billings"
+            modelBuilder.Entity<clsBilling>().ToTable("Billings");
+            modelBuilder.Entity<clsBilling>(entity =>
+            {
+                entity.HasKey(e => e.id);
+                // Define la relación con Client
+                entity.HasOne(e => e.Client)
+                    .WithMany()  // indica que la relación es muchos a uno (una factura puede tener un cliente, pero varios clientes pueden tener varias facturas).
+                    .HasForeignKey(e => e.idClient) //especifica que la propiedad ClientId en la entidad de facturación es la clave foránea que se relaciona con la tabla de clientes.
+                    .OnDelete(DeleteBehavior.Restrict);  // establece el comportamiento de eliminación. En este caso, restringe la eliminación del cliente si hay facturas asociadas a él.
             });
             base.OnModelCreating(modelBuilder);
         }
