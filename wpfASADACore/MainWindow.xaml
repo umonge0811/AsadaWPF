@@ -88,7 +88,7 @@
         </materialDesign:Snackbar>
 
 
-        <TextBlock x:Name="lbl_FechaPrincipal" Text="Fecha" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" FontWeight="Bold" Foreground="Black" Margin="77,776,0,0" />
+        <TextBlock x:Name="lbl_FechaPrincipal" Text="Fecha" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Foreground="Black" Margin="5,768,0,0" />
 
 
     </Grid>

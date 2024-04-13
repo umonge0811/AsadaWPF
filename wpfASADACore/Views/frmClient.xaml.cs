@@ -80,6 +80,9 @@ namespace wpfASADACore.Views
             btn_CreateNewClient.IsEnabled = true;
             btn_ModifyClient.IsEnabled = false;
             btn_DeleteClient.IsEnabled = false;
+            tgs_UltimaLectura.IsChecked = false;
+            txt_UltimaLectura.Visibility = Visibility.Hidden;
+
         }
         #endregion
 
@@ -173,6 +176,16 @@ namespace wpfASADACore.Views
                         return;
 
                     }
+
+                    if (await clientsRepository.ValidatedClientRegister(SubscriberNum))
+                    {
+                        string message = $"El Abonado: {SubscriberNum} ya se encuentra registrado... Verifique!";
+                        await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Red));    
+                        txt_NewSubscribe.Clear();
+                        txt_NewSubscribe.Focus();
+                        return;
+                    }
+
                 }
                 else
                 {
@@ -188,7 +201,11 @@ namespace wpfASADACore.Views
                 // Mostrar mensaje de éxito o error
                 if (idClient > 0)
                 {
-                    // Crear cliente
+                    await clsUtilities.ShowSnackbarAsync("Cliente creado exitosamente", new SolidColorBrush(Colors.LightGreen));
+                   
+
+                    // Crear factura Inicial
+                   
                     DateTime fechaActual = DateTime.Now;
                     DateTime fechaLecturaAnterior = DateTime.Now.AddMonths(-1);
                     double AmountBase = 0.0;
@@ -200,7 +217,7 @@ namespace wpfASADACore.Views
                     //usuario que realiza el cobro                   
                     int IdUser = 0; // ID del usuario actual
                     string Remarks = "";
-                    idClient = 0;
+                    
                     if (txt_Observaciones.Text == "")
                     {
                         Remarks = "Ingreso a Sistema";
@@ -219,10 +236,18 @@ namespace wpfASADACore.Views
                     }
                     var primeraFactura = await billingsRepository.CreateBilling(fechaActual, fechaLecturaAnterior, AmountBase,
                         AmountExc, AmountTotal, AmountIva, LecturaActual, lecturaAnterior, IdUser, Remarks, idClient);
-
-                    await clsUtilities.ShowSnackbarAsync("Cliente creado exitosamente", new SolidColorBrush(Colors.LightGreen));
-                    ClearAllData();
-                    loaddatagrid();
+                    if (primeraFactura)
+                    {
+                        await clsUtilities.ShowSnackbarAsync("Factura Inicial Creada Exitosamente", new SolidColorBrush(Colors.LightGreen));
+                        ClearAllData();
+                        loaddatagrid();
+                    }
+                    else
+                    {
+                        await clsUtilities.ShowSnackbarAsync("Error al crear la Factura Inicial", new SolidColorBrush(Colors.Red));
+                        return;
+                    }
+                   
                 }
                 else
                 {

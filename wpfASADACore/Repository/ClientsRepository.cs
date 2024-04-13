@@ -146,5 +146,27 @@ namespace wpfASADACore.Repository
             return estado;
 
         }
+
+
+        #region metodo para validar si el usuario ya se encuentra registrado
+        public async Task<bool> ValidatedClientRegister(string SubscriberNum)
+        {
+
+            try
+            {
+                using (var db = new ContextDataBase())
+                {
+                    var clientExists = await db.clientes.AnyAsync(u => u.SubscriberNum == SubscriberNum);
+                    return clientExists;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar errores de conexión u otras excepciones
+                Console.WriteLine("Error al validar Cliente: " + ex.Message);
+                throw; // Reenviar la excepción para un tratamiento superior
+            }
+        }
+        #endregion
     }
 }
