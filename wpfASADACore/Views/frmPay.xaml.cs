@@ -62,30 +62,7 @@ namespace wpfASADACore.Views
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var clientsForBilling = billingsRepository.GetClientsForBilling();
-
-            cmb_ClientBill.Items.Clear();
-            foreach (var (id,subscribeNum, name) in clientsForBilling)
-            {
-                //cmb_ClientBill.Items.Add(new { SubscriberNum = subscribeNum, Name = name });
-                cmb_ClientBill.Items.Add(new { SubscriberNum = subscribeNum, Name = name });
-
-            }
-
-
-
-            // Habilitar el texto predictivo
-            cmb_ClientBill.IsTextSearchEnabled = true;
-            //cmb_ClientBill.TextSearch.TextPath = "Name";
-
-            /*
-             Este código:
-
-            Llama al método GetClientsForBilling() para obtener la lista de clientes con registros en la tabla de facturación.
-            Limpia el combobox cmb_ClientBill.
-            Agrega cada cliente a la lista del combobox, utilizando un objeto anónimo con las propiedades Id y Name.
-            Habilita el texto predictivo en el combobox, utilizando IsTextSearchEnabled = true y TextSearch.TextPath = "Name".*/
-
+            
         }
     }
 }
