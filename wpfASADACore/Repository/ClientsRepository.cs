@@ -147,7 +147,6 @@ namespace wpfASADACore.Repository
 
         }
 
-
         #region metodo para validar si el usuario ya se encuentra registrado
         public async Task<bool> ValidatedClientRegister(string SubscriberNum)
         {

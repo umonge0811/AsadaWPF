@@ -189,11 +189,11 @@ namespace wpfASADACore.Views
 
                 txt_NewPass.Focus();
                 return;
-            }
+            } 
            
 
 
-            if (await ValidatedUserRegister(newDNI))
+            if (await usersRepository.ValidatedUserRegister(newDNI))
             {
                 string message = $"El usuario con cedula: {newDNI} ya se encuentra registrado... Verifique!";
                 await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Red));
@@ -224,26 +224,6 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-        #region metodo para validar si el usuario ya se encuentra registrado
-        public async Task<bool> ValidatedUserRegister(string dni)
-        {
-
-            try
-            {
-                using (var db = new ContextDataBase())
-                {
-                    var userExists = await db.usuarios.AnyAsync(u => u.DNI == dni);
-                    return userExists;
-                }
-            }
-            catch (Exception ex)
-            {
-                // Manejar errores de conexión u otras excepciones
-                Console.WriteLine("Error al validar usuario: " + ex.Message);
-                throw; // Reenviar la excepción para un tratamiento superior
-            }
-        }
-        #endregion
 
         #region Evento click del boton de Buscar Usuario
         //Es para buscar los usuarios en la Base de Datos

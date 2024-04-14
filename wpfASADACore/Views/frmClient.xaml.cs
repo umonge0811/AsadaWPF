@@ -20,10 +20,12 @@ namespace wpfASADACore.Views
     {
         //Se almacena ell id del cliente buscado
         int idClient = 0;
+        int ClientType = 0;
 
         //Variable para detectar si se ha cargado informacion de un cliente despues de hacer doble click en el datagrid
         private bool isModified = false;
         BillingsRepository billingsRepository = new BillingsRepository();
+        ReadingRepository readingRepository = new ReadingRepository();
 
         ClientsRepository clientsRepository;
         TypeClientRepository typeClientRepository;
@@ -82,6 +84,10 @@ namespace wpfASADACore.Views
             btn_DeleteClient.IsEnabled = false;
             tgs_UltimaLectura.IsChecked = false;
             txt_UltimaLectura.Visibility = Visibility.Hidden;
+            dtpk_DateReading.Visibility = Visibility.Hidden;
+            txt_Observaciones.Clear();
+            copySwitch.IsEnabled = false;
+            tgs_UltimaLectura.IsChecked = false;
 
         }
         #endregion
@@ -129,7 +135,7 @@ namespace wpfASADACore.Views
                 string Surname = txt_NewsecondSurnameCli.Text;
                 string DNI = txt_NewDNICli.Text;
                 string SubscriberNum = txt_NewSubscribe.Text;
-                int ClientType = int.Parse(cmb_TypeClient.SelectedValue.ToString() ?? "1");
+                ClientType = int.Parse(cmb_TypeClient.SelectedValue.ToString() ?? "1");
 
                 // Validación de campos
                 // Obtén una referencia a tu MainWindow
@@ -207,16 +213,15 @@ namespace wpfASADACore.Views
                     // Crear factura Inicial
                    
                     DateTime fechaActual = DateTime.Now;
-                    DateTime fechaLecturaAnterior = DateTime.Now.AddMonths(-1);
-                    double AmountBase = 0.0;
-                    double AmountExc = 0.0;
-                    double AmountTotal = 0.0;
-                    double AmountIva = 0.0;
+                    DateTime dateCurrentReading = fechaActual;
+                    DateTime fechaLecturaAnterior = dtpk_DateReading.SelectedDate ?? fechaActual;
                     int LecturaActual = 0;
                     int lecturaAnterior = 0;
+                    int totalConsumption = LecturaActual-lecturaAnterior;
                     //usuario que realiza el cobro                   
                     int IdUser = 0; // ID del usuario actual
                     string Remarks = "";
+                    bool LecturaActiva = true;
                     
                     if (txt_Observaciones.Text == "")
                     {
@@ -234,11 +239,10 @@ namespace wpfASADACore.Views
                     {
 
                     }
-                    var primeraFactura = await billingsRepository.CreateBilling(fechaActual, fechaLecturaAnterior, AmountBase,
-                        AmountExc, AmountTotal, AmountIva, LecturaActual, lecturaAnterior, IdUser, Remarks, idClient);
-                    if (primeraFactura)
+                    var primeraLectura = await readingRepository.CreateReading(fechaLecturaAnterior, dateCurrentReading, totalConsumption, lecturaAnterior, LecturaActual, Remarks, LecturaActiva, IdUser, idClient, ClientType);
+                    if (primeraLectura)
                     {
-                        await clsUtilities.ShowSnackbarAsync("Factura Inicial Creada Exitosamente", new SolidColorBrush(Colors.LightGreen));
+                        await clsUtilities.ShowSnackbarAsync("Lectura Inicial Creada Exitosamente", new SolidColorBrush(Colors.LightGreen));
                         ClearAllData();
                         loaddatagrid();
                     }
@@ -247,7 +251,7 @@ namespace wpfASADACore.Views
                         await clsUtilities.ShowSnackbarAsync("Error al crear la Factura Inicial", new SolidColorBrush(Colors.Red));
                         return;
                     }
-                   
+
                 }
                 else
                 {
@@ -520,12 +524,14 @@ namespace wpfASADACore.Views
         {
             // Visualizar el txt_UltimaLectura
             txt_UltimaLectura.Visibility = Visibility.Visible;
+            dtpk_DateReading.Visibility = Visibility.Visible;
 
         }
 
         private void tgs_UltimaLectura_Unchecked(object sender, RoutedEventArgs e)
         {
             txt_UltimaLectura.Visibility = Visibility.Hidden;
+            dtpk_DateReading.Visibility = Visibility.Hidden;
         }
 
 

@@ -64,6 +64,9 @@ namespace wpfASADACore
             RootNavigation.Navigate(typeof(Views.frmPay));
         }
 
-
+        private void nvLecturas_Click(object sender, RoutedEventArgs e)
+        {
+            RootNavigation.Navigate(typeof(Views.frmLectura));
+        }
     }
 }

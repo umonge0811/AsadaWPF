@@ -129,6 +129,28 @@ namespace wpfASADACore.Repository
         }
         #endregion
 
+        #region metodo para validar si el usuario ya se encuentra registrado
+        public async Task<bool> ValidatedUserRegister(string dni)
+        {
+
+            try
+            {
+                using (var db = new ContextDataBase())
+                {
+                    var userExists = await db.usuarios.AnyAsync(u => u.DNI == dni);
+                    return userExists;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar errores de conexión u otras excepciones
+                Console.WriteLine("Error al validar usuario: " + ex.Message);
+                throw; // Reenviar la excepción para un tratamiento superior
+            }
+        }
+        #endregion
+
+
 
         //este es el metodo que se creo para hacer la busqueda en la DB, retorna  un objeto de tipo clase (clsUser)
         public async Task<clsUser?> FindClientByDNI(string dni)

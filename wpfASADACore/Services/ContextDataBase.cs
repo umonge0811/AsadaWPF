@@ -18,6 +18,7 @@ namespace wpfASADACore.Services
         public DbSet<clsCliente> clientes { get; set; }
         public DbSet<clsTypeClient> typeClients { get; set; }
         public DbSet<clsBilling> billings { get; set; }
+        public DbSet<clsReading> readings { get; set; }
 
 
         
@@ -70,6 +71,23 @@ namespace wpfASADACore.Services
                     .WithMany()  // indica que la relación es muchos a uno (una factura puede tener un cliente, pero varios clientes pueden tener varias facturas).
                     .HasForeignKey(e => e.idClient) //especifica que la propiedad ClientId en la entidad de facturación es la clave foránea que se relaciona con la tabla de clientes.
                     .OnDelete(DeleteBehavior.Restrict);  // establece el comportamiento de eliminación. En este caso, restringe la eliminación del cliente si hay facturas asociadas a él.
+            });
+
+            // Mapeo de la entidad de lectura a la tabla "Readings"
+            modelBuilder.Entity<clsReading>().ToTable("Readings");
+            modelBuilder.Entity<clsReading>(entity =>
+            {
+                entity.HasKey(e => e.id);
+                // Define la relación con Client
+                entity.HasOne(e => e.Client)
+                    .WithMany()  // indica que la relación es muchos a uno (una lectura puede tener un cliente, pero varios clientes pueden tener varias lecturas).
+                    .HasForeignKey(e => e.idClient) //especifica que la propiedad ClientId en la entidad de lectura es la clave foránea que se relaciona con la tabla de clientes.
+                    .OnDelete(DeleteBehavior.Restrict);  // establece el comportamiento de eliminación. En este caso, restringe la eliminación del cliente si hay lecturas asociadas a él.
+                // Define la relación con TypeClient
+                entity.HasOne(e => e.TypeClient)
+                    .WithMany()  // indica que la relación es muchos a uno (una lectura puede tener un tipo de cliente, pero varios tipos de cliente pueden tener varias lecturas).
+                    .HasForeignKey(e => e.TypeClientId) //especifica que la propiedad TypeClientId en la entidad de lectura es la clave foránea que se relaciona con la tabla de tipos de cliente.
+                    .OnDelete(DeleteBehavior.Restrict);  // establece el comportamiento de eliminación. En este caso, restringe la eliminación del tipo de cliente si hay lecturas asociadas a él.
             });
             base.OnModelCreating(modelBuilder);
         }

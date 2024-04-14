@@ -23,25 +23,48 @@ namespace wpfASADACore.Repository
             context.Database.EnsureCreatedAsync().Wait();
         }
 
-        public async Task<bool> CreateBilling(DateTime fechaActual, DateTime fechaLecturaAnterior,  double AmountBase,
-                        double AmountExc,double AmountTotal,double AmountIva, int LecturaActual, int lecturaAnterior,int IdUser, string Remarks, int idClient)
+        #region Metodo que se utiliza para enviar la factura a la base de datos
+        //public async Task<bool> CreateBilling(DateTime fechaActual,   double AmountBase, double AmountExc,double AmountTotal,double AmountIva, int IdUser, string Remarks, int idClient)
+        //{
+        //    using (var db = new ContextDataBase())
+        //    {
+        //        clsBilling nuevaFactura1 = new clsBilling(fechaActual,  AmountBase, AmountExc, AmountTotal, AmountIva, IdUser, Remarks, idClient);
+        //        db.billings.Add(nuevaFactura1);
+
+        //        await db.SaveChangesAsync();
+
+        //        return true;
+
+        //    }              
+
+
+        //}
+        #endregion
+
+        public List<(int,string, string)> GetClientsForBilling()
         {
-            using (var db = new ContextDataBase())
+            using (var context = new ContextDataBase())
             {
-                clsBilling nuevaFactura1 = new clsBilling(fechaActual, fechaLecturaAnterior, AmountBase,
-                        AmountExc, AmountTotal, AmountIva, LecturaActual, lecturaAnterior, IdUser, Remarks, idClient);
-                db.billings.Add(nuevaFactura1);
+                // se obtiene los clientes que tienen al menos un registro en la tabla de facturación
+                var clients = context.billings
+                    .Select(b => b.Client)
+                    .Distinct()
+                    .ToList();
 
-                await db.SaveChangesAsync();
+                // se crea una lista de tuplas con el ID y el nombre completo del cliente
+                var clientsForBilling = clients.Select(c => (c.id,c.SubscriberNum, $"{c.name} {c.lastName} {c.secondSurname}")).ToList();
 
-                return true;
+                return clientsForBilling;
 
+                /*Aquí está lo que hace este método:
+
+                Crea una nueva instancia de ContextDataBase para acceder a la base de datos.
+                Selecciona los clientes que tienen al menos un registro en la tabla de facturación (billings). Usamos Select(b => b.Client)
+                para obtener los objetos clsCliente relacionados con cada factura, y Distinct() para asegurarnos de que solo obtenemos cada cliente una vez.
+                Crea una lista de tuplas con el ID y el nombre completo de cada cliente ((c.id, $"{c.name} {c.lastName} {c.secondSurname}")).
+                Devuelve la lista de tuplas.*/
             }
-                
-
-            
         }
-
     }
     
 }
