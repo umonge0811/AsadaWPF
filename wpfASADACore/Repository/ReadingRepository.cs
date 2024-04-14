@@ -56,8 +56,9 @@ namespace wpfASADACore.Repository
 
             public string DisplayText
             {
-                get { return $"Abonado No : {SubscriberNum} Nombre: {Name} {LastName} {SecondSurname}"; }
+                get { return $"{SubscriberNum} - Abonado No : {SubscriberNum} Nombre: {Name} {LastName} {SecondSurname}"; }
             }
+
         }
 
 

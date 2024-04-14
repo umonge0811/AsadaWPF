@@ -8,7 +8,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:wpfASADACore.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="1500"
+      d:DesignHeight="600" d:DesignWidth="1200"
       Title="frmLectura" Background="WhiteSmoke" Loaded="Page_Loaded">
 
     <Grid>
@@ -33,17 +33,19 @@
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <TextBlock Text="Seleccionar Cliente:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="30,10,20,9"/>
-                
-                
-                
+
                 <!--#region  Combo Cliente-->
                 <ComboBox x:Name="cmb_Client"  Height="39" Grid.Row="2" IsTextSearchEnabled="True"
                         materialDesign:ColorZoneAssist.Mode="SecondaryLight"
-                        materialDesign:HintAssist.HelperText="Selecciona Tipo de Cliente"
+                        materialDesign:HintAssist.HelperText="Digita el Número de Abonado"
                         materialDesign:HintAssist.Hint="Cliente"
                         materialDesign:TextFieldAssist.HasClearButton="True"
-                        materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
-                        Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="38,20,39,20" VerticalAlignment="Top" Grid.Column="2" Grid.RowSpan="2" Width="500"  >
+                        materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"                          
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                        Margin="38,20,39,20" VerticalAlignment="Top" Grid.Column="2" Grid.RowSpan="2" Width="500" IsEditable="True"
+                          PreviewTextInput="cmb_Client_PreviewTextInput"
+                          KeyUp="cmb_Client_KeyUp">
+                    
                     <ComboBoxItem IsSelected="True">
                         <StackPanel Orientation="Horizontal">
                         </StackPanel>

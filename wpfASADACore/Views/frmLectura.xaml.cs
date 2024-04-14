@@ -57,6 +57,7 @@ namespace wpfASADACore.Views
                     // Mostrar un mensaje de error o realizar alguna otra acción si no hay clientes con lecturas
                 }
 
+
            
 
         }
@@ -84,6 +85,16 @@ namespace wpfASADACore.Views
                 await clsUtilities.ShowSnackbarAsync("El cliente seleccionado no tiene ninguna lectura actual pendiente", new SolidColorBrush(Colors.Yellow));
                 txtLecturaAnterior.Text = "0";
                 selectedReadingId = 0;
+            }
+        }
+
+      
+        private void cmb_Client_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                btnCargarLectura_Click(sender, e);
+                txtLecturaActual.Focus();   
             }
         }
 
@@ -180,5 +191,10 @@ namespace wpfASADACore.Views
              * Esto significa que puedes buscar por fecha en el formato “MM/dd/yyyy”.*/
         }
 
+        private void cmb_Client_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            cmb_Client.IsDropDownOpen = true;
+
+        }
     }
 }
