@@ -55,10 +55,7 @@ namespace wpfASADACore.Views
                 else
                 {
                     // Mostrar un mensaje de error o realizar alguna otra acción si no hay clientes con lecturas
-                }
-
-
-           
+                }           
 
         }
 
@@ -66,6 +63,9 @@ namespace wpfASADACore.Views
         {
             txtLecturaActual.Clear();
             dtp_Lectura.SelectedDate = null;
+            txtLecturaAnterior.Clear();
+            txtLecturaActual.Clear();
+
             // Limpia otros controles aquí...
         }
 

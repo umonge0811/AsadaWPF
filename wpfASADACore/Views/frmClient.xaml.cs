@@ -88,6 +88,8 @@ namespace wpfASADACore.Views
             txt_Observaciones.Clear();
             copySwitch.IsEnabled = false;
             tgs_UltimaLectura.IsChecked = false;
+            dtpk_DateReading.SelectedDate = null;
+            txt_UltimaLectura.Clear();
 
         }
         #endregion
@@ -210,7 +212,7 @@ namespace wpfASADACore.Views
                     await clsUtilities.ShowSnackbarAsync("Cliente creado exitosamente", new SolidColorBrush(Colors.LightGreen));
                    
 
-                    // Crear factura Inicial
+                    // Crear lectura Inicial
                    
                     DateTime fechaActual = DateTime.Now;
                     DateTime dateCurrentReading = fechaActual;
