@@ -25,7 +25,7 @@ namespace wpfASADACore.Repository
         {
             using (var db = new ContextDataBase())
             {
-                clsReading LecturaInicial = new clsReading(fechaLecturaAnterior, dateCurrentReading, totalConsumption, lecturaAnterior, LecturaActual, Remarks, LecturaActiva, IdUser, idClient, typeclientId,false);
+                clsReading LecturaInicial = new clsReading(fechaLecturaAnterior, dateCurrentReading, totalConsumption, lecturaAnterior, LecturaActual, Remarks, LecturaActiva, IdUser, idClient, typeclientId);
                 db.readings.Add(LecturaInicial);
 
                 await db.SaveChangesAsync();
