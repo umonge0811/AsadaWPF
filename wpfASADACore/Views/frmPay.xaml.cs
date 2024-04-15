@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using wpfASADACore.Models;
 using wpfASADACore.Repository;
 using wpfASADACore.Services;
+using wpfASADACore.Utilities;
 using static wpfASADACore.Repository.ReadingRepository;
 
 
@@ -28,6 +29,7 @@ namespace wpfASADACore.Views
     public partial class frmPay : Page
     {
         BillingsRepository billingsRepository = new BillingsRepository();
+        bool isLocal = false;
 
         public int Id { get; set; }
         public string SubscriberNum { get; set; }
@@ -45,7 +47,7 @@ namespace wpfASADACore.Views
 
 
 
-
+        #region Eventos loaded 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             var db = new BillingsRepository();
@@ -63,22 +65,83 @@ namespace wpfASADACore.Views
             }
            
         }
+        #endregion
 
-        private void btnCargarFact_Click(object sender, RoutedEventArgs e)
+
+        #region Metodo para generar el numero de factura automaticamente 
+        private void GenerarNumeroFactura()
         {
-            LoadClientType();
-            LoadPendingReadings();
+            DateTime ahora = DateTime.Now;
+            int año = ahora.Year % 10;  // El último dígito del año
+            int diaDelAño = ahora.DayOfYear % 100;  // Los últimos dos dígitos del día del año (1 a 366)
+            int hora = ahora.Hour;  // La hora del día (0 a 23)
+            int minuto = ahora.Minute;  // El minuto de la hora (0 a 59)
+            int segundo = ahora.Second / 12;  // El segundo de la hora (0 a 59) dividido por 12 para que no exceda 4
+
+            // Generamos el número de factura como un número de 5 dígitos
+            int numeroFactura = año * 10000 + diaDelAño * 100 + hora * 10 + minuto / 6 + segundo;
+
+            // Asignamos el número de factura al label
+            lbl_InvoiceNum.Text = numeroFactura.ToString();
         }
+        #endregion
 
-        private void frmPay_KeyDown(object sender, KeyEventArgs e)
+
+        #region Eventos click del boton Cargar Facturas
+        private async void btnCargarFact_Click(object sender, RoutedEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if (cmb_Client.SelectedItem != null)
             {
                 LoadClientType();
                 LoadPendingReadings();
             }
+            else
+            {
+                await clsUtilities.ShowSnackbarAsync("Por favor, selecciona un cliente antes de cargar las facturas.", new SolidColorBrush(Colors.Yellow));
+            }
         }
+        #endregion
 
+
+        #region Eventos keydown para que cuando se da enter se carguen las facturas pendientes
+        private async void frmPay_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (cmb_Client.SelectedItem != null)
+                {
+                    LoadClientType();
+                    LoadPendingReadings();
+                }
+                else
+                {
+                    await clsUtilities.ShowSnackbarAsync("Por favor, selecciona un cliente antes de cargar las facturas.", new SolidColorBrush(Colors.Yellow));
+                }
+            }
+        }
+        #endregion
+
+
+        #region evento para que cuando se borre el texto del combobox se limpie el datagrid y otras cosas
+        private void cmb_Client_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(cmb_Client.Text))
+            {
+                // Vacía el DataGrid
+                dtg_Facturas.ItemsSource = null;
+
+                // Cierra el Expander
+                exp_Facturas.IsExpanded = false;
+                grd_Local.Background = new SolidColorBrush(Colors.White);
+                txt_TypeClient.Text = string.Empty;
+                txt_RateType.Text = string.Empty;
+                txt_RateExc.Text = string.Empty;
+            }
+        }
+        #endregion
+
+
+        #region metodo para cargar el tipo de cliente en los textbox y validaciones por si es local
         private void LoadClientType()
         {
             if (cmb_Client.SelectedValue != null)
@@ -96,15 +159,34 @@ namespace wpfASADACore.Views
                     bool isLocal = typeClient.name == "Local";
                     txt_RateType.IsReadOnly = !isLocal;
                     txt_RateExc.IsReadOnly = !isLocal;
+                    if (isLocal)
+                    {
+                        grd_Local.Background = new SolidColorBrush(Colors.LightGreen);
+                        txt_RateType.Clear();
+                        txt_RateExc.Clear();
+
+                    }
+                    else
+                    {
+                        grd_Local.Background = new SolidColorBrush(Colors.White);
+                    }
                 }
+
             }
         }
+        #endregion
+
+
+        #region metodo para cargar las lecturas pendientes en el datagrid
         private void LoadPendingReadings()
         {
             var readings = billingsRepository.GetPendingReadings();
             dtg_Facturas.ItemsSource = readings;
+            OpenExpander();
         }
+        #endregion
 
+        #region evento para que cuando se seleccione una fila del datagrid se carguen los datos en los textbox CALCULOS MATEMATICOS
         private void dtg_Facturas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedReading = (clsReading)dtg_Facturas.SelectedItem;
@@ -136,9 +218,12 @@ namespace wpfASADACore.Views
 
                 double totalPay = rateType + totalM3 * rateExc + iva;
                 txt_TotalPay.Text = totalPay.ToString("C", cultureInfo);
+                GenerarNumeroFactura();
             }
         }
+        #endregion
 
+        #region Metodo para hacer limpieza de los textbox
         private void ClearTextBoxesPays()
         {
             txt_LecturaAnt.Text = string.Empty;
@@ -149,7 +234,10 @@ namespace wpfASADACore.Views
             txt_iva.Text = string.Empty;
             txt_TotalPay.Text = string.Empty;
         }
+        #endregion
 
+
+        #region Evento para que cuando se seleccione una fila del datagrid se carguen los datos en los textbox CALCULOS MATEMATICOS y los demas ROW se bloqueen
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             var selectedCheckBox = (CheckBox)sender;
@@ -163,21 +251,9 @@ namespace wpfASADACore.Views
                 }
                
             }
-            btnGenerarLectura.IsEnabled = true;
+            CloseExpander();
+            btnGenerarFactura.IsEnabled = true;
         }
-
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            foreach (var item in dtg_Facturas.Items)
-            {
-                var row = (DataGridRow)dtg_Facturas.ItemContainerGenerator.ContainerFromItem(item);
-                row.IsEnabled = true;
-            }
-            btnGenerarLectura.IsEnabled = false;
-            ClearTextBoxesPays();
-            LoadPendingReadings();
-        }
-
 
         private CheckBox GetCheckBoxFromRow(DataGridRow row)
         {
@@ -186,8 +262,65 @@ namespace wpfASADACore.Views
             var checkBox = (CheckBox)contentPresenter.ContentTemplate.FindName("checkBox", contentPresenter);
             return checkBox;
         }
+        #endregion
 
 
+        #region Evento para que cuando se deseleccione una fila del datagrid se BORREN los datos en los textbox CALCULOS MATEMATICOS y los demas ROW se desbloqueen
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in dtg_Facturas.Items)
+            {
+                var row = (DataGridRow)dtg_Facturas.ItemContainerGenerator.ContainerFromItem(item);
+                row.IsEnabled = true;
+            }
+            btnGenerarFactura.IsEnabled = false;
+            ClearTextBoxesPays();
+            LoadPendingReadings();
+            // Limpiar el TextBlock factura
+            txt_RateExc.Text = "";
+        }
+        #endregion
+
+
+        #region METODO/FUNCION  para desplegar / cerrar el Extender y mostrar los datos de la factura
+        private void OpenExpander()
+        {
+            // Para expandir el Expander
+            exp_Facturas.IsExpanded = true;
+
+
+        }
+        private void CloseExpander()
+        {
+            // Para expandir el Expander
+            exp_Facturas.IsExpanded = true;
+
+
+        }
+        #endregion
+
+
+        #region Evento para que mientras los campos de editar los precios en local esten vacios el fondo sera Verde, si se completan sera blanco
+        /*cuando el texto en txt_RateType o txt_RateExc cambie, se llamará a los métodos txt_RateType_TextChanged y txt_RateExc_TextChanged respectivamente. Estos métodos a su vez llamarán al método CheckRateFields(), 
+         * que verificará si ambos campos de texto están vacíos o no, y cambiará el color de fondo del elemento grd_Local en consecuencia.*/
+        private void txt_RateType_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CheckRateFields();
+        }
+
+        private void txt_RateExc_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CheckRateFields();
+        }
+
+        private void CheckRateFields()
+        {
+            if (!string.IsNullOrEmpty(txt_RateType.Text) && !string.IsNullOrEmpty(txt_RateExc.Text))
+            {
+                grd_Local.Background = new SolidColorBrush(Colors.White);
+            }
+        }
+        #endregion
 
 
     }
