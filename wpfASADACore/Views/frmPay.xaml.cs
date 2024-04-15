@@ -103,23 +103,23 @@ namespace wpfASADACore.Views
         #endregion
 
 
-        #region Eventos keydown para que cuando se da enter se carguen las facturas pendientes
-        private async void frmPay_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                if (cmb_Client.SelectedItem != null)
-                {
-                    LoadClientType();
-                    LoadPendingReadings();
-                }
-                else
-                {
-                    await clsUtilities.ShowSnackbarAsync("Por favor, selecciona un cliente antes de cargar las facturas.", new SolidColorBrush(Colors.Yellow));
-                }
-            }
-        }
-        #endregion
+        //#region Eventos keydown para que cuando se da enter se carguen las facturas pendientes
+        //private async void frmPay_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        if (cmb_Client.SelectedItem != null)
+        //        {
+        //            LoadClientType();
+        //            LoadPendingReadings();
+        //        }
+        //        else
+        //        {
+        //            await clsUtilities.ShowSnackbarAsync("Por favor, selecciona un cliente antes de cargar las facturas.", new SolidColorBrush(Colors.Yellow));
+        //        }
+        //    }
+        //}
+        //#endregion
 
 
         #region evento para que cuando se borre el texto del combobox se limpie el datagrid y otras cosas
@@ -139,6 +139,12 @@ namespace wpfASADACore.Views
             }
         }
         #endregion
+
+        private void cmb_ClientPay_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            cmb_Client.IsDropDownOpen = true;
+
+        }
 
 
         #region metodo para cargar el tipo de cliente en los textbox y validaciones por si es local
@@ -161,7 +167,7 @@ namespace wpfASADACore.Views
                     txt_RateExc.IsReadOnly = !isLocal;
                     if (isLocal)
                     {
-                        grd_Local.Background = new SolidColorBrush(Colors.LightGreen);
+                        grd_Local.Background = new SolidColorBrush(Color.FromArgb(150, 198, 235, 197));
                         txt_RateType.Clear();
                         txt_RateExc.Clear();
 
@@ -180,7 +186,7 @@ namespace wpfASADACore.Views
         #region metodo para cargar las lecturas pendientes en el datagrid
         private void LoadPendingReadings()
         {
-            var readings = billingsRepository.GetPendingReadings();
+            var readings = billingsRepository.GetPendingReadings((int)cmb_Client.SelectedValue);
             dtg_Facturas.ItemsSource = readings;
             OpenExpander();
         }
@@ -277,7 +283,7 @@ namespace wpfASADACore.Views
             ClearTextBoxesPays();
             LoadPendingReadings();
             // Limpiar el TextBlock factura
-            txt_RateExc.Text = "";
+            lbl_InvoiceNum.Text = "";
         }
         #endregion
 
@@ -320,8 +326,29 @@ namespace wpfASADACore.Views
                 grd_Local.Background = new SolidColorBrush(Colors.White);
             }
         }
+
         #endregion
 
-
+        #region Eventos keydown para que cuando se da enter se carguen las facturas pendientes
+        private async void cmb_Client_KeyUp(object sender, KeyEventArgs e)
+        {
+                      
+          
+                if (e.Key == Key.Enter)
+                {
+                    if (cmb_Client.SelectedItem != null)
+                    {
+                        LoadClientType();
+                        LoadPendingReadings();
+                    }
+                    else
+                    {
+                        await clsUtilities.ShowSnackbarAsync("Por favor, selecciona un cliente antes de cargar las facturas.", new SolidColorBrush(Colors.Yellow));
+                    }
+                }
+            
+         
+        }
+        #endregion
     }
 }

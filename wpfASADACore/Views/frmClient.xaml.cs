@@ -35,9 +35,13 @@ namespace wpfASADACore.Views
             InitializeComponent();
             clientsRepository = new ClientsRepository();
             typeClientRepository = new TypeClientRepository();
+            // Deshabilitar fechas futuras
+            dtpk_DateReading.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddDays(1), DateTime.MaxValue));
+        
 
-            #region Simplificacion de la verificacion si el texto cambia para habilitar el boton de modificar
-            txt_NewNameCli.TextChanged += Input_Changed;
+
+        #region Simplificacion de la verificacion si el texto cambia para habilitar el boton de modificar
+        txt_NewNameCli.TextChanged += Input_Changed;
             txt_NewFirstNameCli.TextChanged += Input_Changed;
             txt_NewsecondSurnameCli.TextChanged += Input_Changed;
             txt_NewDNICli.TextChanged += Input_Changed;
@@ -85,7 +89,6 @@ namespace wpfASADACore.Views
             tgs_UltimaLectura.IsChecked = false;
             txt_UltimaLectura.Visibility = Visibility.Hidden;
             dtpk_DateReading.Visibility = Visibility.Hidden;
-            txt_Observaciones.Clear();
             copySwitch.IsEnabled = false;
             tgs_UltimaLectura.IsChecked = false;
             dtpk_DateReading.SelectedDate = null;
@@ -224,12 +227,8 @@ namespace wpfASADACore.Views
                     int IdUser = 0; // ID del usuario actual
                     string Remarks = "";
                     bool LecturaActiva = true;
-                    
-                    if (txt_Observaciones.Text == "")
-                    {
-                        Remarks = "Ingreso a Sistema";
-                    }   
-                    
+                    Remarks = "Ingreso a Sistema";
+
 
                     if (tgs_UltimaLectura.IsChecked == true)
                     { 

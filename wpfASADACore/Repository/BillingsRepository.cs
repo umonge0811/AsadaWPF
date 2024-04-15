@@ -70,11 +70,11 @@ namespace wpfASADACore.Repository
         }
 
 
-        public List<clsReading> GetPendingReadings()
+        public List<clsReading> GetPendingReadings(int clientiID)
         {
             using (var db = new ContextDataBase())
             {
-                return db.readings.Where(r => r.Remarks == "Pendiente de Pago").ToList();
+                return db.readings.Where(r => r.Remarks == "Pendiente de Pago" && r.idClient == clientiID).ToList();
             }
         }
 

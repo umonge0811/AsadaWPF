@@ -42,18 +42,19 @@
 
                 <!--#region  Combo Cliente-->
                 <ComboBox x:Name="cmb_Client"  Height="39" Grid.Row="2" IsTextSearchEnabled="True"
-                          materialDesign:ColorZoneAssist.Mode="SecondaryLight"
-                          materialDesign:HintAssist.HelperText="Digita el Número de Abonado"
-                          materialDesign:HintAssist.Hint="Cliente"
-                          materialDesign:TextFieldAssist.HasClearButton="True"
-                          materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"                          
-                          Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                          Margin="38,20,39,20" VerticalAlignment="Top" Grid.Column="2" Grid.RowSpan="2" Width="500" IsEditable="True" KeyDown="frmPay_KeyDown">
-                    <ComboBox.Template>
-                        <ControlTemplate TargetType="ComboBox">
-                            <TextBox x:Name="PART_EditableTextBox" TextChanged="cmb_Client_TextChanged"/>
-                        </ControlTemplate>
-                    </ComboBox.Template>
+                            materialDesign:ColorZoneAssist.Mode="SecondaryLight"
+                            materialDesign:HintAssist.HelperText="Digita el Número de Abonado"
+                            materialDesign:HintAssist.Hint="Cliente"
+                            materialDesign:TextFieldAssist.HasClearButton="True"
+                            materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"                          
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                            Margin="38,20,39,20" VerticalAlignment="Top" Grid.Column="2" Grid.RowSpan="2" Width="500" IsEditable="True"
+                            PreviewTextInput="cmb_ClientPay_PreviewTextInput"
+                            KeyUp="cmb_Client_KeyUp">
+                    <ComboBoxItem IsSelected="True">
+                        <StackPanel Orientation="Horizontal">
+                        </StackPanel>
+                    </ComboBoxItem>
                 </ComboBox>
                 <!--#endregion-->
 
@@ -76,7 +77,7 @@
                 <materialDesign:Card x:Name="grd_Local">
                     <StackPanel Orientation="Vertical">
 
-                        <TextBlock Text="Datos del Cliente" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Datos del Cliente" HorizontalAlignment="Center" Margin="10"/>
                         <StackPanel Orientation="Horizontal" Margin="20,0,20,10" HorizontalAlignment="Center">
                        
                                 <TextBox x:Name="txt_TypeClient"  TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Tipo de Cliente" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="300" Grid.ColumnSpan="2" Margin="10,10,10,10" IsReadOnly="True"/>

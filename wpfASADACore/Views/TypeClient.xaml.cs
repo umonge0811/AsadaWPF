@@ -40,6 +40,7 @@ namespace wpfASADACore.Views
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             CargarDatosTypeClient();
+   
         }
         #endregion
 
@@ -105,12 +106,25 @@ namespace wpfASADACore.Views
         #region Evento click para crear un nuevo tipo de cliente
         private async void btn_CreateNewTypeCli_Click(object sender, RoutedEventArgs e)
         {
+            // Mostrar barra de progreso
+            await clsUtilities.ShowProgressBarAsync(1000);
+
             string NewtypeClient = txt_NewTyCli.Text;
             string NewDescription = txt_NewDescriptionType.Text;
+
+            // Validación de campos vacíos
+            if (string.IsNullOrEmpty(NewtypeClient) && string.IsNullOrEmpty(NewDescription) && string.IsNullOrEmpty(txt_NewRateBaseType.Text) && string.IsNullOrEmpty(txt_NewRateExcType.Text))
+            {
+                await clsUtilities.ShowSnackbarAsync("No hay ningún dato cargado!", new SolidColorBrush(Colors.Yellow));
+                return;
+            }
+
+            
             double RateBase = Convert.ToDouble(txt_NewRateBaseType.Text);
             double RateExtra = Convert.ToDouble(txt_NewRateExcType.Text);
 
             //Error first 
+           
             if (NewtypeClient.Equals(""))
             {
                 await clsUtilities.ShowSnackbarAsync("Debe de ingresar el nombre del tipo de Cliente Valido!", new SolidColorBrush(Colors.Yellow));
@@ -118,16 +132,7 @@ namespace wpfASADACore.Views
                 //MessageBox.Show("Debe de ingresar el nombre del tipo de Cliente Valido");
                 txt_NewTyCli.Focus();
                 return;
-            }
-
-            if (NewDescription.Equals(""))
-            {
-                await clsUtilities.ShowSnackbarAsync("Debe de ingresar la descripcion del tipo de Cliente Valido!", new SolidColorBrush(Colors.Yellow));
-
-                //MessageBox.Show("Debe de ingresar la descripcion del tipo de Cliente Valido");
-                txt_NewDescriptionType.Focus();
-                return;
-            }
+            }            
 
             if (RateBase.Equals(""))
             {
@@ -156,6 +161,7 @@ namespace wpfASADACore.Views
                 ClearAllDataTypeCli();
                 return;
             }
+           
 
             //await es para esperar a que la tarea termine, en este caso, la funcion/Metodo ejecute para que avance a la siguiente tarea 
             bool estado = await typeClientRepository.CreateTypeClient(NewtypeClient, NewDescription, RateBase, RateExtra);

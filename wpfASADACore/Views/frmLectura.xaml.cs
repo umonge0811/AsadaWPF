@@ -29,6 +29,8 @@ namespace wpfASADACore.Views
         public frmLectura()
         {
             InitializeComponent();
+            dtp_Lectura.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddDays(1), DateTime.MaxValue));
+
         }
         private int selectedClientId;
         private int selectedReadingId;
@@ -54,7 +56,7 @@ namespace wpfASADACore.Views
                 }
                 else
                 {
-                    // Mostrar un mensaje de error o realizar alguna otra acción si no hay clientes con lecturas
+                    cmb_Client.DisplayMemberPath = "No hay Lecturas Registradas!";
                 }           
 
         }
@@ -66,7 +68,7 @@ namespace wpfASADACore.Views
             txtLecturaAnterior.Clear();
             txtLecturaActual.Clear();
 
-            // Limpia otros controles aquí...
+            
         }
 
 
@@ -112,13 +114,7 @@ namespace wpfASADACore.Views
                     return;
                 }
 
-                DateTime? currentReadingDate = dtp_Lectura.SelectedDate;
-                if (!currentReadingDate.HasValue || currentReadingDate.Value.Date > DateTime.Today)
-                {
-                    await clsUtilities.ShowSnackbarAsync("Debe seleccionar una fecha de lectura que no sea mayor a la fecha de hoy!", new SolidColorBrush(Colors.Yellow));
-                    dtp_Lectura.Focus();
-                    return;
-                }
+                DateTime? currentReadingDate = dtp_Lectura.SelectedDate;             
 
 
                 // Actualiza la lectura actual
@@ -191,10 +187,12 @@ namespace wpfASADACore.Views
              * Esto significa que puedes buscar por fecha en el formato “MM/dd/yyyy”.*/
         }
 
-        private void cmb_Client_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void cmb_ClientRead_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             cmb_Client.IsDropDownOpen = true;
 
         }
+
+        
     }
 }

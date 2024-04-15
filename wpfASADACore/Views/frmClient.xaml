@@ -103,15 +103,14 @@
                             <TextBox x:Name="txt_UltimaLectura"  TextWrapping="Wrap" Height="35" FontSize="11" Visibility="Hidden"
                                 VerticalAlignment="Top" materialDesign:HintAssist.Hint="Ultima Lectura Medidor"
                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Grid.Column="2" Grid.Row="3" Margin="38,25,39,0"/>
-                            <TextBox x:Name="txt_Observaciones"  TextWrapping="Wrap" Height="35" FontSize="11"
+                            <!--<TextBox x:Name="txt_Observaciones"  TextWrapping="Wrap" Height="35" FontSize="11"
                                 VerticalAlignment="Top" materialDesign:HintAssist.Hint="Observaciones:"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1"  Grid.Row="3" HorizontalAlignment="Left" Width="300" Grid.ColumnSpan="2" Margin="174,85,0,0"/>
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1"  Grid.Row="3" HorizontalAlignment="Left" Width="300" Grid.ColumnSpan="2" Margin="174,85,0,0"/>-->
                             <DatePicker
                                         x:Name="dtpk_DateReading"
-                                      Width="100"
                                       materialDesign:HintAssist.Hint="Pick Date"
                                       materialDesign:TextFieldAssist.HasClearButton="True"
-                                      Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="174,73,74,10" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="3"  Visibility="Hidden"/>
+                                      Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="178,73,222,10" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="3"  Visibility="Hidden" Grid.ColumnSpan="2" />
 
                         </Grid>
                     </ui:Card>
