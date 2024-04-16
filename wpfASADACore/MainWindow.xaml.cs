@@ -76,7 +76,6 @@ namespace wpfASADACore
             //RootNavigation.Navigate(typeof(View.frmUsuarios));
             RootNavigation.Navigate(typeof(Views.frmInicio));
 
-
         }
     }
 }
