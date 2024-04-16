@@ -44,6 +44,11 @@ namespace wpfASADACore.Repository
             }
         }
 
+        public clsReading GetReadingById(int id)
+        {
+            return context.readings.Find(id);
+        }
+
 
         public class ClientWithReading
         {

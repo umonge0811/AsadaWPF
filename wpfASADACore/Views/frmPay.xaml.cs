@@ -29,13 +29,15 @@ namespace wpfASADACore.Views
     public partial class frmPay : Page
     {
         BillingsRepository billingsRepository = new BillingsRepository();
+      ReadingRepository readingRepository = new ReadingRepository();
+
         bool isLocal = false;
 
         public int Id { get; set; }
         public string SubscriberNum { get; set; }
         public string FullName { get; set; }
         public bool Pay { get; set; }
-
+        private int selectedReadingId;  // Añade esta línea
 
 
 
@@ -140,11 +142,14 @@ namespace wpfASADACore.Views
         }
         #endregion
 
+
+        #region evento para qie se despliegue lista de clientes
         private void cmb_ClientPay_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             cmb_Client.IsDropDownOpen = true;
 
         }
+        #endregion        
 
 
         #region metodo para cargar el tipo de cliente en los textbox y validaciones por si es local
@@ -195,6 +200,11 @@ namespace wpfASADACore.Views
         #region evento para que cuando se seleccione una fila del datagrid se carguen los datos en los textbox CALCULOS MATEMATICOS
         private void dtg_Facturas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //mostrar progressbar
+
+
+
+
             var selectedReading = (clsReading)dtg_Facturas.SelectedItem;
             if (selectedReading != null)
             {
@@ -219,11 +229,15 @@ namespace wpfASADACore.Views
                 // Crear una constante para el porcentaje de impuestos
                 const double taxPercentage = 0.0;  // 0% por el momento
 
-                double iva = (rateType + totalM3 * rateExc) * taxPercentage;
-                txt_iva.Text = iva.ToString("P", cultureInfo);
+                double subtotal = rateType + totalM3 * rateExc;
+                double iva = subtotal * taxPercentage;
 
-                double totalPay = rateType + totalM3 * rateExc + iva;
+                // Usar el CultureInfo personalizado para formatear el monto del IVA como moneda
+                txt_iva.Text = iva.ToString("C", cultureInfo);
+
+                double totalPay = subtotal + iva;
                 txt_TotalPay.Text = totalPay.ToString("C", cultureInfo);
+
                 GenerarNumeroFactura();
             }
         }
@@ -255,12 +269,21 @@ namespace wpfASADACore.Views
                 {
                     row.IsEnabled = false;
                 }
-               
+                else
+                {
+                    // Obtén el ID de la lectura seleccionada
+                    var selectedReading = (clsReading)row.Item;
+                    selectedReadingId = selectedReading.id;
+                }
             }
             CloseExpander();
             btnGenerarFactura.IsEnabled = true;
         }
+        #endregion
 
+
+        #region Evento para que se detecte el checkbox de una fila del datagrid
+        // Método para obtener el CheckBox de una fila del DataGrid
         private CheckBox GetCheckBoxFromRow(DataGridRow row)
         {
             var cell = (DataGridCell)dtg_Facturas.Columns[6].GetCellContent(row).Parent;
@@ -350,5 +373,83 @@ namespace wpfASADACore.Views
          
         }
         #endregion
+
+        #region Evento click del boton Generar Factura
+        private async void btnGenerarFactura_Click(object sender, RoutedEventArgs e)
+        {
+            // Mostrar barra de progreso
+            await clsUtilities.ShowProgressBarAsync();
+
+            if (cmb_Client.SelectedItem != null)
+            {
+                if (dtg_Facturas.SelectedItem != null)
+                {
+                    var selectedReading = (clsReading)dtg_Facturas.SelectedItem;
+                    if (selectedReading != null)
+                    {
+                        // Eliminar el símbolo de moneda y los espacios en blanco
+                        string amountIvaText = txt_iva.Text.Replace("¢", "").Trim();
+                        double amountIva = double.Parse(amountIvaText);
+
+                        string amountBaseText = txt_MontoBasePay.Text.Replace("¢", "").Trim();
+                        double amountBase = double.Parse(amountBaseText);
+
+                        string amountExcText = txt_MontoExcPay.Text.Replace("¢", "").Trim();
+                        double amountExc = double.Parse(amountExcText);
+
+                        string totalPayText = txt_TotalPay.Text.Replace("¢", "").Trim();
+                        double totalPay = double.Parse(totalPayText);
+
+                        // Crear una nueva factura
+                        var newBilling = new clsBilling
+                        {
+                            InvoiceNum = lbl_InvoiceNum.Text,
+                            BillingDate = DateTime.Now,
+                            AmountIva = amountIva,
+                            AmountBase = amountBase,
+                            AmountExc = amountExc,
+                            AmountTotal = totalPay,
+                            UserId = 0, // Aquí debes poner el ID del usuario actual
+                            Remarks = "Pagada",
+                            idClient = selectedReading.idClient
+                        };
+
+                        // Guardar la nueva factura en la base de datos
+                        billingsRepository.AddBilling(newBilling);
+
+                        // Actualizar la lectura como pagada
+                        var readingToUpdate = readingRepository.GetReadingById(selectedReadingId);
+                        if (readingToUpdate != null)
+                        {
+                            readingToUpdate.Remarks = "Pagada";
+                            readingToUpdate.ReadActiva = false;
+                            readingRepository.UpdateReading(readingToUpdate);
+                        }
+
+                        // Actualizar el DataGrid
+                        LoadPendingReadings();
+
+                        // Limpiar los TextBoxes
+                        ClearTextBoxesPays();
+
+                        // Limpiar el TextBlock factura
+                        lbl_InvoiceNum.Text = "";
+
+                        // Mostrar un mensaje de éxito
+                        await clsUtilities.ShowSnackbarAsync("La factura se ha generado correctamente.", new SolidColorBrush(Colors.LightGreen));
+                    }
+                }
+                else
+                {
+                    await clsUtilities.ShowSnackbarAsync("Por favor, selecciona una lectura antes de generar la factura.", new SolidColorBrush(Colors.Yellow));
+                }
+            }
+            else
+            {
+                await clsUtilities.ShowSnackbarAsync("Por favor, selecciona un cliente antes de generar la factura.", new SolidColorBrush(Colors.Yellow));
+            }
+        }
+        #endregion
+
     }
 }

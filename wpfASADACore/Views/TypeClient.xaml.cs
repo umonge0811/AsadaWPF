@@ -169,7 +169,7 @@ namespace wpfASADACore.Views
             if (estado)
             {
                 string message = $"{NewtypeClient} fue  registrado con Exito!";
-                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Green));
+                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.LightGreen));
 
                 //MessageBox.Show("Tipo de Cliente registrado con exito!!");
                 ClearAllDataTypeCli();

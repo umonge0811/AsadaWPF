@@ -25,6 +25,32 @@ namespace wpfASADACore.Repository
             context.Database.EnsureCreatedAsync().Wait();
         }
 
+
+        // Método para agregar una factura
+        public async Task AddBilling(clsBilling billing)
+        {
+            context.billings.Add(billing);
+            await context.SaveChangesAsync();
+        }
+
+        // Método para actualizar la lectura como pagada
+        public async Task UpdateReadingAsPaid(clsReading reading)
+        {
+            var readingToUpdate = context.readings.Find(reading.id);
+            if (readingToUpdate != null)
+            {
+                readingToUpdate.Remarks = "Pagado";
+                context.readings.Update(readingToUpdate);
+                await context.SaveChangesAsync();
+          
+            
+            }
+        }
+
+        public clsReading GetReadingById(int id)
+        {
+            return context.readings.Find(id);
+        }
         public class ClientWithBilling
         {
             public int Id { get; set; }
