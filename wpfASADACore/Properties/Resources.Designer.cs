@@ -59,5 +59,35 @@ namespace wpfASADACore.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///&lt;head&gt;
+        ///    &lt;title&gt;Factura&lt;/title&gt;
+        ///    &lt;style&gt;
+        ///        table {
+        ///            width: 100%;
+        ///            border-collapse: collapse;
+        ///        }
+        ///        th, td {
+        ///            border: 1px solid black;
+        ///            padding: 15px;
+        ///            text-align: left;
+        ///        }
+        ///    &lt;/style&gt;
+        ///&lt;/head&gt;
+        ///&lt;body&gt;
+        ///    &lt;h2&gt;Factura No: {InvoiceNum}&lt;/h2&gt;
+        ///    &lt;p&gt;Fecha: {BillingDate}&lt;/p&gt;
+        ///    &lt;h3&gt;Detalles del Cliente&lt;/h3&gt;
+        ///    &lt;p&gt;ID del Cliente: {idClient}&lt;/p&gt;
+        ///    &lt;p&gt;Nombre del Cliente: {ClientName} { [resto de la cadena truncado]&quot;;.
+        /// </summary>
+        internal static string facturaAsada {
+            get {
+                return ResourceManager.GetString("facturaAsada", resourceCulture);
+            }
+        }
     }
 }

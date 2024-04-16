@@ -40,8 +40,8 @@ namespace wpfASADACore.Views
         
 
 
-        #region Simplificacion de la verificacion si el texto cambia para habilitar el boton de modificar
-        txt_NewNameCli.TextChanged += Input_Changed;
+            #region Simplificacion de la verificacion si el texto cambia para habilitar el boton de modificar
+            txt_NewNameCli.TextChanged += Input_Changed;
             txt_NewFirstNameCli.TextChanged += Input_Changed;
             txt_NewsecondSurnameCli.TextChanged += Input_Changed;
             txt_NewDNICli.TextChanged += Input_Changed;

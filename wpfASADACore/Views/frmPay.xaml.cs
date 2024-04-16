@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,7 +21,13 @@ using wpfASADACore.Models;
 using wpfASADACore.Repository;
 using wpfASADACore.Services;
 using wpfASADACore.Utilities;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
+using Document = iTextSharp.text.Document;
 using static wpfASADACore.Repository.ReadingRepository;
+using System.Net.Sockets;
+using static wpfASADACore.Repository.BillingsRepository;
 
 
 namespace wpfASADACore.Views
@@ -47,25 +56,30 @@ namespace wpfASADACore.Views
             InitializeComponent();
         }
 
-
-
-        #region Eventos loaded 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private void CargarCmbClient()
         {
             var db = new BillingsRepository();
             var clients = db.GetClientsWithReadings("Pendiente de Pago");
             if (clients.Count > 0)
             {
-                cmb_Client.Items.Clear(); // Vacía la colección Items
-                cmb_Client.ItemsSource = clients;
+                cmb_Client.ItemsSource = null; // Limpia la colección existente
+                cmb_Client.ItemsSource = clients; // Vuelve a vincularla con los nuevos datos
                 cmb_Client.DisplayMemberPath = "DisplayText";
                 cmb_Client.SelectedValuePath = "Id";
             }
             else
             {
-                // Mostrar un mensaje de error o realizar alguna otra acción si no hay clientes con lecturas
+                cmb_Client.Background = new SolidColorBrush(Colors.LightGreen);
+                cmb_Client.Text = "No hay clientes con Lecturas Pendientes de Pago.";
+                btnCargarFact.IsEnabled = false;
             }
-           
+        }
+
+
+        #region Eventos loaded 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            CargarCmbClient();
         }
         #endregion
 
@@ -143,7 +157,7 @@ namespace wpfASADACore.Views
         #endregion
 
 
-        #region evento para qie se despliegue lista de clientes
+        #region evento para que se despliegue lista de clientes
         private void cmb_ClientPay_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             cmb_Client.IsDropDownOpen = true;
@@ -197,17 +211,12 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-        #region evento para que cuando se seleccione una fila del datagrid se carguen los datos en los textbox CALCULOS MATEMATICOS
-        private void dtg_Facturas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void RealizarCalculos()
         {
-            //mostrar progressbar
-
-
-
-
             var selectedReading = (clsReading)dtg_Facturas.SelectedItem;
             if (selectedReading != null)
             {
+
                 // Pasar la información de la lectura a los cuadros de texto
                 txt_LecturaAnt.Text = selectedReading.lastRead.ToString();
                 txt_LecturaAct.Text = selectedReading.CurrentRead.ToString();
@@ -241,7 +250,40 @@ namespace wpfASADACore.Views
                 GenerarNumeroFactura();
             }
         }
+
+
+        #region evento para que cuando se seleccione una fila del datagrid se carguen los datos en los textbox CALCULOS MATEMATICOS
+        private async void dtg_Facturas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (txt_TypeClient.Text == "Local" && (txt_RateType.Text == "" || txt_RateExc.Text == ""))
+            {
+                await clsUtilities.ShowSnackbarAsync("Debes Ingresar las Tarifas de cobro.", new SolidColorBrush(Colors.Yellow));
+                exp_Facturas.IsExpanded = false;
+                txt_RateType.Focus();
+
+                // Obtén la fila seleccionada
+                var selectedRow = (DataGridRow)dtg_Facturas.ItemContainerGenerator.ContainerFromItem(dtg_Facturas.SelectedItem);
+
+                // Obtén el CheckBox de la fila seleccionada
+                var checkBox = GetCheckBoxFromRow(selectedRow);
+
+                // Desmarca el CheckBox
+                if (checkBox != null)
+                {
+                    checkBox.IsChecked = false;
+                }
+
+                return;
+            }
+            else
+            {
+                RealizarCalculos();
+            }
+        }
         #endregion
+
+
+
 
         #region Metodo para hacer limpieza de los textbox
         private void ClearTextBoxesPays()
@@ -253,6 +295,12 @@ namespace wpfASADACore.Views
             txt_MontoExcPay.Text = string.Empty;
             txt_iva.Text = string.Empty;
             txt_TotalPay.Text = string.Empty;
+            txt_TypeClient.Text = string.Empty;
+            txt_RateType.Text = string.Empty;
+            txt_RateExc.Text = string.Empty;
+            grd_Local.Background = new SolidColorBrush(Colors.White);
+            exp_Facturas.IsExpanded = false;
+            CargarCmbClient();
         }
         #endregion
 
@@ -348,6 +396,10 @@ namespace wpfASADACore.Views
             {
                 grd_Local.Background = new SolidColorBrush(Colors.White);
             }
+            else
+            {
+                grd_Local.Background = new SolidColorBrush(Colors.Green);
+            }
         }
 
         #endregion
@@ -387,6 +439,10 @@ namespace wpfASADACore.Views
                     var selectedReading = (clsReading)dtg_Facturas.SelectedItem;
                     if (selectedReading != null)
                     {
+                        string dateLastReading = selectedReading.DateLastReading.ToString("dd/MM/yyyy");
+                        string currentReadingDate = selectedReading.CurrentReadingDate.ToString("dd/MM/yyyy");
+                        string totalConsumption = selectedReading.TotalConsumption.ToString();
+                        string typeClient= txt_TypeClient.Text;
                         // Eliminar el símbolo de moneda y los espacios en blanco
                         string amountIvaText = txt_iva.Text.Replace("¢", "").Trim();
                         double amountIva = double.Parse(amountIvaText);
@@ -412,8 +468,10 @@ namespace wpfASADACore.Views
                             UserId = 0, // Aquí debes poner el ID del usuario actual
                             Remarks = "Pagada",
                             idClient = selectedReading.idClient
-                        };
+                          
 
+                        };
+                        
                         // Guardar la nueva factura en la base de datos
                         billingsRepository.AddBilling(newBilling);
 
@@ -437,6 +495,8 @@ namespace wpfASADACore.Views
 
                         // Mostrar un mensaje de éxito
                         await clsUtilities.ShowSnackbarAsync("La factura se ha generado correctamente.", new SolidColorBrush(Colors.LightGreen));
+                        // Generar el PDF de la factura
+                        GenerarFacturaPdf(newBilling, dateLastReading, currentReadingDate, totalConsumption, typeClient);
                     }
                 }
                 else
@@ -450,6 +510,59 @@ namespace wpfASADACore.Views
             }
         }
         #endregion
+
+        private void GenerarFacturaPdf(clsBilling billing, string dateLastReading, string currentReadingDate,string totalConsumption, string typeClient)
+        {
+            var billingDetails = billingsRepository.GetBillingDetails(billing.id);
+            SaveFileDialog savefile = new SaveFileDialog();
+            savefile.FileName = string.Format("Cobro de Recibo Agua " + "Factura_{0}_Abonado_{1}.pdf", billing.InvoiceNum, billingDetails.Client.SubscriberNum);
+            if (savefile.ShowDialog() == true)
+            {
+                var billingsRepository = new BillingsRepository();
+               
+
+                string htmlTemplate = Properties.Resources.facturaAsada.ToString();
+
+                if (billing != null && billingDetails != null)
+                {                  
+
+                    htmlTemplate = htmlTemplate.Replace("{InvoiceNum}", billing.InvoiceNum);
+                    htmlTemplate = htmlTemplate.Replace("{BillingDate}", billing.BillingDate.ToString());
+                    htmlTemplate = htmlTemplate.Replace("{AmountIva}", billing.AmountIva.ToString());
+                    htmlTemplate = htmlTemplate.Replace("{AmountBase}",billing.AmountBase.ToString());
+                    htmlTemplate = htmlTemplate.Replace("{AmountExc}", billing.AmountExc.ToString());
+                    htmlTemplate = htmlTemplate.Replace("{AmountTotal}",  billing.AmountTotal.ToString());
+                    htmlTemplate = htmlTemplate.Replace("{Remarks}", billing.Remarks);
+                    htmlTemplate = htmlTemplate.Replace("{idClient}", billing.idClient.ToString());
+                    htmlTemplate = htmlTemplate.Replace("{ClientName}", billingDetails.Client.name);
+                    htmlTemplate = htmlTemplate.Replace("{ClientLastName}", billingDetails.Client.lastName);
+                    htmlTemplate = htmlTemplate.Replace("{ClientSecondSurname}", billingDetails.Client.secondSurname);
+                    htmlTemplate = htmlTemplate.Replace("{ClientDNI}", billingDetails.Client.DNI);
+                    htmlTemplate = htmlTemplate.Replace("{ClientSubscriberNum}", billingDetails.Client.SubscriberNum);
+                    htmlTemplate = htmlTemplate.Replace("{TypeClientId}",typeClient);
+                    htmlTemplate = htmlTemplate.Replace("{DateLastReading}", dateLastReading);
+                    htmlTemplate = htmlTemplate.Replace("{CurrentReadingDate}", currentReadingDate);
+                    htmlTemplate = htmlTemplate.Replace("{TotalConsumption}", totalConsumption);
+
+                    using (FileStream stream = new FileStream(savefile.FileName, FileMode.Create))
+                    {
+                        Document pdfDoc = new Document(PageSize.A4);
+                        PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
+                        pdfDoc.Open();
+                        pdfDoc.Add(new Phrase(""));
+
+                        using (StringReader sr = new StringReader(htmlTemplate))
+                        {
+                            XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                        }
+
+                        pdfDoc.Close();
+                        stream.Close();
+                    }
+                }
+            }
+        }
+
 
     }
 }

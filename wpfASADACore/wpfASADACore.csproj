@@ -13,10 +13,13 @@
     <None Remove="Images\key-icon.png" />
     <None Remove="Images\LogoAsada2.png" />
     <None Remove="Images\user-icon.png" />
+    <None Remove="water-system.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
+    <PackageReference Include="itextsharp.xmlworker" Version="5.5.13" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
@@ -51,6 +54,7 @@
     <Resource Include="Images\user-icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="water-system.png" />
   </ItemGroup>
 
 </Project>

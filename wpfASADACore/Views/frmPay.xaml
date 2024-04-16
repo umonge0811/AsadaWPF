@@ -51,10 +51,6 @@
                             Margin="38,20,39,20" VerticalAlignment="Top" Grid.Column="2" Grid.RowSpan="2" Width="500" IsEditable="True"
                             PreviewTextInput="cmb_ClientPay_PreviewTextInput"
                             KeyUp="cmb_Client_KeyUp">
-                    <ComboBoxItem IsSelected="True">
-                        <StackPanel Orientation="Horizontal">
-                        </StackPanel>
-                    </ComboBoxItem>
                 </ComboBox>
                 <!--#endregion-->
 

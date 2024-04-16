@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Factura</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 15px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h2>Factura No: {InvoiceNum}</h2>
+    <p>Fecha: {BillingDate}</p>
+    <h3>Detalles del Cliente</h3>
+    <p>ID del Cliente: {idClient}</p>
+    <p>Nombre del Cliente: {ClientName} {ClientLastName} {ClientSecondSurname}</p>
+    <p>Identificación del Cliente: {ClientDNI}</p>
+    <p>Número de Suscriptor: {ClientSubscriberNum}</p>
+    <p>Tipo de Cliente: {TypeClientId}</p>
+    <h3>Detalles de la Lectura</h3>
+    <p>Fecha de la Lectura Anterior: {DateLastReading}</p>
+    <p>Fecha de la Lectura Actual: {CurrentReadingDate}</p>
+    <p>Cantidad de M3: {TotalConsumption}</p>
+    <h3>Detalles de la Factura</h3>
+    <table>
+        <tr>
+            <th>Descripción</th>
+            <th>Monto</th>
+        </tr>
+        <tr>
+            <td>Tarifa Base</td>
+            <td>¢{AmountBase}</td>
+        </tr>
+        <tr>
+            <td>Tarifa Excedente</td>
+            <td>¢{AmountExc}</td>
+        </tr>
+        <tr>
+            <td>IVA</td>
+            <td>¢{AmountIva}</td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td>¢{AmountTotal}</td>
+        </tr>
+    </table>
+    <h3>Detalles del Establecimiento</h3>
+    <p>Aquí puedes agregar información sobre el establecimiento, como la dirección, el número de teléfono, el horario de atención, etc.</p>
+</body>
+</html>

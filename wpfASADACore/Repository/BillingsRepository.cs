@@ -104,6 +104,26 @@ namespace wpfASADACore.Repository
             }
         }
 
+        public class BillingDetails
+        {
+            public clsBilling Billing { get; set; }
+            public clsCliente Client { get; set; }
+            public clsReading Reading { get; set; }
+        }
+
+        public BillingDetails GetBillingDetails(int billingId)
+        {
+            var billing = context.billings.Include(b => b.Client).ThenInclude(c => c.TypeClient).FirstOrDefault(b => b.id == billingId);
+            var reading = context.readings.FirstOrDefault(r => r.idClient == billing.idClient && r.CurrentReadingDate == billing.BillingDate);
+
+            return new BillingDetails
+            {
+                Billing = billing,
+                Client = billing.Client,
+                Reading = reading
+            };
+        }
+
 
 
 

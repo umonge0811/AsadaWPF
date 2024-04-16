@@ -25,6 +25,7 @@ namespace wpfASADACore
             InitializeComponent();
             //_ = CrearUsuario();
             lbl_FechaPrincipal.Text = DateTime.Now.ToString("U");
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         }
 
 
