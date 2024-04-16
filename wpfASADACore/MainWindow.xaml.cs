@@ -22,7 +22,8 @@ namespace wpfASADACore
     {
         public MainWindow()
         {
-            InitializeComponent();
+
+            InitializeComponent();           
             //_ = CrearUsuario();
             lbl_FechaPrincipal.Text = DateTime.Now.ToString("U");
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
@@ -68,6 +69,14 @@ namespace wpfASADACore
         private void nvLecturas_Click(object sender, RoutedEventArgs e)
         {
             RootNavigation.Navigate(typeof(Views.frmLectura));
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //RootNavigation.Navigate(typeof(View.frmUsuarios));
+            RootNavigation.Navigate(typeof(Views.frmInicio));
+
+
         }
     }
 }

@@ -14,6 +14,7 @@
     <None Remove="Images\key-icon.png" />
     <None Remove="Images\LogoAsada2.png" />
     <None Remove="Images\user-icon.png" />
+    <None Remove="Views\close-up-view-nature-concept.jpg" />
     <None Remove="water-system.png" />
   </ItemGroup>
 
@@ -57,6 +58,7 @@
     <Resource Include="Images\user-icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Views\close-up-view-nature-concept.jpg" />
     <Resource Include="water-system.png" />
   </ItemGroup>
 
