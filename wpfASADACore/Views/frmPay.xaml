@@ -181,7 +181,8 @@
                 
                 <StackPanel Grid.Row="2" HorizontalAlignment="Center">
                     <WrapPanel>
-                        <TextBox x:Name="txt_TotalPay"   TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Total a Pagar" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="300" Grid.ColumnSpan="2" Margin="10,10,10,10"/>
+                        <TextBox x:Name="txt_MontoRec"   TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Monto Reconexión" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="300" Grid.ColumnSpan="2" Margin="10,10,10,10"/>
+                        <TextBox x:Name="txt_TotalPay"   TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Total a Pagar" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="300"/>
                     </WrapPanel>
                 </StackPanel>
                 

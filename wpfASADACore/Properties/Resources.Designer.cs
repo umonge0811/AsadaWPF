@@ -89,5 +89,125 @@ namespace wpfASADACore.Properties {
                 return ResourceManager.GetString("facturaAsada", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///&lt;head&gt;
+        ///  &lt;title&gt;Factura&lt;/title&gt;
+        ///  &lt;style&gt;
+        ///    /* Fuente y tamaño de letra */
+        ///    body {
+        ///      font-family: Arial, sans-serif;
+        ///      font-size: 16px;
+        ///    }
+        ///
+        ///    /* Colores y contraste */
+        ///    body {
+        ///      background-color: #f5f5f5;
+        ///      color: #333;
+        ///    }
+        ///
+        ///    /* Alineación y espaciado */
+        ///    table {
+        ///      width: 100%;
+        ///      border-collapse: collapse;
+        ///      margin-bottom: 20px;
+        ///    }
+        ///
+        ///    th, td {
+        ///      padding: 10px;
+        ///      text-align: left;
+        ///    }
+        ///
+        ///    /* U [resto de la cadena truncado]&quot;;.
+        /// </summary>
+        internal static string facturaAsada2 {
+            get {
+                return ResourceManager.GetString("facturaAsada2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///&lt;head&gt;
+        ///  &lt;title&gt;Factura&lt;/title&gt;
+        ///  &lt;style&gt;
+        ///    body {
+        ///      font-family: &apos;Roboto&apos;, sans-serif;
+        ///      margin: 0;
+        ///      padding: 20px;
+        ///      background-color: #f5f5f5;
+        ///      color: #333;
+        ///    }
+        ///
+        ///    .invoice-container {
+        ///      max-width: 800px;
+        ///      margin: 0 auto;
+        ///      background-color: white;
+        ///      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        ///      padding: 30px;
+        ///    }
+        ///
+        ///    h2, h3 {
+        ///      text-align: center;
+        ///      margin-bottom: 20px;
+        ///    }
+        ///
+        ///    table {
+        ///      wid [resto de la cadena truncado]&quot;;.
+        /// </summary>
+        internal static string facturaAsada3 {
+            get {
+                return ResourceManager.GetString("facturaAsada3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///&lt;head&gt;
+        ///  &lt;title&gt;Factura&lt;/title&gt;
+        ///  &lt;style&gt;
+        ///    body {
+        ///      font-family: Arial, sans-serif;
+        ///      margin: 0;
+        ///      padding: 0;
+        ///      background-color: #f4f4f4;
+        ///    }
+        ///
+        ///    .invoice-header, .invoice-footer {
+        ///      background-color: #333;
+        ///      color: #fff;
+        ///      padding: 20px;
+        ///      text-align: center;
+        ///    }
+        ///
+        ///    .invoice-header h2 {
+        ///      margin: 0;
+        ///    }
+        ///
+        ///    .invoice-content {
+        ///      max-width: 800px;
+        ///      margin: 20px auto;
+        ///      background-color: #fff;
+        ///    [resto de la cadena truncado]&quot;;.
+        /// </summary>
+        internal static string facturaAsada4 {
+            get {
+                return ResourceManager.GetString("facturaAsada4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Byte[].
+        /// </summary>
+        internal static byte[] water_system {
+            get {
+                object obj = ResourceManager.GetObject("water_system", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

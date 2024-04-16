@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Factura</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .invoice-header, .invoice-footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .invoice-header h2 {
+      margin: 0;
+    }
+
+    .invoice-content {
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .total-row {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="invoice-header">
+    <h2>Factura No: {InvoiceNum}</h2>
+  </div>
+
+  <div class="invoice-content">
+    <p>Fecha: {BillingDate}</p>
+
+    <h3>Detalles del Cliente</h3>
+    <table>
+      <tr>
+        <th>ID del Cliente</th>
+        <td>{idClient}</td>
+      </tr>
+      <tr>
+        <th>Nombre del Cliente</th>
+        <td>{ClientName} {ClientLastName} {ClientSecondSurname}</td>
+      </tr>
+      <tr>
+        <th>Identificación del Cliente</th>
+        <td>{ClientDNI}</td>
+      </tr>
+      <tr>
+        <th>Número de Suscriptor</th>
+        <td>{ClientSubscriberNum}</td>
+      </tr>
+      <tr>
+        <th>Tipo de Cliente</th>
+        <td>{TypeClientId}</td>
+      </tr>
+    </table>
+
+    <h3>Detalles de la Lectura</h3>
+    <table>
+      <tr>
+        <th>Fecha de la Lectura Anterior</th>
+        <td>{DateLastReading}</td>
+      </tr>
+      <tr>
+        <th>Fecha de la Lectura Actual</th>
+        <td>{CurrentReadingDate}</td>
+      </tr>
+      <tr>
+        <th>Cantidad de M3</th>
+        <td>{TotalConsumption}</td>
+      </tr>
+    </table>
+
+    <h3>Detalles de la Factura</h3>
+    <table>
+      <tr>
+        <th>Descripción</th>
+        <th>Monto</th>
+      </tr>
+      <tr>
+        <td>Tarifa Base</td>
+        <td>¢{AmountBase}</td>
+      </tr>
+      <tr>
+        <td>Tarifa Excedente</td>
+        <td>¢{AmountExc}</td>
+      </tr>
+      <tr>
+        <td>IVA</td>
+        <td>¢{AmountIva}</td>
+      </tr>
+      <tr class="total-row">
+        <td>Total</td>
+        <td>¢{AmountTotal}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="invoice-footer">
+    <p>Gracias por su preferencia.</p>
+  </div>
+</body>
+</html>

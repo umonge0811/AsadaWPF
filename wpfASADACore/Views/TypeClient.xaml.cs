@@ -106,9 +106,11 @@ namespace wpfASADACore.Views
         #region Evento click para crear un nuevo tipo de cliente
         private async void btn_CreateNewTypeCli_Click(object sender, RoutedEventArgs e)
         {
+
             // Mostrar barra de progreso
             await clsUtilities.ShowProgressBarAsync(1000);
-
+            double RateBase = 0;
+            double RateExtra = 0;
             string NewtypeClient = txt_NewTyCli.Text;
             string NewDescription = txt_NewDescriptionType.Text;
 
@@ -119,9 +121,18 @@ namespace wpfASADACore.Views
                 return;
             }
 
+            if (txt_NewRateBaseType.Text == "" && txt_NewRateExcType.Text == "")
+            {
+                 RateBase = 0;
+                 RateExtra = 0;
+
+            }
+            else
+            {
+                RateBase = Convert.ToDouble(txt_NewRateBaseType.Text);
+                RateExtra = Convert.ToDouble(txt_NewRateExcType.Text);
+            }
             
-            double RateBase = Convert.ToDouble(txt_NewRateBaseType.Text);
-            double RateExtra = Convert.ToDouble(txt_NewRateExcType.Text);
 
             //Error first 
            

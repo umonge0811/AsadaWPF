@@ -55,7 +55,7 @@ namespace wpfASADACore.Views
         {
             InitializeComponent();
         }
-
+        #region para cargar el Combobox de Clientes con lexturas pendientes de pago
         private void CargarCmbClient()
         {
             var db = new BillingsRepository();
@@ -74,6 +74,7 @@ namespace wpfASADACore.Views
                 btnCargarFact.IsEnabled = false;
             }
         }
+        #endregion
 
 
         #region Eventos loaded 
@@ -211,11 +212,15 @@ namespace wpfASADACore.Views
         }
         #endregion
 
+        #region Metodo para realizar los calculos matematicos
         private void RealizarCalculos()
         {
             var selectedReading = (clsReading)dtg_Facturas.SelectedItem;
             if (selectedReading != null)
             {
+                // Obtener la fecha actual
+                DateTime currentDate = DateTime.Now;
+                double totalRec = 0;               
 
                 // Pasar la información de la lectura a los cuadros de texto
                 txt_LecturaAnt.Text = selectedReading.lastRead.ToString();
@@ -226,10 +231,28 @@ namespace wpfASADACore.Views
                 double rateType = double.Parse(txt_RateType.Text);
                 double rateExc = double.Parse(txt_RateExc.Text);
                 double totalM3 = double.Parse(txt_TotalM3.Text);
+           
 
                 // Crear un CultureInfo personalizado con el símbolo de moneda establecido en ¢
                 var cultureInfo = new CultureInfo(CultureInfo.CurrentCulture.Name);
                 cultureInfo.NumberFormat.CurrencySymbol = "¢";
+
+                // Verificar si la fecha actual es posterior al día 8 del mes
+                if (currentDate.Day > 8)
+                {
+                    // Si es así, agrega el monto por reconexión
+                    double reconnectionFee = 2000; // se cambia esto por el monto que se desee cobrar por reconexión
+                    totalRec += reconnectionFee;
+
+                    // Actualizar el cuadro de texto txt_MontoRec con el nuevo total
+                    txt_MontoRec.Text = totalRec.ToString("C", cultureInfo);
+                }
+                else
+                {
+                    // Si no es así, establece el monto por reconexión en 0
+                    txt_MontoRec.Text = "¢0";
+                }
+                
 
                 // Usar el CultureInfo personalizado para formatear los números como moneda
                 txt_MontoBasePay.Text = rateType.ToString("C", cultureInfo);
@@ -244,12 +267,13 @@ namespace wpfASADACore.Views
                 // Usar el CultureInfo personalizado para formatear el monto del IVA como moneda
                 txt_iva.Text = iva.ToString("C", cultureInfo);
 
-                double totalPay = subtotal + iva;
+                double totalPay = subtotal + iva + totalRec;
                 txt_TotalPay.Text = totalPay.ToString("C", cultureInfo);
 
                 GenerarNumeroFactura();
             }
         }
+        #endregion
 
 
         #region evento para que cuando se seleccione una fila del datagrid se carguen los datos en los textbox CALCULOS MATEMATICOS
@@ -281,8 +305,6 @@ namespace wpfASADACore.Views
             }
         }
         #endregion
-
-
 
 
         #region Metodo para hacer limpieza de los textbox
@@ -439,6 +461,7 @@ namespace wpfASADACore.Views
                     var selectedReading = (clsReading)dtg_Facturas.SelectedItem;
                     if (selectedReading != null)
                     {
+
                         string dateLastReading = selectedReading.DateLastReading.ToString("dd/MM/yyyy");
                         string currentReadingDate = selectedReading.CurrentReadingDate.ToString("dd/MM/yyyy");
                         string totalConsumption = selectedReading.TotalConsumption.ToString();
@@ -456,6 +479,10 @@ namespace wpfASADACore.Views
                         string totalPayText = txt_TotalPay.Text.Replace("¢", "").Trim();
                         double totalPay = double.Parse(totalPayText);
 
+                        string totalRecText = txt_MontoRec.Text.Replace("¢", "").Trim();
+                        double totalRec = double.Parse(totalRecText);
+
+
                         // Crear una nueva factura
                         var newBilling = new clsBilling
                         {
@@ -467,13 +494,15 @@ namespace wpfASADACore.Views
                             AmountTotal = totalPay,
                             UserId = 0, // Aquí debes poner el ID del usuario actual
                             Remarks = "Pagada",
-                            idClient = selectedReading.idClient
-                          
+                            idClient = selectedReading.idClient,
+                            AmountRec = totalRec,
+
+
 
                         };
-                        
+
                         // Guardar la nueva factura en la base de datos
-                        billingsRepository.AddBilling(newBilling);
+                        await billingsRepository.AddBilling(newBilling);
 
                         // Actualizar la lectura como pagada
                         var readingToUpdate = readingRepository.GetReadingById(selectedReadingId);
@@ -511,6 +540,8 @@ namespace wpfASADACore.Views
         }
         #endregion
 
+
+        #region Metodo para imprimir la factura en PDF
         private void GenerarFacturaPdf(clsBilling billing, string dateLastReading, string currentReadingDate,string totalConsumption, string typeClient)
         {
             var billingDetails = billingsRepository.GetBillingDetails(billing.id);
@@ -532,6 +563,7 @@ namespace wpfASADACore.Views
                     htmlTemplate = htmlTemplate.Replace("{AmountBase}",billing.AmountBase.ToString());
                     htmlTemplate = htmlTemplate.Replace("{AmountExc}", billing.AmountExc.ToString());
                     htmlTemplate = htmlTemplate.Replace("{AmountTotal}",  billing.AmountTotal.ToString());
+                    htmlTemplate = htmlTemplate.Replace("{AmountRec}", billing.AmountRec.ToString());
                     htmlTemplate = htmlTemplate.Replace("{Remarks}", billing.Remarks);
                     htmlTemplate = htmlTemplate.Replace("{idClient}", billing.idClient.ToString());
                     htmlTemplate = htmlTemplate.Replace("{ClientName}", billingDetails.Client.name);
@@ -551,6 +583,7 @@ namespace wpfASADACore.Views
                         pdfDoc.Open();
                         pdfDoc.Add(new Phrase(""));
 
+                        
                         using (StringReader sr = new StringReader(htmlTemplate))
                         {
                             XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
@@ -562,6 +595,7 @@ namespace wpfASADACore.Views
                 }
             }
         }
+        #endregion
 
 
     }
