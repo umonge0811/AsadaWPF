@@ -21,11 +21,11 @@ namespace wpfASADACore.Repository
             context.Database.EnsureCreatedAsync().Wait();
         }
 
-        public async Task<bool> CreateReading(DateTime fechaLecturaAnterior, DateTime dateCurrentReading, int totalConsumption, int lecturaAnterior, int LecturaActual, string Remarks, bool LecturaActiva, int IdUser, int idClient, int typeclientId)
+        public async Task<bool> CreateReading(DateTime fechaLecturaAnterior, DateTime dateCurrentReading, int totalConsumption, int lecturaAnterior, int LecturaActual, string Remarks, bool LecturaActiva, int IdUser, int idClient, int typeclientId, bool IsChecked)
         {
             using (var db = new ContextDataBase())
             {
-                clsReading LecturaInicial = new clsReading(fechaLecturaAnterior, dateCurrentReading, totalConsumption, lecturaAnterior, LecturaActual, Remarks, LecturaActiva, IdUser, idClient, typeclientId);
+                clsReading LecturaInicial = new clsReading(fechaLecturaAnterior, dateCurrentReading, totalConsumption, lecturaAnterior, LecturaActual, Remarks, LecturaActiva, IdUser, idClient, typeclientId, IsChecked);
                 db.readings.Add(LecturaInicial);
 
                 await db.SaveChangesAsync();

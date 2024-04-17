@@ -21,15 +21,18 @@ namespace wpfASADACore.Models
         public int UserId { get; set; } //id del usuario que realizo el ingreso del de la primera lectura
         public int idClient { get; set; }  //  La propiedad ClientId es la clave foránea que se relaciona con la tabla de clientes.
         public int TypeClientId { get; set; }  //  La propiedad TypeClientId es la clave foránea que se relaciona con la tabla de tipos de cliente.
+        public bool IsChecked { get; set; }
 
         public clsCliente? Client { get; set; }  // La propiedad Client es una propiedad de navegación que  permite acceder al objeto de cliente relacionado.
         public clsTypeClient? TypeClient { get; set; }  // La propiedad TypeClient es una propiedad de navegación que  permite acceder al objeto de tipo de cliente relacionado.
 
         public clsReading()
         {
+            IsChecked = false;
+
         }
 
-        public clsReading(DateTime dateLastReading, DateTime dateCurrentReading, int totalConsumption, int lastRead, int currentRead, string? remarks, bool readActiva,int IdUser, int idClient, int typeclientId)
+        public clsReading(DateTime dateLastReading, DateTime dateCurrentReading, int totalConsumption, int lastRead, int currentRead, string? remarks, bool readActiva,int IdUser, int idClient, int typeclientId, bool isChecked)
         {           
             DateLastReading = dateLastReading;
             CurrentReadingDate = dateCurrentReading;
@@ -40,8 +43,9 @@ namespace wpfASADACore.Models
             ReadActiva = readActiva;
             UserId = IdUser;
             this.idClient = idClient;
-            TypeClientId = typeclientId; 
-        }
+            TypeClientId = typeclientId;
+        IsChecked = isChecked;
+    }
 
 
 

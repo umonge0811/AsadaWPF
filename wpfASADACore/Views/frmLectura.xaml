@@ -9,7 +9,7 @@
       xmlns:local="clr-namespace:wpfASADACore.Views"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="1200"
-      Title="frmLectura" Background="WhiteSmoke" Loaded="Page_Loaded">
+      Title="frmLectura" Background="WhiteSmoke" Loaded="Page_Loaded" MinHeight="535" MinWidth="1100">
 
     <Grid>
 
@@ -31,7 +31,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
+            <WrapPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <TextBlock Text="Seleccionar Cliente:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="30,10,20,9"/>
 
                 <!--#region  Combo Cliente-->
@@ -54,7 +54,7 @@
 
                 <ui:Button x:Name="btnCargarLectura" Content="Cargar Lectura" Appearance="Dark"   Margin="0,0,10,0" Grid.Row="1" Click="btnCargarLectura_Click" />
 
-            </StackPanel>
+            </WrapPanel>
 
 
             <WrapPanel Grid.Row="1"  HorizontalAlignment="Center">
@@ -74,62 +74,72 @@
         <Grid Grid.Row="2" Margin="10">
             <!--<materialDesign:Card Grid.Row="1" Margin="20,0,20,20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" materialDesign:ElevationAssist.Elevation="Dp2">-->
 
-                <StackPanel>
+                <StackPanel Orientation="Vertical">
 
-                <StackPanel>
-                    <Grid Margin="0,10,0,0">
-                        <TextBlock Text="Busqueda de Lecturas" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
-                    </Grid>
-                    <Expander   HorizontalAlignment="Center" Header="Filtros">
-                        <StackPanel Margin="24,8,24,16"  Orientation="Vertical"  TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
-                         
+                    <StackPanel>
+                        <WrapPanel Margin="0,10,0,0" HorizontalAlignment="Center">
+                            <TextBlock Text="Busqueda de Lecturas" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                        </WrapPanel>
+                        
+                        <Expander   HorizontalAlignment="Center" Header="Filtros">
+                            <StackPanel Margin="24,8,24,16"  Orientation="Vertical"  TextBlock.Foreground="{DynamicResource MaterialDesignBody}">                         
 
-                            <ui:Card VerticalAlignment="Top" Margin="0,10,0,0" HorizontalAlignment="Center">
-                                <Grid HorizontalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition Width="300" />
-                                        <ColumnDefinition Width="50" />
-                                    </Grid.ColumnDefinitions>
+                                <ui:Card VerticalAlignment="Top" Margin="0,10,0,0" HorizontalAlignment="Center" Grid.IsSharedSizeScope="True">
+                                    <Grid HorizontalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="300" />
+                                            <ColumnDefinition Width="50" />
+                                        </Grid.ColumnDefinitions>
 
-                                    <ui:SymbolIcon Symbol="Search12" Grid.Column="0" />
-                                    <ui:TextBox x:Name="txtBuscarLectura"  Grid.Column="1" Margin="0,10" VerticalAlignment="Center" Cursor="IBeam" FontSize="14" PlaceholderEnabled="True" PlaceholderText="Ingresa el dato que desear Buscar" TextChanged="txtBuscarLectura_TextChanged" />
-                                </Grid>
-                            </ui:Card>
-                        </StackPanel>
-                    </Expander>
-                </StackPanel>
+                                        <ui:SymbolIcon Symbol="Search12" Grid.Column="0" />
+                                        <ui:TextBox x:Name="txtBuscarLectura"  Grid.Column="1" Margin="0,10" VerticalAlignment="Center" Cursor="IBeam" FontSize="14" PlaceholderEnabled="True" PlaceholderText="Ingresa el dato que desear Buscar" TextChanged="txtBuscarLectura_TextChanged" />
+                                    </Grid>
+                                    
+                                </ui:Card>
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
         
 
              
 
-                    <StackPanel Grid.Row="6" Margin="0,20,0,10">
-                        <TextBlock Text="Lecturas Registradas" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,0" FontFamily="Arial" FontWeight="Bold" Background="LightGray" />
-                        <ui:TextBlock Text="*Doble Click para cargar y editar informacion de Lecturas" FontSize="10" HorizontalAlignment="Center" Margin="0,0,0,0" />
+                    <StackPanel Grid.Row="6" Margin="0,20,0,10" HorizontalAlignment="Center">
+                        
+                            <WrapPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                <TextBlock Text="Lecturas Registradas" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,0" FontFamily="Arial" FontWeight="Bold" Background="LightGray" />
+                                <ui:TextBlock Text="*Doble Click para cargar y editar informacion de Lecturas" FontSize="10" Margin="0,0,0,0" HorizontalAlignment="Center" />
 
-                    <DataGrid x:Name="dtg_Lecturas" CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="LightGray" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center" Margin="0,20,0,0" >
-                        <DataGrid.Resources>
-                            <Style TargetType="{x:Type DataGridCell}">
-                                <Setter Property="BorderBrush" Value="Transparent" />
-                                <Setter Property="Foreground" Value="DarkSlateGray" />
-                                <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="LightGray" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGrid.Resources>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Path=DateLastReading,StringFormat=d}" Header="Fecha de la última lectura" Width="Auto" />
-                            <DataGridTextColumn Binding="{Binding Path=lastRead}" Header="Lectura anterior" Width="Auto" />
-                            <DataGridTextColumn Binding="{Binding Path=CurrentRead}" Header="Lectura actual" Width="Auto" />
-                            <DataGridTextColumn Binding="{Binding Path=CurrentReadingDate,StringFormat=d}" Header="Fecha de la lectura actual" Width="Auto" />
-                            <DataGridTextColumn Binding="{Binding Path=TotalConsumption}" Header="Consumo total (M³)" Width="Auto" />
-                            <DataGridTextColumn Binding="{Binding Path=Remarks}" Header="Observaciones" Width="Auto" />
-                            <DataGridCheckBoxColumn Binding="{Binding Path=ReadActiva}" Header="Lectura Activa" Width="Auto" />
-                        </DataGrid.Columns>
-                    </DataGrid>
+
+                            </WrapPanel>
+                        <WrapPanel>
+
+                            <DataGrid x:Name="dtg_Lecturas" CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="LightGray" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center" Margin="0,20,0,0" >
+                                <DataGrid.Resources>
+                                    <Style TargetType="{x:Type DataGridCell}">
+                                        <Setter Property="BorderBrush" Value="Transparent" />
+                                        <Setter Property="Foreground" Value="DarkSlateGray" />
+                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="LightGray" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.Resources>
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Path=DateLastReading,StringFormat=d}" Header="Fecha de la última lectura" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding Path=lastRead}" Header="Lectura anterior" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding Path=CurrentRead}" Header="Lectura actual" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding Path=CurrentReadingDate,StringFormat=d}" Header="Fecha de la lectura actual" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding Path=TotalConsumption}" Header="Consumo total (M³)" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding Path=Remarks}" Header="Observaciones" Width="Auto" />
+                                    <DataGridCheckBoxColumn Binding="{Binding Path=ReadActiva}" Header="Lectura Activa" Width="Auto" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </WrapPanel>
+
 
                 </StackPanel>
                 </StackPanel>

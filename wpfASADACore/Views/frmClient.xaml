@@ -27,6 +27,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
                     <RowDefinition  Height="Auto"/>
+
+                    <RowDefinition  Height="Auto"/>
                 </Grid.RowDefinitions>
 
 
@@ -46,8 +48,79 @@
 
                 </Grid>
                 <!--#endregion-->
-                <Grid Grid.Row="1">
-                    <ui:Card Margin="212,0,212,103" VerticalAlignment="Stretch">
+
+                <WrapPanel Grid.Row="1" HorizontalAlignment="Center" MaxWidth="800">
+                    
+                    <TextBox x:Name="txt_NewNameCli"  TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Nombre del Cliente"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" MinWidth="240" Margin="10" Padding="0,0,0,4"/>
+                    
+                    <TextBox x:Name="txt_NewFirstNameCli" TextWrapping="Wrap" Height="35" FontSize="11"                         VerticalAlignment="Center" materialDesign:HintAssist.Hint="Primer Apellido" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Margin="10" MinWidth="240" Padding="0,0,0,4"/>
+
+
+                    <TextBox x:Name="txt_NewsecondSurnameCli"  TextWrapping="Wrap" Height="35" FontSize="11"                                     VerticalAlignment="Center"  HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Segundo Apellido"   Style="{StaticResource MaterialDesignFloatingHintTextBox}"   MinWidth="240"  Margin="10" Padding="0,0,0,4"/>
+
+                    <TextBox x:Name="txt_NewDNICli"  TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" materialDesign:HintAssist.Hint="Identificación del Cliente" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  MinWidth="240"  Margin="10" Padding="0,0,0,4"/>
+
+                    <TextBox x:Name="txt_NewSubscribe"  TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" materialDesign:HintAssist.Hint="No. Abonado" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center"   MinWidth="240"  Margin="10" Padding="0,0,0,4" />
+
+                    <ComboBox x:Name="cmb_TypeClient"  Height="39" materialDesign:ColorZoneAssist.Mode="SecondaryLight" materialDesign:HintAssist.HelperText="Selecciona Tipo de Cliente" materialDesign:HintAssist.Hint="Tipo Cliente" materialDesign:TextFieldAssist.HasClearButton="True" materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  VerticalAlignment="Center"  MinWidth="240"  Margin="10" Padding="0,0,0,4" >
+                        <ComboBoxItem IsSelected="True">
+                            <StackPanel Orientation="Horizontal">
+                            </StackPanel>
+                        </ComboBoxItem>
+                    </ComboBox>
+                    
+                    <StackPanel Orientation="Vertical" Width="250" Margin="10">
+                        <Label Content="Asignar Cedúla"  RenderTransformOrigin="-0.006,0.571" Margin="0" HorizontalAlignment="Center"  />
+                        <ui:ToggleSwitch x:Name="copySwitch" OffContent="Off" OnContent="On" Width="67" Checked="copySwitch_Checked" Unchecked="copySwitch_Unchecked" VerticalAlignment="Center" Height="20" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel  Orientation="Vertical" Width="250" Margin="0,10,10,10">
+                        <Label Content="Ingresar Lectura Anterior y fecha"  RenderTransformOrigin="-0.006,0.571"  Margin="0"  />
+                        <ui:ToggleSwitch x:Name="tgs_UltimaLectura" OffContent="Off" OnContent="On" Width="91"   VerticalAlignment="Center" Height="20" Checked="tgs_UltimaLectura_Checked" Unchecked="tgs_UltimaLectura_Unchecked" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBox x:Name="txt_UltimaLectura"  TextWrapping="Wrap" Height="35" FontSize="11" Visibility="Hidden" VerticalAlignment="Center" materialDesign:HintAssist.Hint="Ultima Lectura Medidor" Style="{StaticResource MaterialDesignFloatingHintTextBox}" MinWidth="240" Padding="0,0,0,4" ScrollViewer.CanContentScroll="True"/>
+
+                    <DatePicker x:Name="dtpk_DateReading" materialDesign:HintAssist.Hint="Pick Date" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Center"   Visibility="Hidden" HorizontalAlignment="Center" Margin="270,10,10,10"  MinWidth="240" Height="35" Padding="0,0,0,4"/>
+
+                </WrapPanel>
+
+
+                <ui:Card  Grid.Row="2" Background="LightGray" VerticalAlignment="Top" Margin="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="7">
+                        <ui:Button x:Name="btn_CreateNewClient" Height="34" Appearance="Primary" Margin="5,0,0,0" Click="btn_CreateNewClient_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="uSER" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                <TextBlock Text="Crear" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </ui:Button>
+
+                        <ui:Button x:Name="btn_ModifyClient" Click="btn_ModifyClient_Click" Height="34" Appearance="Caution" Margin="10,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="EditAdd" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                <TextBlock Text="Editar" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </ui:Button>
+
+                        <ui:Button x:Name="btn_DeleteClient" Click="btn_DeleteClient_Click" Height="34" Appearance="Danger" Margin="10,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="UserDelete" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                <TextBlock Text="Eliminar" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </ui:Button>
+
+                        <ui:Button x:Name="btn_CleanTxt" Click="btn_CleanTxt_Click" Height="34" Appearance="Info" Margin="10,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="Clean" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                <TextBlock Text="Limpiar" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </ui:Button>
+                    </StackPanel>
+                </ui:Card>
+
+
+                <!--<Grid Grid.Row="1">
+                    <ui:Card Margin="33,0,10,103" VerticalAlignment="Stretch" MinWidth="800" >
                         <Grid Height="235">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -57,8 +130,7 @@
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
-
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="0" />
                                 <ColumnDefinition Width="313*"/>
                                 <ColumnDefinition Width="336*" />
                             </Grid.ColumnDefinitions>
@@ -74,14 +146,9 @@
                             <TextBox x:Name="txt_NewsecondSurnameCli"  TextWrapping="Wrap" Height="35" FontSize="11"
                                      VerticalAlignment="Center"  HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Segundo Apellido"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Row="1" Width="300" Grid.ColumnSpan="2"/>
+                        
 
-                            <TextBox x:Name="txt_NewDNICli"  TextWrapping="Wrap" Height="35" FontSize="11"
-                                     VerticalAlignment="Center" materialDesign:HintAssist.Hint="Identificación del Cliente"
-                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Grid.Column="2" Grid.Row="1" Margin="38,0,39,0"/>
-
-                            <TextBox x:Name="txt_NewSubscribe"  TextWrapping="Wrap" Height="35" FontSize="11"
-                                     VerticalAlignment="Center" materialDesign:HintAssist.Hint="No. Abonado"
-                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="0"  Grid.Row="2" HorizontalAlignment="Center" Width="300" Grid.ColumnSpan="2"/>
+                            
 
                             <Label Content="Asignar Cedúla" Margin="19,7,135,96" Grid.Row="3" RenderTransformOrigin="-0.006,0.571" Grid.Column="1" />
                             <ui:ToggleSwitch x:Name="copySwitch" OffContent="Off" OnContent="On" Width="67" Grid.Row="3" Checked="copySwitch_Checked" Unchecked="copySwitch_Unchecked" Margin="254,11,0,0" VerticalAlignment="Top" Height="20" Grid.Column="1" />
@@ -98,14 +165,15 @@
                                     </StackPanel>
                                 </ComboBoxItem>
                             </ComboBox>
+                
                             <Label Content="Ingresar Lectura Anterior y fecha" Margin="18,39,95,65" Grid.Row="3" RenderTransformOrigin="-0.006,0.571" Grid.Column="1" />
                             <ui:ToggleSwitch x:Name="tgs_UltimaLectura" OffContent="Off" OnContent="On" Width="91" Grid.Row="3"  Margin="254,42,0,0" VerticalAlignment="Top" Height="20" Grid.Column="1" Checked="tgs_UltimaLectura_Checked" Unchecked="tgs_UltimaLectura_Unchecked" Grid.ColumnSpan="2" />
                             <TextBox x:Name="txt_UltimaLectura"  TextWrapping="Wrap" Height="35" FontSize="11" Visibility="Hidden"
                                 VerticalAlignment="Top" materialDesign:HintAssist.Hint="Ultima Lectura Medidor"
                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Grid.Column="2" Grid.Row="3" Margin="38,25,39,0"/>
-                            <!--<TextBox x:Name="txt_Observaciones"  TextWrapping="Wrap" Height="35" FontSize="11"
+                            --><!--<TextBox x:Name="txt_Observaciones"  TextWrapping="Wrap" Height="35" FontSize="11"
                                 VerticalAlignment="Top" materialDesign:HintAssist.Hint="Observaciones:"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1"  Grid.Row="3" HorizontalAlignment="Left" Width="300" Grid.ColumnSpan="2" Margin="174,85,0,0"/>-->
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1"  Grid.Row="3" HorizontalAlignment="Left" Width="300" Grid.ColumnSpan="2" Margin="174,85,0,0"/>--><!--
                             <DatePicker
                                         x:Name="dtpk_DateReading"
                                       materialDesign:HintAssist.Hint="Pick Date"
@@ -114,7 +182,7 @@
 
                         </Grid>
                     </ui:Card>
-                </Grid>
+                </Grid>-->
             </Grid>
 
         </materialDesign:Card>
@@ -191,38 +259,8 @@
             </StackPanel>
 
         </materialDesign:Card>
-        <ui:Card Margin="258,397,246,0" Background="LightGray" VerticalAlignment="Top">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="7">
-                <ui:Button x:Name="btn_CreateNewClient" Height="34" Appearance="Primary" Margin="5,0,0,0" Click="btn_CreateNewClient_Click">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Kind="uSER" VerticalAlignment="Center" Margin="0,0,5,0" />
-                        <TextBlock Text="Crear" VerticalAlignment="Center" />
-                    </StackPanel>
-                </ui:Button>
-
-                <ui:Button x:Name="btn_ModifyClient" Click="btn_ModifyClient_Click" Height="34" Appearance="Caution" Margin="10,0,0,0">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Kind="EditAdd" VerticalAlignment="Center" Margin="0,0,5,0" />
-                        <TextBlock Text="Editar" VerticalAlignment="Center" />
-                    </StackPanel>
-                </ui:Button>
-
-                <ui:Button x:Name="btn_DeleteClient" Click="btn_DeleteClient_Click" Height="34" Appearance="Danger" Margin="10,0,0,0">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Kind="UserDelete" VerticalAlignment="Center" Margin="0,0,5,0" />
-                        <TextBlock Text="Eliminar" VerticalAlignment="Center" />
-                    </StackPanel>
-                </ui:Button>
-
-                <ui:Button x:Name="btn_CleanTxt" Click="btn_CleanTxt_Click" Height="34" Appearance="Info" Margin="10,0,0,0">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Kind="Clean" VerticalAlignment="Center" Margin="0,0,5,0" />
-                        <TextBlock Text="Limpiar" VerticalAlignment="Center" />
-                    </StackPanel>
-                </ui:Button>
-            </StackPanel>
-        </ui:Card>
-
+       
+      
 
 
     </Grid>

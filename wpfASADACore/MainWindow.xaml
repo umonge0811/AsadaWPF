@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:wpfASADACore"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
-        Title="Asada Menú Principal"  Width="1450" Height="800" MinWidth="900" WindowStyle="None" WindowStartupLocation="CenterScreen" Icon="/water-system.png" Loaded="Window_Loaded"
+        Title="Asada Menú Principal"  Width="1450" Height="800" MinHeight="750" MinWidth="1340" WindowStyle="None" WindowStartupLocation="CenterScreen" Icon="/water-system.png" Loaded="Window_Loaded"
         >
     <Grid>
 

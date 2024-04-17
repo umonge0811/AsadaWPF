@@ -134,6 +134,9 @@ namespace wpfASADACore.Views
                     lastReading.TotalConsumption = currentRead - lastReading.lastRead;
                     lastReading.ReadActiva = true; // Marca la lectura como inactiva
                     lastReading.Remarks = "Pendiente de Pago"; // Àctualiza
+                    lastReading.IsChecked = true;
+                    
+                    
                     await readingRepository.UpdateReading(lastReading); // Asegúrate de implementar este método en tu repositorio
                 }
 
@@ -148,7 +151,9 @@ namespace wpfASADACore.Views
                     true, // Lectura Activa
                     lastReading.UserId, // ID del usuario
                     lastReading.idClient, // ID del cliente
-                    lastReading.TypeClientId // ID del tipo de cliente
+                    lastReading.TypeClientId, // ID del tipo de cliente
+                    lastReading.IsChecked // Estado de la lectura
+
                 );
 
                 // Actualiza el DataGrid

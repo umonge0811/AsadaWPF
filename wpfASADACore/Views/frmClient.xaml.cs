@@ -228,6 +228,7 @@ namespace wpfASADACore.Views
                     string Remarks = "";
                     bool LecturaActiva = true;
                     Remarks = "Ingreso a Sistema";
+                    bool IsChecked = true;
 
 
                     if (tgs_UltimaLectura.IsChecked == true)
@@ -240,7 +241,7 @@ namespace wpfASADACore.Views
                     {
 
                     }
-                    var primeraLectura = await readingRepository.CreateReading(fechaLecturaAnterior, dateCurrentReading, totalConsumption, lecturaAnterior, LecturaActual, Remarks, LecturaActiva, IdUser, idClient, ClientType);
+                    var primeraLectura = await readingRepository.CreateReading(fechaLecturaAnterior, dateCurrentReading, totalConsumption, lecturaAnterior, LecturaActual, Remarks, LecturaActiva, IdUser, idClient, ClientType, IsChecked);
                     if (primeraLectura)
                     {
                         await clsUtilities.ShowSnackbarAsync("Lectura Inicial Creada Exitosamente", new SolidColorBrush(Colors.LightGreen));

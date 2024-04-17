@@ -1,33 +1,18 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using wpfASADACore.Models;
-using wpfASADACore.Repository;
-using wpfASADACore.Services;
-using wpfASADACore.Utilities;
-using iTextSharp.text;
+﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
+using Microsoft.Win32;
+using System.Globalization;
+using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+using wpfASADACore.Models;
+using wpfASADACore.Repository;
+using wpfASADACore.Utilities;
 using Document = iTextSharp.text.Document;
-using static wpfASADACore.Repository.ReadingRepository;
-using System.Net.Sockets;
-using static wpfASADACore.Repository.BillingsRepository;
 
 
 namespace wpfASADACore.Views
@@ -38,7 +23,9 @@ namespace wpfASADACore.Views
     public partial class frmPay : Page
     {
         BillingsRepository billingsRepository = new BillingsRepository();
-      ReadingRepository readingRepository = new ReadingRepository();
+        ReadingRepository readingRepository = new ReadingRepository();
+        // Delegado vacío para forzar la actualización de la UI
+        private static Action EmptyDelegate = delegate () { };
 
         bool isLocal = false;
 
@@ -46,7 +33,8 @@ namespace wpfASADACore.Views
         public string SubscriberNum { get; set; }
         public string FullName { get; set; }
         public bool Pay { get; set; }
-        private int selectedReadingId; 
+        private int selectedReadingId;
+        private clsReading _selectedReading;
 
         public frmPay()
         {
@@ -99,7 +87,7 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-        #region Eventos click del boton Cargar Facturas
+        #region Eventos click del boton Cargar Facturas 
         private async void btnCargarFact_Click(object sender, RoutedEventArgs e)
         {
             if (cmb_Client.SelectedItem != null)
@@ -163,7 +151,6 @@ namespace wpfASADACore.Views
                         grd_Local.Background = new SolidColorBrush(Color.FromArgb(150, 198, 235, 197));
                         txt_RateType.Clear();
                         txt_RateExc.Clear();
-
                     }
                     else
                     {
@@ -269,35 +256,97 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-        #region evento para que cuando se seleccione una fila del datagrid se carguen los datos en los textbox CALCULOS MATEMATICOS
+        //#region evento para que cuando se seleccione una fila del datagrid se carguen los datos en los textbox CALCULOS MATEMATICOS
+        //private async void dtg_Facturas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (txt_TypeClient.Text == "Local" && (txt_RateType.Text == "" || txt_RateExc.Text == ""))
+        //    {
+        //        await clsUtilities.ShowSnackbarAsync("Debes Ingresar las Tarifas de cobro.", new SolidColorBrush(Colors.Yellow));
+        //        exp_Facturas.IsExpanded = false;
+        //        txt_RateType.Focus();
+
+        //        // Obtén la fila seleccionada
+        //        var selectedRow = (DataGridRow)dtg_Facturas.ItemContainerGenerator.ContainerFromItem(dtg_Facturas.SelectedItem);
+
+        //        // Obtén el CheckBox de la fila seleccionada
+        //        var checkBox = GetCheckBoxFromRow(selectedRow);
+
+        //        // Desmarca el CheckBox
+        //        if (checkBox != null)
+        //        {
+        //            checkBox.IsChecked = false;
+        //        }
+
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        RealizarCalculos();
+        //    }
+        //}
+        //#endregion
+        
+        private bool AreRateFieldsEmpty()
+        {
+            return string.IsNullOrEmpty(txt_RateType.Text) || string.IsNullOrEmpty(txt_RateExc.Text);
+        }
+
         private async void dtg_Facturas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (txt_TypeClient.Text == "Local" && (txt_RateType.Text == "" || txt_RateExc.Text == ""))
+            if (AreRateFieldsEmpty())
             {
                 await clsUtilities.ShowSnackbarAsync("Debes Ingresar las Tarifas de cobro.", new SolidColorBrush(Colors.Yellow));
                 exp_Facturas.IsExpanded = false;
+                btnGenerarFactura.IsEnabled = false;
                 txt_RateType.Focus();
 
-                // Obtén la fila seleccionada
-                var selectedRow = (DataGridRow)dtg_Facturas.ItemContainerGenerator.ContainerFromItem(dtg_Facturas.SelectedItem);
+                // Muestra los labels si los campos están vacíos
+                lbl_txtRateType.Visibility = string.IsNullOrEmpty(txt_RateType.Text) ? Visibility.Visible : Visibility.Hidden;
+                lbl_txtRateExc.Visibility = string.IsNullOrEmpty(txt_RateExc.Text) ? Visibility.Visible : Visibility.Hidden;
 
-                // Obtén el CheckBox de la fila seleccionada
-                var checkBox = GetCheckBoxFromRow(selectedRow);
+                // Desmarca todas las filas seleccionadas
+                //dtg_Facturas.SelectedItems.Clear();
 
-                // Desmarca el CheckBox
-                if (checkBox != null)
+                // Desmarca el CheckBox de la fila seleccionada
+                if (dtg_Facturas.SelectedItem != null)
                 {
-                    checkBox.IsChecked = false;
+                    var selectedRow = (DataGridRow)dtg_Facturas.ItemContainerGenerator.ContainerFromItem(dtg_Facturas.SelectedItem);
+                   // var checkBox = GetCheckBoxFromRow(selectedRow);
+                    var cellContent = dtg_Facturas.Columns[6].GetCellContent(selectedRow);
+                    if (cellContent != null)
+                    {
+                        var cell = (DataGridCell)cellContent.Parent;
+                        var contentPresenter = (ContentPresenter)cell.Content;
+                        ((CheckBox)contentPresenter.ContentTemplate.FindName("checkBox", contentPresenter)).IsChecked = false;
+                       // checkBox.IsChecked = false;
+
+                    //   // return checkBox;
+                    }
+                   // checkBox.IsChecked = false;
                 }
 
                 return;
             }
             else
             {
+                // Oculta los labels si los campos están llenos
+                lbl_txtRateType.Visibility = Visibility.Hidden;
+                lbl_txtRateExc.Visibility = Visibility.Hidden;
+
                 RealizarCalculos();
             }
         }
-        #endregion
+        // Evento TextChanged para txt_RateType y txt_RateExc
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Si ambos campos están llenos, expande exp_Facturas
+            if (!AreRateFieldsEmpty())
+            {
+                exp_Facturas.IsExpanded = true;
+                
+            }
+        }
+
 
         #region Metodo para hacer limpieza de los textbox
         private void ClearTextBoxesPays()
@@ -338,19 +387,34 @@ namespace wpfASADACore.Views
         #endregion
 
         #region Evento para que se detecte el checkbox de una fila del datagrid
-        // Método para obtener el CheckBox de una fila del DataGrid
         private CheckBox GetCheckBoxFromRow(DataGridRow row)
         {
-            var cell = (DataGridCell)dtg_Facturas.Columns[6].GetCellContent(row).Parent;
-            var contentPresenter = (ContentPresenter)cell.Content;
-            var checkBox = (CheckBox)contentPresenter.ContentTemplate.FindName("checkBox", contentPresenter);
-            return checkBox;
+            var cellContent = dtg_Facturas.Columns[6].GetCellContent(row);
+            if (cellContent != null)
+            {
+                var cell = (DataGridCell)cellContent.Parent;
+                var contentPresenter = (ContentPresenter)cell.Content;
+                var checkBox = (CheckBox)contentPresenter.ContentTemplate.FindName("checkBox", contentPresenter);
+                return checkBox;
+            }
+            return null; // Devuelve null si no se encuentra el contenido de la celda
         }
         #endregion
 
         #region Evento para que cuando se deseleccione una fila del datagrid se BORREN los datos en los textbox CALCULOS MATEMATICOS y los demas ROW se desbloqueen
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
+            // Obtén el CheckBox que disparó el evento
+            var checkBox = (CheckBox)sender;
+
+            // Verifica si hay una fila seleccionada actualmente
+            if (_selectedReading != null)
+            {
+                // Desmarca el CheckBox de la fila seleccionada
+                _selectedReading.IsChecked = false;
+                _selectedReading = null;
+            }
+
             foreach (var item in dtg_Facturas.Items)
             {
                 var row = (DataGridRow)dtg_Facturas.ItemContainerGenerator.ContainerFromItem(item);
