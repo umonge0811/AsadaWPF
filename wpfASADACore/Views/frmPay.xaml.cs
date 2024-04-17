@@ -78,13 +78,15 @@ namespace wpfASADACore.Views
             int hora = ahora.Hour;  // La hora del día (0 a 23)
             int minuto = ahora.Minute;  // El minuto de la hora (0 a 59)
             int segundo = ahora.Second / 12;  // El segundo de la hora (0 a 59) dividido por 12 para que no exceda 4
+            int milisegundo = ahora.Millisecond / 166;  // Los milisegundos de la hora (0 a 999) dividido por 166 para que no exceda 5
 
-            // Generamos el número de factura como un número de 5 dígitos
-            int numeroFactura = año * 10000 + diaDelAño * 100 + hora * 10 + minuto / 6 + segundo;
+            // Generamos el número de factura como un número de 6 dígitos
+            int numeroFactura = año * 100000 + diaDelAño * 1000 + hora * 100 + minuto * 10 + segundo + milisegundo;
 
             // Asignamos el número de factura al label
             lbl_InvoiceNum.Text = numeroFactura.ToString();
         }
+
         #endregion
 
         #region Eventos click del boton Cargar Facturas 
@@ -256,35 +258,6 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-        //#region evento para que cuando se seleccione una fila del datagrid se carguen los datos en los textbox CALCULOS MATEMATICOS
-        //private async void dtg_Facturas_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (txt_TypeClient.Text == "Local" && (txt_RateType.Text == "" || txt_RateExc.Text == ""))
-        //    {
-        //        await clsUtilities.ShowSnackbarAsync("Debes Ingresar las Tarifas de cobro.", new SolidColorBrush(Colors.Yellow));
-        //        exp_Facturas.IsExpanded = false;
-        //        txt_RateType.Focus();
-
-        //        // Obtén la fila seleccionada
-        //        var selectedRow = (DataGridRow)dtg_Facturas.ItemContainerGenerator.ContainerFromItem(dtg_Facturas.SelectedItem);
-
-        //        // Obtén el CheckBox de la fila seleccionada
-        //        var checkBox = GetCheckBoxFromRow(selectedRow);
-
-        //        // Desmarca el CheckBox
-        //        if (checkBox != null)
-        //        {
-        //            checkBox.IsChecked = false;
-        //        }
-
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        RealizarCalculos();
-        //    }
-        //}
-        //#endregion
         
         private bool AreRateFieldsEmpty()
         {
