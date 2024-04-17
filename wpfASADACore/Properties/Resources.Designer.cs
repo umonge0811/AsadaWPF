@@ -211,6 +211,69 @@ namespace wpfASADACore.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///&lt;head&gt;
+        ///    &lt;title&gt;Factura&lt;/title&gt;
+        ///    &lt;style&gt;
+        ///        body {
+        ///            font-family: Arial, sans-serif;
+        ///        }
+        ///        .container {
+        ///            display: flex;
+        ///            justify-content: space-between;
+        ///        }
+        ///        .details {
+        ///            width: 45%;
+        ///        }
+        ///        table {
+        ///            width: 100%;
+        ///            border-collapse: collapse;
+        ///            margin-top: 20px;
+        ///        }
+        ///        th, td {
+        ///            border: 1px solid black;
+        ///            padding: 10 [resto de la cadena truncado]&quot;;.
+        /// </summary>
+        internal static string facturaAsada5 {
+            get {
+                return ResourceManager.GetString("facturaAsada5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///&lt;head&gt;
+        ///    &lt;title&gt;Factura&lt;/title&gt;
+        ///    &lt;style&gt;
+        ///        body {
+        ///            text-align: center;
+        ///        }
+        ///        table {
+        ///            width: 80%;
+        ///            margin: auto;
+        ///            border-collapse: collapse;
+        ///        }
+        ///        th, td {
+        ///            border: 1px solid black;
+        ///            padding: 15px;
+        ///            text-align: left;
+        ///        }
+        ///    &lt;/style&gt;
+        ///&lt;/head&gt;
+        ///&lt;body&gt;
+        ///    &lt;h2&gt;Factura No: {InvoiceNum}&lt;/h2&gt;
+        ///    &lt;p&gt;Fecha: {BillingDate}&lt;/p&gt;
+        ///    &lt;h3&gt;Detalles del Cliente&lt; [resto de la cadena truncado]&quot;;.
+        /// </summary>
+        internal static string facturaAsada6 {
+            get {
+                return ResourceManager.GetString("facturaAsada6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Byte[].
         /// </summary>
         internal static byte[] water_system {

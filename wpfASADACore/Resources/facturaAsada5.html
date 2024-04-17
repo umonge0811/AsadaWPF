@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Factura</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .details {
+            width: 45%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">Factura No: {InvoiceNum}</h2>
+    <p style="text-align: center;">Fecha: {BillingDate}</p>
+    <div class="container">
+        <div class="details">
+            <h3>Detalles del Cliente</h3>
+            <p>ID del Cliente: {idClient}</p>
+            <p>Nombre del Cliente: {ClientName} {ClientLastName} {ClientSecondSurname}</p>
+            <p>Identificación del Cliente: {ClientDNI}</p>
+            <p>Número de Abonado: {ClientSubscriberNum}</p>
+            <p>Tipo de Cliente: {TypeClientId}</p>
+        </div>
+        <div class="details">
+            <h3>Detalles de la Lectura</h3>
+            <p>Fecha de la Lectura Anterior: {DateLastReading}  Lectura: {LastReading}</p>
+            <p>Fecha de la Lectura Actual: {CurrentReadingDate}  Lectura: {CurrentReading}</p>
+            <p>Cantidad de M³ Consumidos: {TotalConsumption}</p>
+        </div>
+    </div>
+    <h3 style="text-align: center;">Detalles de la Factura</h3>
+    <table>
+        <tr>
+            <th>Descripción</th>
+            <th>Monto</th>
+        </tr>
+        <tr>
+            <td>Tarifa Base</td>
+            <td>¢{AmountBase}</td>
+        </tr>
+        <tr>
+            <td>Tarifa Excedente</td>
+            <td>¢{AmountExc}</td>
+        </tr>
+        <tr>
+            <td>Tarifa x Reconexión</td>
+            <td>¢{AmountRec}</td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td>¢{AmountTotal}</td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Factura</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 15px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h2>Factura No: {InvoiceNum}</h2>
+    <p>Fecha: {BillingDate}</p>
+    <h3>Detalles del Cliente</h3>
+    <p>ID del Cliente: {idClient}</p>
+    <p>Nombre del Cliente: {ClientName} {ClientLastName} {ClientSecondSurname}</p>
+    <p>Identificación del Cliente: {ClientDNI}</p>
+    <p>Número de Suscriptor: {ClientSubscriberNum}</p>
+    <p>Tipo de Cliente: {TypeClientId}</p>
+    <h3>Detalles de la Lectura</h3>
+    <p>Fecha de la Lectura Anterior: {DateLastReading} - Lectura: {LastReading}</p>
+    <p>Fecha de la Lectura Actual: {CurrentReadingDate} - Lectura: {CurrentReading}</p>
+    <p>Cantidad de M3: {TotalConsumption}</p>
+    <h3>Detalles de la Factura</h3>
+    <table>
+        <tr>
+            <th>Descripción</th>
+            <th>Monto</th>
+        </tr>
+        <tr>
+            <td>Tarifa Base</td>
+            <td>¢{AmountBase}</td>
+        </tr>
+        <tr>
+            <td>Tarifa Excedente</td>
+            <td>¢{AmountExc}</td>
+        </tr>
+        <tr>
+            <td>Tarifa x Reconexión</td>
+            <td>¢{AmountRec}</td>
+        </tr>
+        <tr>
+            <td>IVA</td>
+            <td>¢{AmountIva}</td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td>¢{AmountTotal}</td>
+        </tr>
+    </table>
+</body>
+</html>

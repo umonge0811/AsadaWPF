@@ -11,14 +11,14 @@
         >
     <Grid>
 
-        <ui:NavigationView x:Name="RootNavigation" IsBackButtonVisible="Collapsed" PaneTitle="Asada" PaneDisplayMode="left" OpenPaneLength="240" Grid.ColumnSpan="2">
+        <ui:NavigationView x:Name="RootNavigation" IsBackButtonVisible="Collapsed" PaneTitle="Asada" PaneDisplayMode="Left" OpenPaneLength="240" Grid.ColumnSpan="2">
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem Content="Facturación" Icon="{ui:SymbolIcon WalletCreditCard24}" Click="NavigationViewItem_Click_3"></ui:NavigationViewItem>
                 <ui:NavigationViewItem x:Name="nvLecturas" Content="Lecturas" Icon="{ui:SymbolIcon TaskListSquareAdd24}" Click="nvLecturas_Click"></ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Configuraciones" Icon="{ui:SymbolIcon Settings16}">
                     <ui:NavigationViewItem.MenuItems>
                         <ui:NavigationViewItem Content="Gestion de Clientes" Icon="{ui:SymbolIcon PersonAccounts24}" Click="NavigationViewItem_Click_1" ></ui:NavigationViewItem>
-                        <ui:NavigationViewItem Content="Tipos de Cliente y Tarifas" Icon="{ui:SymbolIcon MoneySettings20}" Click="NavigationViewItem_Click_2"></ui:NavigationViewItem>
+                        <!--<ui:NavigationViewItem Content="Tipos de Cliente y Tarifas" Icon="{ui:SymbolIcon MoneySettings20}" Click="NavigationViewItem_Click_2"></ui:NavigationViewItem>-->
                     </ui:NavigationViewItem.MenuItems>
                 </ui:NavigationViewItem>
             </ui:NavigationView.MenuItems>

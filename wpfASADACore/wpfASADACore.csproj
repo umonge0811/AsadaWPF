@@ -6,6 +6,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <PackageIcon>water-system.png</PackageIcon>
+    <ApplicationIcon>water-system.ico</ApplicationIcon>
+    <Title>Asada</Title>
+    <AssemblyName>H2OCobro</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +20,10 @@
     <None Remove="Images\user-icon.png" />
     <None Remove="Views\close-up-view-nature-concept.jpg" />
     <None Remove="water-system.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="water-system.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,6 +68,13 @@
     </Resource>
     <Resource Include="Views\close-up-view-nature-concept.jpg" />
     <Resource Include="water-system.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\water-system.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

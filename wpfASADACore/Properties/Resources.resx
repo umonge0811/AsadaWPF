@@ -133,6 +133,12 @@
   <data name="facturaAsada4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\facturaAsada4.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="facturaAsada5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\facturaAsada5.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="facturaAsada6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\facturaAsada6.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="water_system" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\water-system.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

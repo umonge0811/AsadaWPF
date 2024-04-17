@@ -46,15 +46,13 @@ namespace wpfASADACore.Views
         public string SubscriberNum { get; set; }
         public string FullName { get; set; }
         public bool Pay { get; set; }
-        private int selectedReadingId;  // Añade esta línea
-
-
-
+        private int selectedReadingId; 
 
         public frmPay()
         {
             InitializeComponent();
         }
+
         #region para cargar el Combobox de Clientes con lexturas pendientes de pago
         private void CargarCmbClient()
         {
@@ -76,14 +74,12 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-
         #region Eventos loaded 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             CargarCmbClient();
         }
         #endregion
-
 
         #region Metodo para generar el numero de factura automaticamente 
         private void GenerarNumeroFactura()
@@ -103,7 +99,6 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-
         #region Eventos click del boton Cargar Facturas
         private async void btnCargarFact_Click(object sender, RoutedEventArgs e)
         {
@@ -118,26 +113,6 @@ namespace wpfASADACore.Views
             }
         }
         #endregion
-
-
-        //#region Eventos keydown para que cuando se da enter se carguen las facturas pendientes
-        //private async void frmPay_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Enter)
-        //    {
-        //        if (cmb_Client.SelectedItem != null)
-        //        {
-        //            LoadClientType();
-        //            LoadPendingReadings();
-        //        }
-        //        else
-        //        {
-        //            await clsUtilities.ShowSnackbarAsync("Por favor, selecciona un cliente antes de cargar las facturas.", new SolidColorBrush(Colors.Yellow));
-        //        }
-        //    }
-        //}
-        //#endregion
-
 
         #region evento para que cuando se borre el texto del combobox se limpie el datagrid y otras cosas
         private void cmb_Client_TextChanged(object sender, TextChangedEventArgs e)
@@ -157,7 +132,6 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-
         #region evento para que se despliegue lista de clientes
         private void cmb_ClientPay_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -165,7 +139,6 @@ namespace wpfASADACore.Views
 
         }
         #endregion        
-
 
         #region metodo para cargar el tipo de cliente en los textbox y validaciones por si es local
         private void LoadClientType()
@@ -202,11 +175,32 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-
         #region metodo para cargar las lecturas pendientes en el datagrid
         private void LoadPendingReadings()
         {
+            // Verificar si billingsRepository es null
+            if (billingsRepository == null)
+            {
+                // billingsRepository no está inicializado
+                return;
+            }
+
+            // Verificar si cmb_Client.SelectedValue es null
+            if (cmb_Client.SelectedValue == null)
+            {
+                // No hay ningún cliente seleccionado
+                return;
+            }
+
             var readings = billingsRepository.GetPendingReadings((int)cmb_Client.SelectedValue);
+
+            // Verificar si readings es null
+            if (readings == null)
+            {
+                // GetPendingReadings devolvió null
+                return;
+            }
+
             dtg_Facturas.ItemsSource = readings;
             OpenExpander();
         }
@@ -238,7 +232,7 @@ namespace wpfASADACore.Views
                 cultureInfo.NumberFormat.CurrencySymbol = "¢";
 
                 // Verificar si la fecha actual es posterior al día 8 del mes
-                if (currentDate.Day > 8)
+                if (currentDate.Day > 8 )
                 {
                     // Si es así, agrega el monto por reconexión
                     double reconnectionFee = 2000; // se cambia esto por el monto que se desee cobrar por reconexión
@@ -264,8 +258,8 @@ namespace wpfASADACore.Views
                 double subtotal = rateType + totalM3 * rateExc;
                 double iva = subtotal * taxPercentage;
 
-                // Usar el CultureInfo personalizado para formatear el monto del IVA como moneda
-                txt_iva.Text = iva.ToString("C", cultureInfo);
+                //// Usar el CultureInfo personalizado para formatear el monto del IVA como moneda
+                //txt_iva.Text = iva.ToString("C", cultureInfo);
 
                 double totalPay = subtotal + iva + totalRec;
                 txt_TotalPay.Text = totalPay.ToString("C", cultureInfo);
@@ -274,7 +268,6 @@ namespace wpfASADACore.Views
             }
         }
         #endregion
-
 
         #region evento para que cuando se seleccione una fila del datagrid se carguen los datos en los textbox CALCULOS MATEMATICOS
         private async void dtg_Facturas_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -306,7 +299,6 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-
         #region Metodo para hacer limpieza de los textbox
         private void ClearTextBoxesPays()
         {
@@ -315,17 +307,11 @@ namespace wpfASADACore.Views
             txt_TotalM3.Text = string.Empty;
             txt_MontoBasePay.Text = string.Empty;
             txt_MontoExcPay.Text = string.Empty;
-            txt_iva.Text = string.Empty;
+            //txt_iva.Text = string.Empty;
             txt_TotalPay.Text = string.Empty;
-            txt_TypeClient.Text = string.Empty;
-            txt_RateType.Text = string.Empty;
-            txt_RateExc.Text = string.Empty;
-            grd_Local.Background = new SolidColorBrush(Colors.White);
-            exp_Facturas.IsExpanded = false;
-            CargarCmbClient();
+            txt_MontoRec.Text = string.Empty;   
         }
         #endregion
-
 
         #region Evento para que cuando se seleccione una fila del datagrid se carguen los datos en los textbox CALCULOS MATEMATICOS y los demas ROW se bloqueen
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -351,7 +337,6 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-
         #region Evento para que se detecte el checkbox de una fila del datagrid
         // Método para obtener el CheckBox de una fila del DataGrid
         private CheckBox GetCheckBoxFromRow(DataGridRow row)
@@ -362,7 +347,6 @@ namespace wpfASADACore.Views
             return checkBox;
         }
         #endregion
-
 
         #region Evento para que cuando se deseleccione una fila del datagrid se BORREN los datos en los textbox CALCULOS MATEMATICOS y los demas ROW se desbloqueen
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -380,7 +364,6 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-
         #region METODO/FUNCION  para desplegar / cerrar el Extender y mostrar los datos de la factura
         private void OpenExpander()
         {
@@ -397,7 +380,6 @@ namespace wpfASADACore.Views
 
         }
         #endregion
-
 
         #region Evento para que mientras los campos de editar los precios en local esten vacios el fondo sera Verde, si se completan sera blanco
         /*cuando el texto en txt_RateType o txt_RateExc cambie, se llamará a los métodos txt_RateType_TextChanged y txt_RateExc_TextChanged respectivamente. Estos métodos a su vez llamarán al método CheckRateFields(), 
@@ -466,9 +448,11 @@ namespace wpfASADACore.Views
                         string currentReadingDate = selectedReading.CurrentReadingDate.ToString("dd/MM/yyyy");
                         string totalConsumption = selectedReading.TotalConsumption.ToString();
                         string typeClient= txt_TypeClient.Text;
+                        int lastRead = int.Parse(txt_LecturaAnt.Text);
+                        int currentRead = int.Parse(txt_LecturaAct.Text);
                         // Eliminar el símbolo de moneda y los espacios en blanco
-                        string amountIvaText = txt_iva.Text.Replace("¢", "").Trim();
-                        double amountIva = double.Parse(amountIvaText);
+                        //string amountIvaText = txt_iva.Text.Replace("¢", "").Trim();
+                        //double amountIva = double.Parse(amountIvaText);
 
                         string amountBaseText = txt_MontoBasePay.Text.Replace("¢", "").Trim();
                         double amountBase = double.Parse(amountBaseText);
@@ -488,7 +472,7 @@ namespace wpfASADACore.Views
                         {
                             InvoiceNum = lbl_InvoiceNum.Text,
                             BillingDate = DateTime.Now,
-                            AmountIva = amountIva,
+                            AmountIva = 0,
                             AmountBase = amountBase,
                             AmountExc = amountExc,
                             AmountTotal = totalPay,
@@ -517,7 +501,8 @@ namespace wpfASADACore.Views
                         LoadPendingReadings();
 
                         // Limpiar los TextBoxes
-                        ClearTextBoxesPays();
+                        ClearTextBoxesPays(); // solo limpia los calculos matematicos
+                        Clear(); // limpia datagrid y textbox tipo cliente, expander cerrado
 
                         // Limpiar el TextBlock factura
                         lbl_InvoiceNum.Text = "";
@@ -525,7 +510,7 @@ namespace wpfASADACore.Views
                         // Mostrar un mensaje de éxito
                         await clsUtilities.ShowSnackbarAsync("La factura se ha generado correctamente.", new SolidColorBrush(Colors.LightGreen));
                         // Generar el PDF de la factura
-                        GenerarFacturaPdf(newBilling, dateLastReading, currentReadingDate, totalConsumption, typeClient);
+                        GenerarFacturaPdf(newBilling, dateLastReading, currentReadingDate, totalConsumption, typeClient,lastRead,currentRead);
                     }
                 }
                 else
@@ -540,9 +525,8 @@ namespace wpfASADACore.Views
         }
         #endregion
 
-
         #region Metodo para imprimir la factura en PDF
-        private void GenerarFacturaPdf(clsBilling billing, string dateLastReading, string currentReadingDate,string totalConsumption, string typeClient)
+        private void GenerarFacturaPdf(clsBilling billing, string dateLastReading, string currentReadingDate,string totalConsumption, string typeClient, int lastRead, int currentRead)
         {
             var billingDetails = billingsRepository.GetBillingDetails(billing.id);
             SaveFileDialog savefile = new SaveFileDialog();
@@ -552,14 +536,14 @@ namespace wpfASADACore.Views
                 var billingsRepository = new BillingsRepository();
                
 
-                string htmlTemplate = Properties.Resources.facturaAsada.ToString();
+                string htmlTemplate = Properties.Resources.facturaAsada5.ToString();
 
                 if (billing != null && billingDetails != null)
                 {                  
 
                     htmlTemplate = htmlTemplate.Replace("{InvoiceNum}", billing.InvoiceNum);
                     htmlTemplate = htmlTemplate.Replace("{BillingDate}", billing.BillingDate.ToString());
-                    htmlTemplate = htmlTemplate.Replace("{AmountIva}", billing.AmountIva.ToString());
+                    //htmlTemplate = htmlTemplate.Replace("{AmountIva}", billing.AmountIva.ToString());
                     htmlTemplate = htmlTemplate.Replace("{AmountBase}",billing.AmountBase.ToString());
                     htmlTemplate = htmlTemplate.Replace("{AmountExc}", billing.AmountExc.ToString());
                     htmlTemplate = htmlTemplate.Replace("{AmountTotal}",  billing.AmountTotal.ToString());
@@ -575,6 +559,8 @@ namespace wpfASADACore.Views
                     htmlTemplate = htmlTemplate.Replace("{DateLastReading}", dateLastReading);
                     htmlTemplate = htmlTemplate.Replace("{CurrentReadingDate}", currentReadingDate);
                     htmlTemplate = htmlTemplate.Replace("{TotalConsumption}", totalConsumption);
+                    htmlTemplate = htmlTemplate.Replace("{LastReading}", lastRead.ToString());
+                    htmlTemplate = htmlTemplate.Replace("{CurrentReading}", currentRead.ToString());
 
                     using (FileStream stream = new FileStream(savefile.FileName, FileMode.Create))
                     {
@@ -595,8 +581,30 @@ namespace wpfASADACore.Views
                 }
             }
         }
+
         #endregion
 
+        #region Metodo para  Limpiar gatagrid y textbox tipo cliente, expander cerrado
+        private void Clear()
+        {
+            dtg_Facturas.ItemsSource = null;
+            txt_RateType.Clear();
+            txt_RateExc.Clear();
+            txt_TypeClient.Clear();
+            cmb_Client.Text = string.Empty;
+            grd_Local.Background = new SolidColorBrush(Colors.White);
+            exp_Facturas.IsExpanded = false;
+        }
+        #endregion
 
+        #region Evento click del boton Cancelar
+        private void btnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            ClearTextBoxesPays();
+            Clear();
+
+
+        }
+        #endregion
     }
 }

@@ -50,7 +50,7 @@ namespace wpfASADACore.Repository
         // Este metodo es para Obtener 
         public ObservableCollection<clsCliente> GetAllClients()
         {
-            return new ObservableCollection<clsCliente>(context.clientes.ToList());
+            return new ObservableCollection<clsCliente>(context.clientes.Include(c => c.TypeClient).ToList());
         }   
         
         //este es el metodo que se creo para hacer la busqueda en la DB, retorna  un objeto de tipo clase (clsUser)
