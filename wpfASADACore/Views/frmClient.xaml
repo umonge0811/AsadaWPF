@@ -86,7 +86,7 @@
                 </WrapPanel>
 
 
-                <ui:Card  Grid.Row="2" Background="LightGray" VerticalAlignment="Top" Margin="10">
+                <ui:Card  Grid.Row="2" Background="LightGray" VerticalAlignment="Top" Margin="10" MaxWidth="400">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="7">
                         <ui:Button x:Name="btn_CreateNewClient" Height="34" Appearance="Primary" Margin="5,0,0,0" Click="btn_CreateNewClient_Click">
                             <StackPanel Orientation="Horizontal">
@@ -102,7 +102,7 @@
                             </StackPanel>
                         </ui:Button>
 
-                        <ui:Button x:Name="btn_DeleteClient" Click="btn_DeleteClient_Click" Height="34" Appearance="Danger" Margin="10,0,0,0">
+                        <ui:Button x:Name="btn_DeleteClient" Click="btn_DeleteClient_Click" Height="34" Appearance="Danger" Margin="10,0,0,0" Visibility="Collapsed">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconModern Kind="UserDelete" VerticalAlignment="Center" Margin="0,0,5,0" />
                                 <TextBlock Text="Eliminar" VerticalAlignment="Center" />

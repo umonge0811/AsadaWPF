@@ -439,7 +439,7 @@ namespace wpfASADACore.Views
             }
             else
             {
-                grd_Local.Background = new SolidColorBrush(Colors.Green);
+                grd_Local.Background = new SolidColorBrush(Colors.LightGreen);
             }
         }
 

@@ -208,7 +208,7 @@ namespace wpfASADACore.Views
             if (estado)
             {
                 string message = $"El usuario : {newUser} fue registrado con Exito!";                
-                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Green));
+                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.LightGreen));
                 ClearAllData();
                 loaddatagrid();
             }
@@ -316,7 +316,7 @@ namespace wpfASADACore.Views
             if (estado)
             {
                 //MessageBox.Show("Usuario modificado con exito!!");
-                await clsUtilities.ShowSnackbarAsync("Usuario modificado con Exito!", new SolidColorBrush(Colors.Green));
+                await clsUtilities.ShowSnackbarAsync("Usuario modificado con Exito!", new SolidColorBrush(Colors.LightGreen));
                 ClearAllData();
                 loaddatagrid();
                 btn_DeleteUser.IsEnabled = false;
@@ -364,7 +364,7 @@ namespace wpfASADACore.Views
             if (estado)
             {
                 //MessageBox.Show("Usuario eliminado con Exito!");
-                await clsUtilities.ShowSnackbarAsync("Usuario ELIMINADO con Exito!", new SolidColorBrush(Colors.Green));
+                await clsUtilities.ShowSnackbarAsync("Usuario ELIMINADO con Exito!", new SolidColorBrush(Colors.LightGreen));
                 ClearAllData();
                 loaddatagrid();
                 btn_DeleteUser.IsEnabled = false;

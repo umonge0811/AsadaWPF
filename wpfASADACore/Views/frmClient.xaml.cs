@@ -449,7 +449,7 @@ namespace wpfASADACore.Views
             if (estado)
             {
                 string message = $" Cliente ELIMINADO con Exito!";
-                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Green));
+                await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.LightGreen));
                 ClearAllData();
                 loaddatagrid();
                 btn_DeleteClient.IsEnabled = false;

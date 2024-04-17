@@ -13,6 +13,7 @@ namespace wpfASADACore.Utilities
     public class clsUtilities
     {
 
+
         public static bool EsCorreoValido(string email)
         {
             // Patrón de expresión regular para un correo electrónico
@@ -20,6 +21,8 @@ namespace wpfASADACore.Utilities
 
             // Valida el correo electrónico con la expresión regular
             return Regex.IsMatch(email, regexPattern);
+
+
         }
 
         #region Metodo para mostrar Snackbar de Material Design
@@ -27,18 +30,28 @@ namespace wpfASADACore.Utilities
         {
             // Obtén una referencia a tu MainWindow
             var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
             if (mainWindow != null)
             {
-                // Accede a tu SnackbarMessagePrincipal
+                // Accede a tu SnackbarMessagePrincipal MaterialDesignThemes.Wpf.Snackbar
                 MaterialDesignThemes.Wpf.Snackbar snackbar = mainWindow.SnackbarMessageGlobal;
-                snackbar.IsActive = true;
-                snackbar.FontSize = 25;
-                snackbar.Message.Content = message;
-                snackbar.Background = backgroundColor;
-                snackbar.Foreground = new SolidColorBrush(Colors.Black);
+
+                // Actualiza el Snackbar en el subproceso principal
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    snackbar.IsActive = true;
+                    snackbar.Message.FontSize = 60; // Establecer el tamaño de fuente directamente en el Snackbar
+                    snackbar.Message.Content = message;
+                    snackbar.Background = backgroundColor;
+                    snackbar.Foreground = new SolidColorBrush(Colors.Black);
+                });
+
                 await Task.Delay(delay);
-                snackbar.IsActive = false;
+
+                // Actualiza el Snackbar en el subproceso principal
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    snackbar.IsActive = false;
+                });
             }
             else
             {

@@ -31,6 +31,11 @@ namespace wpfASADACore
             lbl_FechaPrincipal.Text = DateTime.Now.ToString("U");
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             Loaded += OnLoaded;
+
+            // Crea un estilo personalizado para el Snackbar
+            Style snackbarStyle = new Style(typeof(MaterialDesignThemes.Wpf.Snackbar));
+            snackbarStyle.Setters.Add(new Setter(MaterialDesignThemes.Wpf.Snackbar.FontSizeProperty, 100.0));
+            SnackbarMessageGlobal.Style = snackbarStyle;
         }
 
 

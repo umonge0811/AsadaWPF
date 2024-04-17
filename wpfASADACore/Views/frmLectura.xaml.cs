@@ -160,7 +160,7 @@ namespace wpfASADACore.Views
                 LoadReadingsToDataGrid();
 
                 // Muestra un mensaje de éxito
-                await clsUtilities.ShowSnackbarAsync("Lectura creada con éxito", new SolidColorBrush(Colors.Green));
+                await clsUtilities.ShowSnackbarAsync("Lectura creada con éxito", new SolidColorBrush(Colors.LightGreen));
                 ClearControls();
             }
             catch (Exception ex)
