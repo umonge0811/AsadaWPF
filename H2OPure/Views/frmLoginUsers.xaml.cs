@@ -2,6 +2,8 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
+using H2OPure.Repository;
 using H2OPure.Services;
 
 namespace H2OPure.Views
@@ -13,12 +15,14 @@ namespace H2OPure.Views
     {
         //Declaración del objeto
         AutenticacionService autenticacionService;
+        UsersRepository usersRepository = new UsersRepository();
 
         public LoginUsers()
         {
             InitializeComponent();
             //Instancias 
-            autenticacionService = new AutenticacionService();  
+            autenticacionService = new AutenticacionService();
+            lbl_In.Visibility = Visibility.Hidden;
 
         }
 
@@ -40,15 +44,48 @@ namespace H2OPure.Views
 
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private async void btn_Login_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            this.Close();
-          
+            string username = txt_Username.Text;
+            string password = txt_Password.Password;
 
+            var (isValid, userId, userType) = await usersRepository.ValidateUserLogin(username, password);
+
+            if (isValid)
+            {
+                txt_Username.Background = new SolidColorBrush(Color.FromArgb(0, 255, 0, 0));
+                txb_AvisoLogInco.Visibility = Visibility.Hidden;
+                // Muestra el ProgressBar
+                DeterminateCircularProgress.IsIndeterminate = true;
+                lbl_In.Visibility= Visibility.Visible;
+
+                // Crea un Timer que se ejecuta después de 2 segundos
+                var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+                timer.Start();
+                timer.Tick += (s, args) =>
+                {
+                    timer.Stop();
+
+                    // Oculta el ProgressBar
+                    DeterminateCircularProgress.IsIndeterminate = true;                   
+                    // Guarda el ID del usuario y el tipo de usuario en la clase Utilities
+                    Utilities.clsUtilities.UserIdLog = userId;
+                    Utilities.clsUtilities.TypeUserLog = userType;
+                    // Otorga acceso a la aplicación
+                    GrantAccess();
+                    // Cierra la ventana de inicio de sesión
+                    this.Close();
+                };
+                }
+            else
+            {
+                txt_Username.Background = new SolidColorBrush(Color.FromArgb(30, 255, 0, 0));
+                txb_AvisoLogInco.Visibility = Visibility.Visible;
+                txt_Password.Password = "";
+                txt_Username.Text = "";
+                txt_Username.Focus();
+            }
         }
-
         public void GrantAccess()
         { 
             MainWindow main = new MainWindow();
@@ -73,5 +110,6 @@ namespace H2OPure.Views
                 textBlock.Foreground = Brushes.DarkGray;
             }
         }
+
     }
 }

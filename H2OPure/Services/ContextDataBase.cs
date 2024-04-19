@@ -1,17 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using H2OPure.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using H2OPure.Models;
 
 namespace H2OPure.Services
 {
 
     //Es la clase que se encarga de la conexión con la base de datos
-   public class ContextDataBase : DbContext
+    public class ContextDataBase : DbContext
     {
         static string database = "asada.db";
         public DbSet<clsUser> usuarios { get; set; }
@@ -19,9 +14,13 @@ namespace H2OPure.Services
         public DbSet<clsTypeClient> typeClients { get; set; }
         public DbSet<clsBilling> billings { get; set; }
         public DbSet<clsReading> readings { get; set; }
-
-
+        public DbSet<clsEmployee> employees { get; set; }
+        public DbSet<clsInventory> inventories { get; set; }
         
+
+
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(connectionString: "Filename=" + database, 
@@ -88,6 +87,27 @@ namespace H2OPure.Services
                     .WithMany()  // indica que la relación es muchos a uno (una lectura puede tener un tipo de cliente, pero varios tipos de cliente pueden tener varias lecturas).
                     .HasForeignKey(e => e.TypeClientId) //especifica que la propiedad TypeClientId en la entidad de lectura es la clave foránea que se relaciona con la tabla de tipos de cliente.
                     .OnDelete(DeleteBehavior.Restrict);  // establece el comportamiento de eliminación. En este caso, restringe la eliminación del tipo de cliente si hay lecturas asociadas a él.
+            });
+
+            modelBuilder.Entity<clsInventory>().ToTable("Inventories");
+            modelBuilder.Entity<clsInventory>(entity =>
+            {
+                entity.HasKey(e => e.id);
+                entity.HasOne(e => e.Employee)
+                    .WithMany(e => e.Inventories)
+                    .HasForeignKey(e => e.employeeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<clsEmployee>().ToTable("Employees");
+            modelBuilder.Entity<clsEmployee>(entity =>
+            {
+
+                entity.HasKey(e => e.id);
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.id)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
             base.OnModelCreating(modelBuilder);
         }

@@ -134,6 +134,9 @@ namespace H2OPure.Views
             string newPassword = txt_NewPass.Password;
             string newRepPassword = txt_NewRePass.Password;
             string newDNI = txt_NewId.Text;
+            int typeUser = cmb_TypeUser.SelectedIndex;
+
+
             
 
 
@@ -203,7 +206,7 @@ namespace H2OPure.Views
             }
 
             //await es para esperar a que la tarea termine, en este caso, la funcion/Metodo ejecute para que avance a la siguiente tarea 
-            bool estado = await usersRepository.CreateUser(newName, newUser, newDNI, newPassword, newEmail);
+            bool estado = await usersRepository.CreateUser(newName, newUser, newDNI, newPassword, newEmail,typeUser);
 
             if (estado)
             {
@@ -223,7 +226,6 @@ namespace H2OPure.Views
 
         }
         #endregion
-
 
         #region Evento click del boton de Buscar Usuario
         //Es para buscar los usuarios en la Base de Datos

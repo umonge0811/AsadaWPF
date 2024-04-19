@@ -50,10 +50,7 @@
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FB7806"/>
                         <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#FB7806"/>
                     </ComboBox.Resources>
-                    <ComboBoxItem IsSelected="True">
-                        <StackPanel Orientation="Horizontal">
-                        </StackPanel>
-                    </ComboBoxItem>
+                   
                 </ComboBox>
                 <!--#endregion-->
 

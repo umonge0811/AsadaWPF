@@ -12,15 +12,17 @@ namespace H2OPure.Models
         public string? Password { get; set; }
         public string UserName { get; set; }
         public string DNI { get; set; }
+        public int typeUser { get; set; } //0 = admin, 1 = user
 
         //contructor lleno
-        public clsUser(string? name, string? email, string? password, string userName, string DNI)
+        public clsUser(string? name, string? email, string? password, string userName, string DNI, int typeUser)
         {
             Name = name;
             Email = email;
             Password = EstablecerContraseña(password);
             UserName = userName;
             this.DNI = DNI;
+            this.typeUser = typeUser;
         }
 
         //constructor vacio

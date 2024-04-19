@@ -63,11 +63,7 @@
 
                     <TextBox x:Name="txt_NewSubscribe"  TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" materialDesign:HintAssist.Hint="No. Abonado" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center"   MinWidth="240"  Margin="10" Padding="0,0,0,4" materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" materialDesign:HintAssist.Foreground="#FB7806" Foreground="White"/>
 
-                    <ComboBox x:Name="cmb_TypeClient"  Height="39" materialDesign:ColorZoneAssist.Mode="SecondaryLight" materialDesign:HintAssist.HelperText="Selecciona Tipo de Cliente" materialDesign:HintAssist.Hint="Tipo Cliente" materialDesign:TextFieldAssist.HasClearButton="True" materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  VerticalAlignment="Center"  MinWidth="240"  Margin="10" Padding="0,0,0,4" Foreground="White" >
-                        <ComboBoxItem IsSelected="True">
-                            <StackPanel Orientation="Horizontal">
-                            </StackPanel>
-                        </ComboBoxItem>
+                    <ComboBox x:Name="cmb_TypeClient"  Height="39" materialDesign:ColorZoneAssist.Mode="Dark" materialDesign:HintAssist.HelperText="Selecciona Tipo de Cliente" materialDesign:HintAssist.Hint="Tipo Cliente" materialDesign:TextFieldAssist.HasClearButton="True"  Style="{StaticResource MaterialDesignFloatingHintComboBox}"  VerticalAlignment="Center"  MinWidth="240"  Margin="10" Padding="0,0,0,4" Foreground="White"  materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" materialDesign:HintAssist.Foreground="#FB7806">
                     </ComboBox>
                     
                     <StackPanel Orientation="Vertical" Width="250" Margin="10">

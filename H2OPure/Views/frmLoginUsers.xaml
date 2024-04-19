@@ -55,6 +55,8 @@
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
+                    
+                    
 
                     <TextBlock Text="LOG IN"
                             Foreground="DarkGray"
@@ -135,20 +137,27 @@
                          Orientation="Vertical"
                          Margin="0,1,0,0">
 
-                    <Image
-                        Width="176"  Height="150" Source="/Views/Rounder Water.png">
+
+                    <Image Source="/Views/Rounder Water.png" Height="156">
                         <Image.Effect>
                             <DropShadowEffect/>
                         </Image.Effect>
+                        <Image.OpacityMask>
+                            <ImageBrush ImageSource="/Views/Rounder Water.png"/>
+                        </Image.OpacityMask>
+
                     </Image>
 
-                    <TextBox x:Name="txt_NewDNICli"  TextWrapping="Wrap" Height="35" FontSize="12" Padding="0,0,0,6" VerticalAlignment="Center" Foreground="WhiteSmoke" materialDesign:HintAssist.Hint="Usuario" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Foreground="#FB7806" materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" Grid.Column="2" Grid.Row="1" Margin="0,0,0,0"/>
+
+
+                    <TextBox x:Name="txt_Username"  TextWrapping="Wrap" Height="35" FontSize="12" Padding="0,0,0,6" VerticalAlignment="Center" Foreground="WhiteSmoke" materialDesign:HintAssist.Hint="Usuario" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Foreground="#FB7806" materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" Grid.Column="2" Grid.Row="1" Margin="0,0,0,0" />
+                    <TextBlock x:Name="txb_AvisoLogInco" Text="Usuario o contraseña Invalida" FontSize="10" Foreground="Red" Visibility="Hidden"></TextBlock>
 
 
 
 
                     <PasswordBox
-                           x:Name="FloatingPasswordBox" Foreground="WhiteSmoke"
+                           x:Name="txt_Password" Foreground="WhiteSmoke"
                            materialDesign:HintAssist.Foreground="#FB7806"
                            materialDesign:HintAssist.Hint="Contraseña"
                            materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" Padding="0,0,0,6" FontSize="14"                               
@@ -159,13 +168,13 @@
                     <Button x:Name="btnLogin"                         
                      BorderThickness="0"
                      Content="Ingresar"
-                     Foreground="White"
+                     Foreground="#FF0C0C0C"
                      FontSize="12"
                      FontFamily="MS UI Gothic"
                      Cursor="Hand"
                      Grid.Column="2"
                      Margin="0,15,0,0"
-                     Click="btnLogin_Click">
+                     Click="btn_Login_Click">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Background" Value="#588273"/>
@@ -206,7 +215,11 @@
                             MouseEnter="TextBlock_MouseEnter"
                             MouseLeave="TextBlock_MouseLeave"/>
 
+                    <ProgressBar  x:Name="DeterminateCircularProgress"  Style="{StaticResource MaterialDesignCircularProgressBar}" Visibility="Visible" IsIndeterminate="False" Foreground="WhiteSmoke"/>
+                    <Label x:Name="lbl_In" Content="Ingresando..."  Margin="0,2,0,0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
+
                 </StackPanel>
+                
 
 
             </Grid>

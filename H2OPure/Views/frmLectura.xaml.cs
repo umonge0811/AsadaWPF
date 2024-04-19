@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using H2OPure.Repository;
+using H2OPure.Utilities;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using H2OPure.Models;
-using H2OPure.Repository;
-using H2OPure.Services;
-using H2OPure.Utilities;
 
 namespace H2OPure.Views
 {
@@ -36,10 +24,19 @@ namespace H2OPure.Views
         private int selectedReadingId;
 
 
-        private void LoadReadingsToDataGrid()
+        private async void LoadReadingsToDataGrid()
         {
-            selectedClientId = (int)cmb_Client.SelectedValue;
-            dtg_Lecturas.ItemsSource = readingRepository.GetReadingsByClient(selectedClientId);
+            if (cmb_Client.SelectedValue != null)
+            {
+                selectedClientId = (int)cmb_Client.SelectedValue;
+                dtg_Lecturas.ItemsSource = readingRepository.GetReadingsByClient(selectedClientId);
+            }
+            else
+            {
+                // Manejar el caso cuando el ComboBox está vacío
+                await clsUtilities.ShowSnackbarAsync("No hay seleccion", new SolidColorBrush(Colors.Yellow));
+                dtg_Lecturas.ItemsSource = null;
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

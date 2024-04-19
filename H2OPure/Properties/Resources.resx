@@ -142,6 +142,12 @@
   <data name="facturaAsada6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\facturaAsada6.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="maintenance2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\maintenance2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Rounder_Water" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Rounder Water.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="water_system" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\water-system.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

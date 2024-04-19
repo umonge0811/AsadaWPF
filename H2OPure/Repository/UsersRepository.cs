@@ -42,7 +42,7 @@ namespace H2OPure.Repository
         }
 
 
-        public async Task<bool> CreateUser(string name, string username, string dni, string password, string email)
+        public async Task<bool> CreateUser(string name, string username, string dni, string password, string email, int typeUser)
         {
 
             try
@@ -53,7 +53,7 @@ namespace H2OPure.Repository
 
                     //await db.Database.EnsureCreatedAsync();
 
-                    clsUser usuario1 = new clsUser(name, email, password, username, dni); //Estás creando una instancia de la clase clsUser con los datos proporcionados (nombre, correo electrónico, contraseña, nombre de usuario y DNI).
+                    clsUser usuario1 = new clsUser(name, email, password, username, dni,typeUser); //Estás creando una instancia de la clase clsUser con los datos proporcionados (nombre, correo electrónico, contraseña, nombre de usuario y DNI).
 
                     db.usuarios.Add(usuario1); //Luego, se agrega este usuario al conjunto de datos (DbSet) de usuarios en el contexto de base de datos (ContextDataBase).
 
@@ -218,6 +218,30 @@ namespace H2OPure.Repository
         public ObservableCollection<clsUser> GetAllUsers()
         {
             return new ObservableCollection<clsUser>(context.usuarios.ToList());
+        }
+
+        public async Task<(bool, int, int)> ValidateUserLogin(string username, string password)
+        {
+            try
+            {
+                using (var db = new ContextDataBase())
+                {
+                    var user = await db.usuarios.FirstOrDefaultAsync(u => u.UserName == username);
+
+                    if (user != null && user.VerificarContraseña(password))
+                    {
+                        // Devuelve verdadero si el usuario es válido, junto con el Id y el tipo de usuario
+                        return (true, user.Id, user.typeUser);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+
+            // Devuelve falso si el usuario no es válido o no existe, junto con valores predeterminados para el Id y el tipo de usuario
+            return (false, default(int), default(int));
         }
 
 

@@ -6,9 +6,9 @@
       xmlns:local="clr-namespace:H2OPure.Views"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="frmInicio" Loaded="Page_Loaded" >
+      Title="frmInicio" Loaded="Page_Loaded" Opacity="0.8" >
     <Page.Background>
-        <ImageBrush ImageSource="/Views/drop-falling-into-water.jpg" Stretch="Uniform"/>
+        <ImageBrush ImageSource="/Views/drop-falling-into-water.jpg" Stretch="Uniform" Opacity="0.805"/>
     </Page.Background>
 
     <TextBlock x:Name="txt_Block" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" Foreground="White" Width="198" Margin="0,260,0,0">

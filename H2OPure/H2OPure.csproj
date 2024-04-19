@@ -20,6 +20,7 @@
     <None Remove="Images\user-icon.png" />
     <None Remove="Views\close-up-view-nature-concept.jpg" />
     <None Remove="Views\drop-falling-into-water.jpg" />
+    <None Remove="Views\Rounder Water.png" />
     <None Remove="water-system.png" />
   </ItemGroup>
 
@@ -69,6 +70,7 @@
     </Resource>
     <Resource Include="Views\close-up-view-nature-concept.jpg" />
     <Resource Include="Views\drop-falling-into-water.jpg" />
+    <Resource Include="Views\Rounder Water.png" />
     <Resource Include="water-system.png" />
   </ItemGroup>
 

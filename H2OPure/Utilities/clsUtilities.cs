@@ -12,7 +12,10 @@ namespace H2OPure.Utilities
 {
     public class clsUtilities
     {
-
+        //variable para almacenar el usuario logueado
+        public static int UserIdLog = 0;
+        //variable para almacenar el rol del usuario logueado
+        public static int TypeUserLog = 0;
 
         public static bool EsCorreoValido(string email)
         {
