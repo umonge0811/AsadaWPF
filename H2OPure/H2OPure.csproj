@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <PackageIcon>water-system.png</PackageIcon>
+    <ApplicationIcon>water-system.ico</ApplicationIcon>
+    <Title>Asada</Title>
+    <AssemblyName>H2OCobro</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="close-up-view-nature-concept.jpg" />
+    <None Remove="Images\bglogin.jpg" />
+    <None Remove="Images\key-icon.png" />
+    <None Remove="Images\LogoAsada2.png" />
+    <None Remove="Images\user-icon.png" />
+    <None Remove="Views\close-up-view-nature-concept.jpg" />
+    <None Remove="Views\drop-falling-into-water.jpg" />
+    <None Remove="water-system.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="water-system.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
+    <PackageReference Include="itextsharp.xmlworker" Version="5.5.13" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.4" />
+    <PackageReference Include="WPF-UI" Version="3.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="close-up-view-nature-concept.jpg" />
+    <Resource Include="Images\bglogin.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\key-icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\LogoAsada2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\user-icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Views\close-up-view-nature-concept.jpg" />
+    <Resource Include="Views\drop-falling-into-water.jpg" />
+    <Resource Include="water-system.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\water-system.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

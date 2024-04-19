@@ -1,0 +1,222 @@
+﻿<Window x:Class="H2OPure.Views.LoginUsers"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:H2OPure.Views"
+        mc:Ignorable="d"
+        Title="LoginUsers" Height="400" Width="500"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Windows_MouseDown" 
+        Background="Transparent" 
+        AllowsTransparency="True">
+
+    <Border CornerRadius="12">
+        <Border.Background>
+            <ImageBrush ImageSource="/images/bglogin.jpg"
+                     Stretch="Fill"/>
+        </Border.Background>
+        <Border CornerRadius="12"            
+         BorderThickness="1" 
+         Opacity="0.95">
+            <!-- Esto es para la transparencia de la imagen-->
+
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#1b6d86"  Offset="0"/>
+                    <GradientStop Color="#515151"  Offset="0.75"/>
+                    <GradientStop Color="#183347"  Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <!--Esto es para el color de Fondo y el degradado -->
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#323232"  Offset="0.5"/>
+                    <GradientStop Color="#393939"  Offset="0"/>
+                </LinearGradientBrush>
+
+            </Border.Background>
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="LOG IN"
+                            Foreground="DarkGray"
+                            FontFamily="MS UI Gothic"
+                            FontSize="10"
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Margin="10,0,0,0"/>
+
+                    <Button x:Name="btnMinimize"                           
+                         BorderThickness="0"
+                         Content="-"
+                         Foreground="White"
+                         FontSize="16"
+                         FontFamily="MS UI Gothic"
+                         Cursor="Hand"
+                         Click="btnClose_Click" Grid.ColumnSpan="2" Margin="438,0,5,0">
+
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#588273"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#278BEF"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Width="25" Height="18"
+                                     CornerRadius="9"
+                                     Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+
+                    </Button>
+
+                    <Button x:Name="btnClose"                         
+                         BorderThickness="0"
+                         Content="X"
+                         Foreground="White"
+                         FontSize="12"
+                         FontFamily="MS UI Gothic"
+                         Cursor="Hand"
+                         Grid.Column="2"
+                         Click="btnClose_Click">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#494949"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#C62DAE"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Width="25" Height="18"
+                                     CornerRadius="9"
+                                     Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+                <!--Este es el panel donde esta el logo -->
+                <StackPanel Width="220"
+                         Grid.Row="1"
+                         Orientation="Vertical"
+                         Margin="0,1,0,0">
+
+                    <Image
+                        Width="176"  Height="150" Source="/Views/Rounder Water.png">
+                        <Image.Effect>
+                            <DropShadowEffect/>
+                        </Image.Effect>
+                    </Image>
+
+                    <TextBox x:Name="txt_NewDNICli"  TextWrapping="Wrap" Height="35" FontSize="12" Padding="0,0,0,6" VerticalAlignment="Center" Foreground="WhiteSmoke" materialDesign:HintAssist.Hint="Usuario" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Foreground="#FB7806" materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" Grid.Column="2" Grid.Row="1" Margin="0,0,0,0"/>
+
+
+
+
+                    <PasswordBox
+                           x:Name="FloatingPasswordBox" Foreground="WhiteSmoke"
+                           materialDesign:HintAssist.Foreground="#FB7806"
+                           materialDesign:HintAssist.Hint="Contraseña"
+                           materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" Padding="0,0,0,6" FontSize="14"                               
+                           Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                           />
+
+
+                    <Button x:Name="btnLogin"                         
+                     BorderThickness="0"
+                     Content="Ingresar"
+                     Foreground="White"
+                     FontSize="12"
+                     FontFamily="MS UI Gothic"
+                     Cursor="Hand"
+                     Grid.Column="2"
+                     Margin="0,15,0,0"
+                     Click="btnLogin_Click">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#588273"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#FB7806"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Width="100" Height="25"
+                                 CornerRadius="5"
+                                 Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <TextBlock Text="Olvidaste tu Contraseña?"
+                    Foreground="DarkGray"
+                    FontSize="12"
+                    FontWeight="Medium"
+                    FontFamily="MS UI Gothic"
+                    Margin="0,10,0,0"/>
+
+                    <TextBlock x:Name="txtReset"  Text="Reset"
+                    Foreground="DarkGray"
+                    FontSize="12"
+                    FontWeight="Bold"
+                    FontFamily="MS UI Gothic"
+                    Margin="0,1,0,0"
+                    Cursor="Hand"
+                            MouseEnter="TextBlock_MouseEnter"
+                            MouseLeave="TextBlock_MouseLeave"/>
+
+                </StackPanel>
+
+
+            </Grid>
+
+
+
+
+
+
+
+        </Border>
+    </Border>
+</Window>
