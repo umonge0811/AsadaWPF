@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using H2OPure.Repository;
 using H2OPure.Services;
+using H2OPure.Utilities;
 
 namespace H2OPure.Views
 {
@@ -49,7 +50,7 @@ namespace H2OPure.Views
             string username = txt_Username.Text;
             string password = txt_Password.Password;
 
-            var (isValid, userId, userType) = await usersRepository.ValidateUserLogin(username, password);
+            var (isValid, userId, userType, isPasswordChangeRequired) = await usersRepository.ValidateUserLogin(username, password);
 
             if (isValid)
             {
@@ -71,6 +72,12 @@ namespace H2OPure.Views
                     // Guarda el ID del usuario y el tipo de usuario en la clase Utilities
                     Utilities.clsUtilities.UserIdLog = userId;
                     Utilities.clsUtilities.TypeUserLog = userType;
+                    if (isPasswordChangeRequired)
+                    {
+                        msb_ChangePass msb_ChangePass = new msb_ChangePass();
+                        msb_ChangePass.ShowDialog();
+                        this.Hide();
+                    }
                     // Otorga acceso a la aplicación
                     GrantAccess();
                     // Cierra la ventana de inicio de sesión

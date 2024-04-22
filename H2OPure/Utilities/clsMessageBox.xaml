@@ -11,7 +11,7 @@
         Title="clsMessageBox" Height="250" Width="350" WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen" Background="Transparent">
 
 
-    <Border Background="WhiteSmoke" BorderBrush="Black" BorderThickness="1" CornerRadius="10" Padding="10">
+    <Border Background="#323232" BorderBrush="Black" BorderThickness="1" CornerRadius="10" Padding="10">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -21,14 +21,14 @@
 
             <!-- Barra de color en la parte superior -->
             <Border x:Name="BarColor" Background="{Binding BarColor}" Padding="10" CornerRadius="10">
-                <TextBlock x:Name="BarText" Text="{Binding BarText}" HorizontalAlignment="Center" />
+                <TextBlock x:Name="BarText" Text="{Binding BarText}" HorizontalAlignment="Center" Foreground="WhiteSmoke"/>
             </Border>
 
             <!-- Logo -->
-            <materialDesign:PackIcon x:Name="Logo" Kind="QuestionMark" VerticalAlignment="Center" HorizontalAlignment="Center" Height="74" Width="80" Grid.Row="1" Margin="0,50,0,0"/>
+            <materialDesign:PackIcon x:Name="Logo" Kind="QuestionMark" VerticalAlignment="Center" HorizontalAlignment="Center" Height="74" Width="80" Grid.Row="1" Margin="0,50,0,0" Foreground="WhiteSmoke"/>
 
             <!-- Bloque de texto para el mensaje -->
-            <TextBlock Grid.Row="1" x:Name="MessageTextBlock" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,20,0,0" />
+            <TextBlock Grid.Row="1" x:Name="MessageTextBlock" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,20,0,0" Foreground="WhiteSmoke" />
 
             <!-- Espacio para los botones -->
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">

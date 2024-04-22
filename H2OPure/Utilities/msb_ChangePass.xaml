@@ -1,0 +1,70 @@
+﻿<Window x:Class="H2OPure.Utilities.msb_ChangePass"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:H2OPure.Utilities"
+        mc:Ignorable="d"
+        Title="msb_ChangePass" Height="250" Width="300" WindowStyle="None" WindowStartupLocation="CenterScreen" Background="Transparent">
+
+    <Border Background="#323232" BorderBrush="Black" BorderThickness="1" CornerRadius="10" Padding="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+
+            </Grid.RowDefinitions>
+
+            <ui:Card Grid.Row="0" VerticalAlignment="Top">
+                <!-- Barra de color en la parte superior -->
+                <Border x:Name="BarColor" Background="#202020" Padding="10" CornerRadius="5">
+
+                    <TextBlock Text="Cambio de Contraseña" HorizontalAlignment="Center" FontSize="20" Foreground="WhiteSmoke" />
+                </Border>
+
+            </ui:Card>
+
+
+
+
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" Grid.Row="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Logo -->
+                    <ui:PasswordBox x:Name="txt_NewAdminPass"  Grid.Row="0" TextWrapping="Wrap" Height="37" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Nueva Contraseña" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" SelectionBrush="#FB7806" CaretBrush="#FB7806"  materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" materialDesign:HintAssist.Foreground="#FB7806" Foreground="WhiteSmoke" />
+
+                    <ui:TextBox x:Name="txt_VisibleAdminPass"  Grid.Row="0" TextWrapping="Wrap" Height="37" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Nueva Contraseña" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" Visibility="Hidden" SelectionBrush="#FB7806" CaretBrush="#FB7806"  materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" materialDesign:HintAssist.Foreground="#FB7806" Foreground="WhiteSmoke" />
+
+                    <ui:PasswordBox x:Name="txt_NewAdminRePass" Grid.Row="1" TextWrapping="Wrap" Height="37" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Confirma la Nueva Contraseña" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" SelectionBrush="#FB7806" CaretBrush="#FB7806"  materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" materialDesign:HintAssist.Foreground="#FB7806" Foreground="WhiteSmoke" />
+
+                    <ui:TextBox x:Name="txt_VisibleAdminRePass"  Grid.Row="1" TextWrapping="Wrap" Height="37" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Confirma la Nueva Contraseña" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" Visibility="Hidden" SelectionBrush="#FB7806" CaretBrush="#FB7806"  materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" materialDesign:HintAssist.Foreground="#FB7806" Foreground="WhiteSmoke"/>
+
+                    <ui:ToggleSwitch x:Name="tglAdminPass"  Grid.Row="0" OnContent="🚫" OffContent="👁️" IsChecked="False" Width="70" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" Checked="tglPass_Checked" Unchecked="tglPass_Unchecked" Background="#FFFB7806" Margin="0,10,4,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
+
+                    <ui:ToggleSwitch x:Name="tglAdminRePass" Grid.Row="1" OnContent="🚫" OffContent="👁️" IsChecked="False" Margin="0,10,4,0" Width="70" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0,0,0,0" VerticalAlignment="Stretch" Checked="tglPass2_Checked" Unchecked="tglPass2_Unchecked" Background="#FFFB7806" HorizontalAlignment="Right" />
+                </Grid>
+
+                <ui:Button x:Name="btn_ChangePassAdmin" Height="34"  Margin="5,15,0,0"  Background="#588273" HorizontalAlignment="Center" Click="btn_ChangePassAdmin_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconModern Kind="UnlockKeyhole" VerticalAlignment="Center" Margin="0,0,5,0" />
+                        <TextBlock Text="Cambiar" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ui:Button>
+
+
+
+            </StackPanel>
+
+
+
+            <!-- Espacio para los botones -->
+        </Grid>
+    </Border>
+</Window>

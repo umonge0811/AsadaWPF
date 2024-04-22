@@ -25,7 +25,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" Margin="0,50,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="50" />
@@ -34,7 +34,7 @@
                     </Grid.ColumnDefinitions>
 
                     <iconPacks:PackIconModern Kind="UserAdd" RenderTransformOrigin="0.5,0.5" Width="50" Height="30" Foreground="Green" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <TextBlock Text="Crear Nuevo Usuarios" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Grid.Column="2" VerticalAlignment="Center" Foreground="White" />
+                    <TextBlock Text="Nuevos Empleados" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Grid.Column="2" VerticalAlignment="Center" Foreground="White" />
                 </Grid>
 
                 <ui:Card Grid.Row="1" Height="Auto" Margin="10,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Center">
@@ -82,16 +82,24 @@
                         <WrapPanel HorizontalAlignment="Center">
 
                             <ComboBox x:Name="cmb_TypeUser"  Height="39" materialDesign:ColorZoneAssist.Mode="Dark" materialDesign:HintAssist.HelperText="Selecciona Tipo de Usuario" materialDesign:HintAssist.Hint="Tipo Usuario" materialDesign:TextFieldAssist.HasClearButton="True"  Style="{StaticResource MaterialDesignFloatingHintComboBox}"  VerticalAlignment="Center"  MinWidth="240"  Margin="10" Padding="0,0,0,4" Foreground="White" materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" materialDesign:HintAssist.Foreground="#FB7806" >
+                                <ComboBoxItem>Sin Usuario</ComboBoxItem>
                                 <ComboBoxItem>Administrador</ComboBoxItem>
                                 <ComboBoxItem>Usuario</ComboBoxItem>
                             </ComboBox>
+                            <ComboBox x:Name="cmb_Puesto"  Height="39" materialDesign:ColorZoneAssist.Mode="Dark" materialDesign:HintAssist.HelperText="Selecciona Puesto" materialDesign:HintAssist.Hint="Puesto Laboral" materialDesign:TextFieldAssist.HasClearButton="True"  Style="{StaticResource MaterialDesignFloatingHintComboBox}"  VerticalAlignment="Center"  MinWidth="240"  Margin="10" Padding="0,0,0,4" Foreground="White" materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" materialDesign:HintAssist.Foreground="#FB7806" >
+                                <ComboBoxItem>Administrador</ComboBoxItem>
+                                <ComboBoxItem>Fontanero</ComboBoxItem>
+                                <ComboBoxItem>Finanzas</ComboBoxItem>
+                                <ComboBoxItem>Mantenimiento</ComboBoxItem>
+                            </ComboBox>
+
 
                         </WrapPanel>
 
                     </StackPanel>
                 </ui:Card>
                 
-                <ui:Card Grid.Row="1" VerticalAlignment="Center" Background="#FF363636" Margin="0,200,0,0" HorizontalAlignment="Center">
+                <ui:Card Grid.Row="1" VerticalAlignment="Center" Background="#FF363636" Margin="0,180,0,38" HorizontalAlignment="Center">
                     
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0" >
                         <ui:Button x:Name="btn_CreateNewUser" Height="34" Appearance="Primary" Margin="5,0,0,0" Click="btn_CreateNewUser_Click" Background="#588273">
