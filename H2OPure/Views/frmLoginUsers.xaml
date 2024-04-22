@@ -162,6 +162,7 @@
                            materialDesign:HintAssist.Hint="Contraseña"
                            materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" Padding="0,0,0,6" FontSize="14"                               
                            Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                            KeyDown="txt_Password_KeyDown"
                            />
 
 

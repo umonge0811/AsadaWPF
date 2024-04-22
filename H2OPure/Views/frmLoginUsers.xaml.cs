@@ -44,6 +44,15 @@ namespace H2OPure.Views
             Application.Current.Shutdown();
 
         }
+        //metodo para la tecla enter
+        private void txt_Password_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                btn_Login_Click(sender, e);
+            }
+        }
+
 
         private async void btn_Login_Click(object sender, RoutedEventArgs e)
         {
