@@ -50,7 +50,7 @@ namespace H2OPure.Views
             string username = txt_Username.Text;
             string password = txt_Password.Password;
 
-            var (isValid, userId, userType, isPasswordChangeRequired) = await usersRepository.ValidateUserLogin(username, password);
+            var (isValid, userId, userType, isPasswordChangeRequired, errorMessage) = await usersRepository.ValidateUserLogin(username, password);
 
             if (isValid)
             {
@@ -91,7 +91,10 @@ namespace H2OPure.Views
                 txt_Password.Password = "";
                 txt_Username.Text = "";
                 txt_Username.Focus();
+                // Muestra el mensaje de error en el Label
+                txb_AvisoLogInco.Text = errorMessage;
             }
+
         }
         public void GrantAccess()
         { 

@@ -29,12 +29,15 @@ namespace H2OPure.Views
             
             btn_DeleteUser.IsEnabled = false;
             btn_ModifyUser.IsEnabled = false;
+            chk_Activo.Visibility = Visibility.Hidden;
 
             #region Simplificacion de la verificacion si el texto de usuarios cambia para habilitar el boton de modificar
             txt_NewName.TextChanged += Input_Changed;
             txt_NewId.TextChanged += Input_Changed;
             txt_NewUser.TextChanged += Input_Changed;
             txt_NewEmail.TextChanged += Input_Changed;
+            cmb_TypeUser.SelectionChanged += Input_Changed;
+            cmb_Puesto.SelectionChanged += Input_Changed;
             #endregion
         }
 
@@ -80,6 +83,27 @@ namespace H2OPure.Views
                 lblPass.Visibility = Visibility.Visible;
                 tglPass.Visibility = Visibility.Hidden;
                 tglrePass.Visibility = Visibility.Hidden;
+                foreach (ComboBoxItem item in cmb_Puesto.Items)
+                {
+                    if (item.Content.ToString() == user.Puesto)
+                    {
+                        cmb_Puesto.SelectedItem = item;
+                        break;
+                    }
+                }
+                cmb_TypeUser.SelectedIndex = user.typeUser;
+                if (user.isActive)
+                {
+                    btn_DeleteUser.IsEnabled = true;
+                    chk_Activo.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    btn_DeleteUser.IsEnabled = false;
+                    chk_Activo.Visibility = Visibility.Visible;
+                    chk_Activo.IsChecked = false;
+                }
+               
 
             } 
         }
@@ -117,6 +141,13 @@ namespace H2OPure.Views
             txt_NewRePass.Visibility = Visibility.Visible;
             tglPass.IsChecked = false;
             tglrePass.IsChecked = false;
+            lblPass.Visibility = Visibility.Hidden;
+            tglPass.Visibility = Visibility.Visible;
+            tglrePass.Visibility = Visibility.Visible;
+            cmb_Puesto.Text = "Seleccione un Puesto";
+            cmb_TypeUser.Text = "Seleccione";
+            chk_Activo.Visibility = Visibility.Hidden;
+            
 
         }
         #endregion
@@ -135,7 +166,7 @@ namespace H2OPure.Views
             string newRepPassword = txt_NewRePass.Password;
             string newDNI = txt_NewId.Text;
             int typeUser = cmb_TypeUser.SelectedIndex;
-            string? puesto = cmb_Puesto.SelectedItem.ToString();
+            string? puesto = (cmb_Puesto.SelectedItem as ComboBoxItem).Content.ToString();
 
 
 
@@ -207,7 +238,7 @@ namespace H2OPure.Views
             }
 
             //await es para esperar a que la tarea termine, en este caso, la funcion/Metodo ejecute para que avance a la siguiente tarea 
-            bool estado = await usersRepository.CreateUser(newName, newUser, newDNI, newPassword, newEmail,typeUser, puesto);
+            bool estado = await usersRepository.CreateUser(newName, newUser, newDNI, newPassword, newEmail,typeUser,true, puesto);
 
             if (estado)
             {
@@ -281,6 +312,9 @@ namespace H2OPure.Views
             string newEmail = txt_NewEmail.Text;
             string newUser = txt_NewUser.Text;
             string newDNI = txt_NewId.Text;
+            string? puesto = cmb_Puesto.SelectedItem.ToString();
+            int typeUser = cmb_TypeUser.SelectedIndex;
+            bool isActive = chk_Activo.IsChecked.Value;
 
 
             //Error first 
@@ -314,7 +348,7 @@ namespace H2OPure.Views
            
 
             //await es para esperar a que la tarea termine, en este caso, la funcion/Metodo ejecute para que avance a la siguiente tarea 
-            bool estado = await usersRepository.modifyUser(newName, newUser, newDNI, newEmail, userName);
+            bool estado = await usersRepository.modifyUser(newName, newUser, newDNI, newEmail, userName,puesto,typeUser,isActive);
 
             if (estado)
             {
@@ -331,6 +365,8 @@ namespace H2OPure.Views
                 lblPass.Visibility = Visibility.Hidden;
                 tglPass.Visibility = Visibility.Visible;
                 tglrePass.Visibility = Visibility.Visible;
+                cmb_Puesto.Text = "Seleccione un Puesto";
+                cmb_TypeUser.Text = "Seleccione";
 
 
             }
@@ -349,7 +385,7 @@ namespace H2OPure.Views
             // Mostrar barra de progreso
             await clsUtilities.ShowProgressBarAsync();
             // Mostrar un mensaje de confirmación para eliminar el cliente
-            var confirmationBox = new clsMessageBox("¿Está seguro de eliminar el Usuario?", "Sí", "No", "AlertOctagonOutline", "Advertencia", Brushes.Yellow);
+            var confirmationBox = new clsMessageBox("¿Está seguro de Inactivar el Usuario?", "Sí", "No", "AlertOctagonOutline", "Advertencia", Brushes.Yellow);
             var confirmationResult = confirmationBox.ShowDialog();
             if (confirmationResult != true)
             {
@@ -359,7 +395,7 @@ namespace H2OPure.Views
             if (userName == null)
             {
                 //MessageBox.Show("Debes buscar un usuario antes de eliminarlo");
-                await clsUtilities.ShowSnackbarAsync("Debes buscar un usuario antes de eliminarlo!", new SolidColorBrush(Colors.Yellow));
+                await clsUtilities.ShowSnackbarAsync("Debes buscar un usuario antes de Inactivarlo!", new SolidColorBrush(Colors.Yellow));
                 ClearAllData();
             }
             bool estado = await usersRepository.deleteUser(userName);
@@ -367,7 +403,7 @@ namespace H2OPure.Views
             if (estado)
             {
                 //MessageBox.Show("Usuario eliminado con Exito!");
-                await clsUtilities.ShowSnackbarAsync("Usuario ELIMINADO con Exito!", new SolidColorBrush(Colors.LightGreen));
+                await clsUtilities.ShowSnackbarAsync("Usuario Desactivado con Exito!", new SolidColorBrush(Colors.LightGreen));
                 ClearAllData();
                 loaddatagrid();
                 btn_DeleteUser.IsEnabled = false;

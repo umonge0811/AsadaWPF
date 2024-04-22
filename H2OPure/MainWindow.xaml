@@ -36,7 +36,7 @@
                     <ui:NavigationViewItem.MenuItems >
                         <ui:NavigationViewItem Content="Gestion de Clientes" Icon="{ui:SymbolIcon PersonAccounts24}" Click="NavigationViewItem_Click_1" ></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Tipos de Cliente y Tarifas" Icon="{ui:SymbolIcon MoneySettings20}" Click="NavigationViewItem_Click_2"></ui:NavigationViewItem>
-                        <ui:NavigationViewItem Content="Gestion de Usuarios" Icon="{ui:SymbolIcon peopleadd16}" Click="NavigationViewItem_Click_4"></ui:NavigationViewItem>
+                        <ui:NavigationViewItem Content="Gestion de Empleados y Usuarios " Icon="{ui:SymbolIcon peopleadd16}" Click="NavigationViewItem_Click_4"></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Inventarios" Icon="{ui:SymbolIcon boxtoolbox24}"  ></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Personal" Icon="{ui:SymbolIcon PersonAccounts24}"  ></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Reportes" Icon="{ui:SymbolIcon DocumentPdf16}" ></ui:NavigationViewItem>

@@ -92,10 +92,11 @@
                                 <ComboBoxItem>Finanzas</ComboBoxItem>
                                 <ComboBoxItem>Mantenimiento</ComboBoxItem>
                             </ComboBox>
+                            <CheckBox x:Name="chk_Activo" Content="Activar"/>
+
 
 
                         </WrapPanel>
-
                     </StackPanel>
                 </ui:Card>
                 
@@ -119,7 +120,7 @@
                         <ui:Button x:Name="btn_DeleteUser" Click="btn_DeleteUser_Click" Height="34" Appearance="Danger" Margin="10,0,0,0" Background="#A52F09">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconModern Kind="UserDelete" VerticalAlignment="Center" Margin="0,0,5,0" />
-                                <TextBlock Text="Eliminar" VerticalAlignment="Center" />
+                                <TextBlock Text="Desactivar" VerticalAlignment="Center" />
                             </StackPanel>
                         </ui:Button>
 
@@ -178,6 +179,7 @@
                             <DataGridTextColumn Binding="{Binding Path=Name}" Header="Nombre Completo" Width="Auto" />
                             <DataGridTextColumn Binding="{Binding Path=UserName}" Header="Nombre de Usuario" Width="Auto" />
                             <DataGridTextColumn Binding="{Binding Path=Email}" Header="Correo Electronico" Width="Auto" />
+                            <DataGridTextColumn Binding="{Binding Path=isActive}" Header="Activo" Width="Auto" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

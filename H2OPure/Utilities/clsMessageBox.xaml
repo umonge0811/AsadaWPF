@@ -21,7 +21,7 @@
 
             <!-- Barra de color en la parte superior -->
             <Border x:Name="BarColor" Background="{Binding BarColor}" Padding="10" CornerRadius="10">
-                <TextBlock x:Name="BarText" Text="{Binding BarText}" HorizontalAlignment="Center" Foreground="WhiteSmoke"/>
+                <TextBlock x:Name="BarText" Text="{Binding BarText}" HorizontalAlignment="Center" Foreground="Black"/>
             </Border>
 
             <!-- Logo -->

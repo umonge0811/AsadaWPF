@@ -30,10 +30,11 @@ namespace H2OPure.Repository
                 {
                     Name = "Admin",
                     UserName = "Admin",
-                    DNI = "Admin",
-                    Email = "admin@example.com",
+                    DNI = "N/A",
+                    Email = "Sin Email",
                     typeUser = 0, // 0 = admin
                     Puesto = "Administrador",
+                    isActive = true,
                     IsPasswordChangeRequired = true,
                 };
 
@@ -48,7 +49,7 @@ namespace H2OPure.Repository
 
         
 
-        // Este metodo es para Obtener 
+        // Este metodo es para Obtener informacion para llena el Datagrid de Usuarios
         public ObservableCollection<clsUser> GetAllUser()
         {
             // Proyectar las propiedades deseadas, excluyendo la contraseña
@@ -58,6 +59,9 @@ namespace H2OPure.Repository
                 Name = u.Name,
                 UserName = u.UserName,
                 Email = u.Email,
+                isActive = u.isActive,
+                typeUser = u.typeUser,
+                Puesto = u.Puesto,
                 // ... Otras propiedades que desees incluir
             });
 
@@ -66,7 +70,7 @@ namespace H2OPure.Repository
         }
 
 
-        public async Task<bool> CreateUser(string name, string username, string dni, string password, string email, int typeUser,string puesto)
+        public async Task<bool> CreateUser(string name, string username, string dni, string password, string email, int typeUser, bool isActivo,string puesto)
         {
 
             try
@@ -77,7 +81,7 @@ namespace H2OPure.Repository
 
                     //await db.Database.EnsureCreatedAsync();
 
-                    clsUser usuario1 = new clsUser(name, email, password, username, dni,typeUser, puesto); //Estás creando una instancia de la clase clsUser con los datos proporcionados (nombre, correo electrónico, contraseña, nombre de usuario y DNI).
+                    clsUser usuario1 = new clsUser(name, email, password, username, dni,typeUser, isActivo, puesto); //Estás creando una instancia de la clase clsUser con los datos proporcionados (nombre, correo electrónico, contraseña, nombre de usuario y DNI).
 
                     db.usuarios.Add(usuario1); //Luego, se agrega este usuario al conjunto de datos (DbSet) de usuarios en el contexto de base de datos (ContextDataBase).
 
@@ -114,7 +118,7 @@ namespace H2OPure.Repository
 
 
         #region Modificar Usuarios
-        public async Task<bool> modifyUser(string name, string username, string dni,  string email, string userName)
+        public async Task<bool> modifyUser(string name, string username, string dni,  string email, string userName, string puesto,int typeuser, bool isActive)
         {
 
             bool estado = false;
@@ -132,6 +136,9 @@ namespace H2OPure.Repository
                         user.UserName = username;
                         user.Email = email;
                         user.DNI = dni;
+                        user.Puesto = puesto;
+                        user.isActive = isActive;
+                        user.typeUser = typeuser;
 
                         await db.SaveChangesAsync();
 
@@ -203,59 +210,63 @@ namespace H2OPure.Repository
 
         }
 
-        public async Task<bool> deleteUser( string? userName)
+        public async Task<bool> deleteUser(string? userName)
         {
-
             bool estado = false;
             try
             {
-
                 using (var db = new ContextDataBase())
                 {
-
                     var user = await db.usuarios.FirstOrDefaultAsync(u => u.UserName == userName);
 
                     if (user != null)
                     {
-                      
-                        db.usuarios.Remove(user);
+                        // Marca el usuario como inactivo en lugar de eliminarlo
+                        user.isActive = false;
                         await db.SaveChangesAsync();
 
                         estado = true;
                     }
-
                 }
-
             }
             catch (Exception ex)
             {
                 message = ex.Message;
-                //MessageBox.Show(ex.Message);
                 estado = false;
             }
 
             return estado;
-
         }
 
-        // Este metodo es para Obtener 
+        // Este metodo es para Obtener  todos los Usuarios  
         public ObservableCollection<clsUser> GetAllUsers()
         {
             return new ObservableCollection<clsUser>(context.usuarios.ToList());
         }
 
-        public async Task<(bool, int, int, bool)> ValidateUserLogin(string username, string password)
+        //Metodo para validar el inicio de sesion 
+        public async Task<(bool, int, int, bool, string)> ValidateUserLogin(string username, string password)
         {
             try
             {
                 using (var db = new ContextDataBase())
                 {
-                    var user = await db.usuarios.FirstOrDefaultAsync(u => u.UserName == username);
+                    var user = await db.usuarios.FirstOrDefaultAsync(u => u.UserName == username && u.isActive);
 
                     if (user != null && user.VerificarContraseña(password))
                     {
-                        // Devuelve verdadero si el usuario es válido, junto con el Id, el tipo de usuario y el estado de IsPasswordChangeRequired
-                        return (true, user.Id, user.typeUser, user.IsPasswordChangeRequired);
+                        // Devuelve verdadero si el usuario es válido, junto con el Id, el tipo de usuario, el estado de IsPasswordChangeRequired y un mensaje vacío
+                        return (true, user.Id, user.typeUser, user.IsPasswordChangeRequired, "");
+                    }
+                    else if (user != null)
+                    {
+                        // El usuario es inválido porque la contraseña es incorrecta
+                        return (false, default(int), default(int), default(bool), "Contraseña o Usuario incorrecta");
+                    }
+                    else
+                    {
+                        // El usuario es inválido porque no existe o no está activo
+                        return (false, default(int), default(int), default(bool), "Usuario no existe o no está activo");
                     }
                 }
             }
@@ -264,10 +275,11 @@ namespace H2OPure.Repository
                 message = ex.Message;
             }
 
-            // Devuelve falso si el usuario no es válido o no existe, junto con valores predeterminados para el Id, el tipo de usuario y IsPasswordChangeRequired
-            return (false, default(int), default(int), default(bool));
+            // Devuelve falso si el usuario no es válido o no existe, junto con valores predeterminados para el Id, el tipo de usuario, IsPasswordChangeRequired y un mensaje de error
+            return (false, default(int), default(int), default(bool), "Error al validar el usuario");
         }
 
+        // Cambiar la contraseña de un usuario admin al inicio, y tambien se puede cambiar la contraseña de un usuario
         public async Task<bool> ChangeUserPassword(int userId, string newPassword)
         {
             try

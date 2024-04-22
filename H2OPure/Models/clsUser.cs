@@ -14,10 +14,11 @@ namespace H2OPure.Models
         public string DNI { get; set; }
         public int typeUser { get; set; } //0 = admin, 1 = user
         public  string Puesto { get; set; }
+        public bool isActive { get; set; }
         public bool IsPasswordChangeRequired { get; set; }
 
         //contructor lleno
-        public clsUser(string? name, string? email, string? password, string userName, string DNI, int typeUser, string puesto)
+        public clsUser(string? name, string? email, string? password, string userName, string DNI, int typeUser,bool active, string puesto)
         {
             Name = name;
             Email = email;
@@ -25,6 +26,7 @@ namespace H2OPure.Models
             UserName = userName;
             this.DNI = DNI;
             this.typeUser = typeUser;
+            isActive = active;
             Puesto = puesto;
         }
 
