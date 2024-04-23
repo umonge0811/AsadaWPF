@@ -13,6 +13,7 @@ namespace H2OPure.Services
         public DbSet<clsBilling> billings { get; set; }
         public DbSet<clsReading> readings { get; set; }
         public DbSet<clsInventory> inventories { get; set; }
+        public DbSet<clsInventoryTransaction> InventoryTransactions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -81,6 +82,16 @@ namespace H2OPure.Services
                     .WithMany() // Relación de 1:N
                     .HasForeignKey(e => e.userId) // Llave foránea que se relaciona con la tabla User.
                     .OnDelete(DeleteBehavior.Restrict); // Restricción de eliminación impide que se elimine el User si tiene Inventories asociados.
+            });
+
+            modelBuilder.Entity<clsInventoryTransaction>().ToTable("InventoryTransactions");
+            modelBuilder.Entity<clsInventoryTransaction>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             base.OnModelCreating(modelBuilder);

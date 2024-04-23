@@ -14,6 +14,7 @@ namespace H2OPure.Models
         public DateTime exitDate { get; set; }
         public string Department { get; set; }
         public string Remarks { get; set; } // Agregado
+        public string action { get; set; } //  INGRESO O SALIDA
 
         public int userId { get; set; } // Cambiado de employeeId a userId
 
@@ -26,7 +27,7 @@ namespace H2OPure.Models
         }
 
         //constructor lleno
-        public clsInventory(int id, string materialName, int quantity, DateTime entryDate, DateTime exitDate,string department,string remarks, int userId) // Cambiado de employeeId a userId
+        public clsInventory(int id, string materialName, int quantity, DateTime entryDate, DateTime exitDate,string department,string remarks, string action, int userId) // Cambiado de employeeId a userId
         {
             this.id = id;
             this.materialName = materialName;
@@ -35,6 +36,7 @@ namespace H2OPure.Models
             this.exitDate = exitDate;
             this.Department = department;
             this.Remarks = remarks; // Agregado
+            this.action = action;
             this.userId = userId; // Cambiado de employeeId a userId
         }
     }

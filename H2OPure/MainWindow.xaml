@@ -37,15 +37,14 @@
                         <ui:NavigationViewItem Content="Tipos de Cliente y Tarifas" Icon="{ui:SymbolIcon MoneySettings20}" Click="NavigationViewItem_Click_2"></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Gestion de Empleados y Usuarios " Icon="{ui:SymbolIcon peopleadd16}" Click="NavigationViewItem_Click_4"></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Inventarios" Icon="{ui:SymbolIcon boxtoolbox24}" Click="NavigationViewItem_Click_5" ></ui:NavigationViewItem>
-                        <ui:NavigationViewItem Content="Personal" Icon="{ui:SymbolIcon PersonAccounts24}"  ></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Reportes" Icon="{ui:SymbolIcon DocumentPdf16}" ></ui:NavigationViewItem>
-                    </ui:NavigationViewItem.MenuItems>                   
-                    
+                    </ui:NavigationViewItem.MenuItems>
+
                 </ui:NavigationViewItem>
-                
+
             </ui:NavigationView.MenuItems>
 
-            
+
             <ui:NavigationView.FooterMenuItems>
 
                 <ui:NavigationViewItem Content="Acerca de" >
@@ -77,8 +76,8 @@
                 <ImageBrush Stretch="UniformToFill"/>
             </ContentPresenter.OpacityMask>
         </ContentPresenter>
-        
-        
+
+
         <ui:TitleBar
               x:Name="TitleBar"
               Title="{Binding ViewModel.ApplicationTitle}"
@@ -93,7 +92,13 @@
 
 
         <ProgressBar x:Name="ProgressBarPrincipal" IsIndeterminate="False" Visibility="Hidden" VerticalAlignment="Bottom" 
-       Foreground="#FF588273" Background="LightBlue" Margin="219,0,3,0" Height="8" RenderTransformOrigin="00,0.5">
+       Foreground="#FF588273" Margin="330,0,3,0" Height="5" RenderTransformOrigin="00,0.5">
+            <ProgressBar.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FF8CAD83" Offset="1"/>
+                </LinearGradientBrush>
+            </ProgressBar.Background>
             <ProgressBar.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="-1" />
@@ -104,20 +109,23 @@
             </ProgressBar.RenderTransform>
         </ProgressBar>
 
-        <materialDesign:Snackbar x:Name="SnackbarMessagePrincipal" Height="60" Margin="350,0,30,30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-            <materialDesign:SnackbarMessage Width="1220" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" FontSize="40">
-                <materialDesign:SnackbarMessage.Template>
-                    <ControlTemplate TargetType="{x:Type materialDesign:SnackbarMessage}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="1">
-                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </materialDesign:SnackbarMessage.Template>
-            </materialDesign:SnackbarMessage>
-        </materialDesign:Snackbar>
+
+        <Border CornerRadius="50">
+            <materialDesign:Snackbar x:Name="SnackbarMessagePrincipal" Height="60" Margin="350,0,30,30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" >
+                <materialDesign:SnackbarMessage Width="1044" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" FontSize="40">
+                    <materialDesign:SnackbarMessage.Template>
+                        <ControlTemplate TargetType="{x:Type materialDesign:SnackbarMessage}">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="1">
+                                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </materialDesign:SnackbarMessage.Template>
+                </materialDesign:SnackbarMessage>
+            </materialDesign:Snackbar>
+        </Border>
 
 
-        <TextBlock x:Name="lbl_FechaPrincipal" Text="Fecha" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Foreground="White" Margin="350,768,0,0" />
+        <TextBlock x:Name="lbl_FechaPrincipal" Text="Fecha" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Foreground="White" Margin="800,0,0,5" />
 
 
     </Grid>
