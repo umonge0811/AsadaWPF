@@ -3,12 +3,62 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
+      
       xmlns:local="clr-namespace:H2OPure.Views"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="frmAcercade">
 
     <Grid>
-        
+        <Border Background="#323232" CornerRadius="20" Margin="50" BorderBrush="Orange" BorderThickness="2">
+            <materialDesign:Card Background="Transparent" materialDesign:ElevationAssist.Elevation="Dp16">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+
+                    <Border CornerRadius="10" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#424242" >
+                    <TextBlock Text="Acerca de Mi App" Foreground="White" FontSize="24" FontWeight="Bold" Margin="15" HorizontalAlignment="Center" />
+                    </Border>
+                
+                    <TextBlock Text="Esta es mi Primer aplicación. Aquí puedes encontrar más información sobre mí y seguirme en las redes sociales." Foreground="White" TextWrapping="Wrap" Margin="10,20,10,20" TextAlignment="Center" />
+                
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                        <Button Width="50" Height="50" Margin="10">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <iconPacks:PackIconFontAwesome Kind="FacebookBrands" Foreground="White" Width="50" Height="50"/>                                
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Width="50" Height="50" Margin="10">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <iconPacks:PackIconFontAwesome Kind="WhatsappBrands" Foreground="White" Width="50" Height="50"/>
+                                
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Width="50" Height="50" Margin="10">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <iconPacks:PackIconFontAwesome Kind="InstagramBrands" Foreground="White" Width="50" Height="50"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Width="50" Height="50" Margin="10">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <iconPacks:PackIconFontAwesome Kind="LinkedinBrands" Foreground="White" Width="50" Height="50"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                    <TextBlock Text="Desarrollado por: Ulises Monge Aguilar" Foreground="White" TextWrapping="Wrap" Margin="0,20,0,0" HorizontalAlignment="Center" />
+                </StackPanel>
+                </materialDesign:Card>
+        </Border>
+
+
     </Grid>
 </Page>

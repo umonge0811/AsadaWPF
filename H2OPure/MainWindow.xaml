@@ -47,7 +47,7 @@
 
             <ui:NavigationView.FooterMenuItems>
 
-                <ui:NavigationViewItem Content="Acerca de" >
+                <ui:NavigationViewItem Content="Acerca de" Click="NavigationViewItem_Click_6" >
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="Info12" />
                     </ui:NavigationViewItem.Icon>
