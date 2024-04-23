@@ -7,8 +7,7 @@
         xmlns:local="clr-namespace:H2OPure"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
-        Title="Asada Menú Principal"  Width="1450" Height="800" MinHeight="750" MinWidth="1340" WindowStyle="None" WindowStartupLocation="CenterScreen" Icon="/water-system.png" Loaded="Window_Loaded" Background="#FF202020"
-        >
+        Title="Asada Menú Principal"  Width="1450" Height="800" MinHeight="750" MinWidth="1340" WindowStyle="None" WindowStartupLocation="CenterScreen" Icon="/water-system.png" Loaded="Window_Loaded" Background="#FF202020">
     <Grid>
 
         <ui:NavigationView x:Name="RootNavigation" IsBackButtonVisible="Collapsed" PaneTitle="H2OPay" PaneDisplayMode="Left" >
@@ -37,7 +36,7 @@
                         <ui:NavigationViewItem Content="Gestion de Clientes" Icon="{ui:SymbolIcon PersonAccounts24}" Click="NavigationViewItem_Click_1" ></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Tipos de Cliente y Tarifas" Icon="{ui:SymbolIcon MoneySettings20}" Click="NavigationViewItem_Click_2"></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Gestion de Empleados y Usuarios " Icon="{ui:SymbolIcon peopleadd16}" Click="NavigationViewItem_Click_4"></ui:NavigationViewItem>
-                        <ui:NavigationViewItem Content="Inventarios" Icon="{ui:SymbolIcon boxtoolbox24}"  ></ui:NavigationViewItem>
+                        <ui:NavigationViewItem Content="Inventarios" Icon="{ui:SymbolIcon boxtoolbox24}" Click="NavigationViewItem_Click_5" ></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Personal" Icon="{ui:SymbolIcon PersonAccounts24}"  ></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Reportes" Icon="{ui:SymbolIcon DocumentPdf16}" ></ui:NavigationViewItem>
                     </ui:NavigationViewItem.MenuItems>                   
@@ -94,7 +93,7 @@
 
 
         <ProgressBar x:Name="ProgressBarPrincipal" IsIndeterminate="False" Visibility="Hidden" VerticalAlignment="Bottom" 
-       Foreground="Blue" Background="LightBlue" Margin="219,0,3,0" Height="8" RenderTransformOrigin="00,0.5">
+       Foreground="#FF588273" Background="LightBlue" Margin="219,0,3,0" Height="8" RenderTransformOrigin="00,0.5">
             <ProgressBar.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="-1" />
@@ -118,7 +117,7 @@
         </materialDesign:Snackbar>
 
 
-        <TextBlock x:Name="lbl_FechaPrincipal" Text="Fecha" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Foreground="Black" Margin="5,768,0,0" />
+        <TextBlock x:Name="lbl_FechaPrincipal" Text="Fecha" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Foreground="White" Margin="350,768,0,0" />
 
 
     </Grid>

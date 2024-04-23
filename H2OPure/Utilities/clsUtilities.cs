@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace H2OPure.Utilities
@@ -87,6 +89,28 @@ namespace H2OPure.Utilities
             }
         }
         #endregion
+
+        public class DateToTextConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                DateTime date = (DateTime)value;
+                if (date == DateTime.MinValue)
+                {
+                    return "No ha tenido salidas";
+                }
+                else
+                {
+                    return date.ToShortDateString();
+                }
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
 
     }
 }

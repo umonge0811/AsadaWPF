@@ -77,9 +77,9 @@ namespace H2OPure.Services
             modelBuilder.Entity<clsInventory>(entity =>
             {
                 entity.HasKey(e => e.id); // llave Primaria
-                entity.HasOne(e => e.User)// Relación con la tabla de usuarios de 1:N
+                entity.HasOne(e => e.User) // Relación con la tabla de usuarios de 1:N
                     .WithMany() // Relación de 1:N
-                    .HasForeignKey(e => e.id) // Llave foránea definiendo que la propiedad id de la entidad clsInventory es la clave foránea que se relaciona con la tabla User. Esto significa que el id en Inventories corresponde al Id en User.
+                    .HasForeignKey(e => e.userId) // Llave foránea que se relaciona con la tabla User.
                     .OnDelete(DeleteBehavior.Restrict); // Restricción de eliminación impide que se elimine el User si tiene Inventories asociados.
             });
 

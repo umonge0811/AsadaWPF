@@ -91,5 +91,11 @@ namespace H2OPure
 
             RootNavigation.Navigate(typeof(Views.frmUsers));
         }
+
+        private void NavigationViewItem_Click_5(object sender, RoutedEventArgs e)
+        {
+            RootNavigation.Navigate(typeof(Views.frmInventary));
+
+        }
     }
 }
