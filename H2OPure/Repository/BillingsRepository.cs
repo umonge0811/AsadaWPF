@@ -61,7 +61,7 @@ namespace H2OPure.Repository
 
             public string DisplayText
             {
-                get { return $"{SubscriberNum} - Abonado No : {SubscriberNum} Nombre: {Name} {LastName} {SecondSurname}"; }
+                get { return $"{SubscriberNum} - Medidor No : {SubscriberNum} Nombre: {Name} {LastName} {SecondSurname}"; }
             }
         }
 

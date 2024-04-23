@@ -61,7 +61,7 @@
 
                     <TextBox x:Name="txt_NewDNICli"  TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" materialDesign:HintAssist.Hint="Identificación del Cliente" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  MinWidth="240"  Margin="10" Padding="0,0,0,4" materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" materialDesign:HintAssist.Foreground="#FB7806" Foreground="White"/>
 
-                    <TextBox x:Name="txt_NewSubscribe"  TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" materialDesign:HintAssist.Hint="No. Abonado" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center"   MinWidth="240"  Margin="10" Padding="0,0,0,4" materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" materialDesign:HintAssist.Foreground="#FB7806" Foreground="White"/>
+                    <TextBox x:Name="txt_NewSubscribe"  TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" materialDesign:HintAssist.Hint="No. Medidor" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Center"   MinWidth="240"  Margin="10" Padding="0,0,0,4" materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" materialDesign:HintAssist.Foreground="#FB7806" Foreground="White"/>
 
                     <ComboBox x:Name="cmb_TypeClient"  Height="39" materialDesign:ColorZoneAssist.Mode="Dark" materialDesign:HintAssist.HelperText="Selecciona Tipo de Cliente" materialDesign:HintAssist.Hint="Tipo Cliente" materialDesign:TextFieldAssist.HasClearButton="True"  Style="{StaticResource MaterialDesignFloatingHintComboBox}"  VerticalAlignment="Center"  MinWidth="240"  Margin="10" Padding="0,0,0,4" Foreground="White"  materialDesign:TextFieldAssist.UnderlineBrush="#FB7806" materialDesign:HintAssist.Foreground="#FB7806">
                     </ComboBox>
@@ -245,7 +245,7 @@
                             <DataGridTextColumn Binding="{Binding Path=name}" Header="Nombre" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding Path=lastName}" Header="Apellido Paterno" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding Path=secondSurname}" Header="Apellido Materno" Width="Auto"/>
-                            <DataGridTextColumn Binding="{Binding Path=SubscriberNum}" Header="# Suscritor" Width="Auto" MinWidth="100"/>
+                            <DataGridTextColumn Binding="{Binding Path=SubscriberNum}" Header="# Medidor" Width="Auto" MinWidth="100"/>
                             <DataGridTextColumn Binding="{Binding Path=TypeClient.name}" Header="Tipo cliente" Width="Auto"/>
                         </DataGrid.Columns>
                     </DataGrid>

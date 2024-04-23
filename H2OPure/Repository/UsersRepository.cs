@@ -243,6 +243,11 @@ namespace H2OPure.Repository
         {
             return new ObservableCollection<clsUser>(context.usuarios.ToList());
         }
+        // Este metodo es para Obtener  todos los Usuarios para el reporte 
+        public IEnumerable<clsUser> GetAllUsersAsEnumerable()
+        {
+            return context.usuarios.ToList();
+        }
 
         //Metodo para validar el inicio de sesion 
         public async Task<(bool, int, int, bool, string)> ValidateUserLogin(string username, string password)

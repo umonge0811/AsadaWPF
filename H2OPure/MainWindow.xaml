@@ -37,7 +37,7 @@
                         <ui:NavigationViewItem Content="Tipos de Cliente y Tarifas" Icon="{ui:SymbolIcon MoneySettings20}" Click="NavigationViewItem_Click_2"></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Gestion de Empleados y Usuarios " Icon="{ui:SymbolIcon peopleadd16}" Click="NavigationViewItem_Click_4"></ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="Inventarios" Icon="{ui:SymbolIcon boxtoolbox24}" Click="NavigationViewItem_Click_5" ></ui:NavigationViewItem>
-                        <ui:NavigationViewItem Content="Reportes" Icon="{ui:SymbolIcon DocumentPdf16}" ></ui:NavigationViewItem>
+                        <ui:NavigationViewItem Content="Reportes" Icon="{ui:SymbolIcon DocumentPdf16}" Click="NavigationViewItem_Click_7"></ui:NavigationViewItem>
                     </ui:NavigationViewItem.MenuItems>
 
                 </ui:NavigationViewItem>
@@ -109,8 +109,10 @@
             </ProgressBar.RenderTransform>
         </ProgressBar>
 
+        <!--<ui:InfoBar Title="Title" Message="Essential message." Visibility="Visible" VerticalAlignment="Top" Height="35"/>-->
 
-        <Border CornerRadius="50">
+
+      
             <materialDesign:Snackbar x:Name="SnackbarMessagePrincipal" Height="60" Margin="350,0,30,30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" >
                 <materialDesign:SnackbarMessage Width="1044" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" FontSize="40">
                     <materialDesign:SnackbarMessage.Template>
@@ -122,7 +124,7 @@
                     </materialDesign:SnackbarMessage.Template>
                 </materialDesign:SnackbarMessage>
             </materialDesign:Snackbar>
-        </Border>
+    
 
 
         <TextBlock x:Name="lbl_FechaPrincipal" Text="Fecha" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Foreground="White" Margin="800,0,0,5" />

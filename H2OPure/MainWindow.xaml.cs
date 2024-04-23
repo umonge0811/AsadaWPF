@@ -1,7 +1,9 @@
 ﻿using H2OPure.Repository;
+using H2OPure.Utilities;
 using MaterialDesignThemes.Wpf;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 
 namespace H2OPure
@@ -11,7 +13,7 @@ namespace H2OPure
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        clsUtilities utilities = new clsUtilities();
         TypeClientRepository typeclientRepository = new TypeClientRepository();
         public MainWindow()
         {
@@ -44,6 +46,7 @@ namespace H2OPure
 
         private void NavigationViewItem_Click(object sender, RoutedEventArgs e)
         {
+           
             //RootNavigation.Navigate(typeof(View.frmUsuarios));
             RootNavigation.Navigate(typeof(Views.frmUsers));
 
@@ -55,10 +58,21 @@ namespace H2OPure
 
         }
 
-        private void NavigationViewItem_Click_2(object sender, RoutedEventArgs e)
+        private async void NavigationViewItem_Click_2(object sender, RoutedEventArgs e)
         {
-            RootNavigation.Navigate(typeof(Views.TypeClient));
+            if (Utilities.clsUtilities.TypeUserLog != 1)
+            {
+                await clsUtilities.ShowSnackbarAsync("Acceso restringido, unicamente Administradores", new SolidColorBrush(Colors.Yellow));
+
+                return;
+
+            }
+            else
+            { 
+                RootNavigation.Navigate(typeof(Views.TypeClient));
+            }
         }
+
 
         private void NavigationViewItem_Click_3(object sender, RoutedEventArgs e)
         {
@@ -86,10 +100,20 @@ namespace H2OPure
 
         }
 
-        private void NavigationViewItem_Click_4(object sender, RoutedEventArgs e)
+        private async void NavigationViewItem_Click_4(object sender, RoutedEventArgs e)
         {
+            if (Utilities.clsUtilities.TypeUserLog != 1)
+            {
+                await clsUtilities.ShowSnackbarAsync("Acceso restringido, unicamente Administradores", new SolidColorBrush(Colors.Yellow));
+                
+                return;
 
-            RootNavigation.Navigate(typeof(Views.frmUsers));
+            }
+            else
+            {
+                RootNavigation.Navigate(typeof(Views.frmUsers));
+            }
+
         }
 
         private void NavigationViewItem_Click_5(object sender, RoutedEventArgs e)
@@ -101,6 +125,24 @@ namespace H2OPure
         private void NavigationViewItem_Click_6(object sender, RoutedEventArgs e)
         {
             RootNavigation.Navigate(typeof(Views.frmAcercade));
+
+        }
+
+        private async void NavigationViewItem_Click_7(object sender, RoutedEventArgs e)
+        {
+            if (Utilities.clsUtilities.TypeUserLog != 1)
+            {
+                await clsUtilities.ShowSnackbarAsync("Acceso restringido, unicamente Administradores", new SolidColorBrush(Colors.Yellow));
+
+                return;
+
+            }
+            else
+            {
+                RootNavigation.Navigate(typeof(Views.frmReportes));
+            }
+
+                
 
         }
     }

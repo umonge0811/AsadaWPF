@@ -51,7 +51,7 @@ namespace H2OPure.Views
 
         }       
 
-        #region Metodo para validar el numero de abonado
+        #region Metodo para validar el numero de Medidor
         public async Task<bool> ValidatedClientRegister(string Subscribernum)
         {
 
@@ -182,7 +182,7 @@ namespace H2OPure.Views
                     }
                     if (string.IsNullOrEmpty(SubscriberNum))
                     {
-                        await clsUtilities.ShowSnackbarAsync("Ingrese el número de abonado o active el Switch para asignar la cédula como número de abonado", new SolidColorBrush(Colors.Yellow));
+                        await clsUtilities.ShowSnackbarAsync("Ingrese el número de Medidor o active el Switch para asignar la cédula como número de Medidor", new SolidColorBrush(Colors.Yellow));
                         txt_NewNameCli.Focus();
                         return;
 
@@ -190,7 +190,7 @@ namespace H2OPure.Views
 
                     if (await clientsRepository.ValidatedClientRegister(SubscriberNum))
                     {
-                        string message = $"El Abonado: {SubscriberNum} ya se encuentra registrado... Verifique!";
+                        string message = $"El Medidor: {SubscriberNum} ya se encuentra registrado... Verifique!";
                         await clsUtilities.ShowSnackbarAsync(message, new SolidColorBrush(Colors.Red));    
                         txt_NewSubscribe.Clear();
                         txt_NewSubscribe.Focus();
@@ -336,14 +336,14 @@ namespace H2OPure.Views
             clsCliente? userFound = await clientsRepository.FindClientBySubscriberNum(SubscriberNum);
             if (userFound == null)
             {
-                await clsUtilities.ShowSnackbarAsync("No existe Cliente con el Número de Abonado ingresado!!!", new SolidColorBrush(Colors.Yellow));
+                await clsUtilities.ShowSnackbarAsync("No existe Cliente con el Número de Medidor ingresado!!!", new SolidColorBrush(Colors.Yellow));
 
 
-                //MessageBox.Show("No existe Cliente con el Número de Abonado ingresado!!");
+                //MessageBox.Show("No existe Cliente con el Número de Medidor ingresado!!");
                 return;
             }
 
-            //si ninguna de las validaciones se cumplen entonces encuentra el id cliente segun su Numero de Abonado y carga los datos en los tXTBox
+            //si ninguna de las validaciones se cumplen entonces encuentra el id cliente segun su Numero de Medidor y carga los datos en los tXTBox
 
             //Guardo el id del cliente encontrado
             idClient = userFound.id;            
@@ -428,11 +428,11 @@ namespace H2OPure.Views
             clsCliente? userFound = await clientsRepository.FindClientBySubscriberNum(SubscriberNum);
             if (userFound == null)
             {
-                await clsUtilities.ShowSnackbarAsync("No existe Cliente con el Número de Abonado ingresado!!!", new SolidColorBrush(Colors.Red));
+                await clsUtilities.ShowSnackbarAsync("No existe Cliente con el Número de Medidor ingresado!!!", new SolidColorBrush(Colors.Red));
                 return;
             }
 
-            //si ninguna de las validaciones se cumplen entonces encuentra el id cliente segun su Numero de Abonado y carga los datos en los tXTBox
+            //si ninguna de las validaciones se cumplen entonces encuentra el id cliente segun su Numero de Medidor y carga los datos en los tXTBox
 
             //Guardo el id del cliente encontrado
             idClient = userFound.id;
@@ -507,7 +507,7 @@ namespace H2OPure.Views
 
         #endregion
 
-        #region Metodo para copiar el DNI en el Numero de Abonado
+        #region Metodo para copiar el DNI en el Numero de Medidor
         private void copySwitch_Checked(object sender, RoutedEventArgs e)
         {
             // Copiar el texto

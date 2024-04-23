@@ -309,6 +309,7 @@ namespace H2OPure.Views
                 RealizarCalculos();
             }
         }
+
         // Evento TextChanged para txt_RateType y txt_RateExc
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -567,7 +568,7 @@ namespace H2OPure.Views
         {
             var billingDetails = billingsRepository.GetBillingDetails(billing.id);
             SaveFileDialog savefile = new SaveFileDialog();
-            savefile.FileName = string.Format("Cobro de Recibo Agua " + "Factura_{0}_Abonado_{1}.pdf", billing.InvoiceNum, billingDetails.Client.SubscriberNum);
+            savefile.FileName = string.Format("Cobro de Recibo Agua " + "Factura_{0}_Medidor_{1}.pdf", billing.InvoiceNum, billingDetails.Client.SubscriberNum);
             if (savefile.ShowDialog() == true)
             {
                 var billingsRepository = new BillingsRepository();

@@ -1,0 +1,130 @@
+﻿<Page x:Class="H2OPure.Views.frmReportes"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:H2OPure.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="frmReportes" Loaded="Page_Loaded">
+
+    <Grid>
+        <Border Background="#323232" CornerRadius="15" Margin="10">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                    <TextBlock Text="Repostes del Sistema" FontSize="25"  TextAlignment="Center" Foreground="WhiteSmoke" Margin="10"></TextBlock>
+                    <iconPacks:PackIconForkAwesome Kind="FilePdfOutline" VerticalAlignment="Center" FontSize="30" Height="33" Width="30" Foreground="WhiteSmoke"></iconPacks:PackIconForkAwesome>
+                </StackPanel>
+
+
+                <Border Background="#505050" BorderBrush="Red" BorderThickness="0.5" CornerRadius="10">
+                    <Expander Background="Transparent">
+                        <Expander.Header >
+                            <StackPanel Orientation="Horizontal" >
+                                <materialDesign:PackIcon Kind="AccountFilter" VerticalAlignment="Center" FontSize="30" Height="33" Width="30" Foreground="WhiteSmoke"></materialDesign:PackIcon>
+                                <TextBlock Text="Reporte de Usuarios" Margin="10,0,0,0" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
+
+                            </StackPanel>
+                        </Expander.Header>
+                        
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock x:Name="txt_FilterTitle" Text="Todos los usuarios" Margin="10" HorizontalAlignment="Center" Foreground="WhiteSmoke" FontWeight="Heavy" FontSize="20"/>
+
+
+                            <StackPanel Margin="10">
+                                <DataGrid x:Name="dtg_Usuarios" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" HorizontalAlignment="Center" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+                                        <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" />
+                                        <DataGridTextColumn Header="Correo Electrónico" Binding="{Binding Email}" />
+                                        <DataGridTextColumn Header="Nombre de Usuario" Binding="{Binding UserName}" />
+                                        <DataGridTextColumn Header="DNI" Binding="{Binding DNI}" />
+                                        <DataGridTextColumn Header="Tipo de Usuario" Binding="{Binding typeUser}" />
+                                        <DataGridTextColumn Header="Puesto" Binding="{Binding Puesto}" />
+                                        <DataGridTextColumn Header="Activo" Binding="{Binding isActive}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+
+                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                                <Button Width="auto" Margin="10" Click="btn_FilterActiveUsers_Click" Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="AccountCheck" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar usuarios activos" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="auto" Margin="10" Click="btn_FilterInactiveUsers_Click"  Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="AccountRemove" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar usuarios inactivos" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="auto" Margin="10" Click="btn_FilterAdminUsers_Click"  Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="AccountStar" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar usuarios administradores" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="auto" Margin="10" Click="btn_FilterNormalUsers_Click"  Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar usuarios normales" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Expander>
+
+                </Border>
+
+                <Border Background="#505050" BorderBrush="Red" BorderThickness="0.5" CornerRadius="10">
+                    <Expander Background="Transparent">
+                        <Expander.Header >
+                            <StackPanel Orientation="Horizontal" >
+                                <iconPacks:PackIconMaterial Kind="counter" VerticalAlignment="Center" FontSize="30" Height="33" Width="30" Foreground="WhiteSmoke"></iconPacks:PackIconMaterial>
+                                <TextBlock Text="Reporte de Medidores" Margin="10,0,0,0" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
+
+                            </StackPanel>
+                        </Expander.Header>
+                        <!-- Contenido del Expander -->
+                    </Expander>
+
+                </Border>
+
+                <Border Background="#505050" BorderBrush="Red" BorderThickness="0.5" CornerRadius="10">
+                    <Expander Background="Transparent">
+                        <Expander.Header >
+                            <StackPanel Orientation="Horizontal" >
+                                <iconPacks:PackIconMaterial Kind="FormatListNumbered" VerticalAlignment="Center" FontSize="30" Height="33" Width="30" Foreground="WhiteSmoke"></iconPacks:PackIconMaterial>
+                                <TextBlock Text="Reporte de Inventarios" Margin="10,0,0,0" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
+
+                            </StackPanel>
+                        </Expander.Header>
+                        <!-- Contenido del Expander -->
+                    </Expander>
+
+                </Border>
+
+                <Border Background="#505050" BorderBrush="Red" BorderThickness="0.5" CornerRadius="10">
+                    <Expander Background="Transparent">
+                        <Expander.Header >
+                            <StackPanel Orientation="Horizontal" >
+                                <iconPacks:PackIconMaterial Kind="Account" VerticalAlignment="Center" FontSize="30" Height="33" Width="30" Foreground="WhiteSmoke"></iconPacks:PackIconMaterial>
+                                <TextBlock Text="Cuentas" Margin="10,0,0,0" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
+
+                            </StackPanel>
+                        </Expander.Header>
+                        <!-- Contenido del Expander -->
+                    </Expander>
+
+                </Border>
+            </StackPanel>
+            
+            
+        </Border>
+        
+        
+    </Grid>
+</Page>

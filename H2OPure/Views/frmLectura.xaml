@@ -37,7 +37,7 @@
                 <!--#region  Combo Cliente-->
                 <ComboBox x:Name="cmb_Client" Height="39" Grid.Row="2" IsTextSearchEnabled="True"
                           materialDesign:ColorZoneAssist.Mode="Dark"
-                          materialDesign:HintAssist.HelperText="Digita el Número de Abonado"
+                          materialDesign:HintAssist.HelperText="Digita el Número de Medidor"
                           materialDesign:HintAssist.Hint="Cliente"
                           materialDesign:TextFieldAssist.HasClearButton="True"
                           materialDesign:TextFieldAssist.UnderlineBrush="#FB7806"
