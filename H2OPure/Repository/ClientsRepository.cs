@@ -45,8 +45,31 @@ namespace H2OPure.Repository
         public ObservableCollection<clsCliente> GetAllClients()
         {
             return new ObservableCollection<clsCliente>(context.clientes.Include(c => c.TypeClient).ToList());
-        }   
-        
+        }
+
+        public ObservableCollection<clsCliente> GetClientsForReport()
+        {
+            // Asegúrate de que tu contexto de base de datos está inicializado
+            if (context == null)
+            {
+                context = new ContextDataBase();
+                context.Database.EnsureCreatedAsync().Wait();
+            }
+
+            // Intenta recuperar los datos de la base de datos
+            try
+            {
+                var clients = context.clientes.Include(c => c.TypeClient).ToList();
+                return new ObservableCollection<clsCliente>(clients);
+            }
+            catch (Exception ex)
+            {
+                // Si hay un error, establece tu mensaje de error
+                message = ex.Message;
+                return new ObservableCollection<clsCliente>();
+            }
+        }
+
         //este es el metodo que se creo para hacer la busqueda en la DB, retorna  un objeto de tipo clase (clsUser)
         public async Task<clsCliente?> FindClientBySubscriberNum(string SubscriberNum)
         {

@@ -32,7 +32,7 @@ namespace H2OPure.Repository
                     UserName = "Admin",
                     DNI = "N/A",
                     Email = "Sin Email",
-                    typeUser = 0, // 0 = admin
+                    typeUser = 1, // 1 = admin
                     Puesto = "Administrador",
                     isActive = true,
                     IsPasswordChangeRequired = true,

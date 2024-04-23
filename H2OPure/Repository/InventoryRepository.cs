@@ -171,6 +171,21 @@ namespace H2OPure.Repository
             }
         }
 
+        public async Task<List<clsInventoryTransaction>> GetInventoryTransactionsForReport()
+        {
+            try
+            {
+                // Obtener todas las transacciones de inventario de la base de datos
+                return await context.InventoryTransactions.Include(i => i.User).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                // Imprimir el error y lanzar la excepción
+                Console.WriteLine("Error al obtener las transacciones de inventario para el reporte: " + ex.Message);
+                throw;
+            }
+        }
+
 
 
     }

@@ -124,9 +124,43 @@ namespace H2OPure.Repository
             };
         }
 
+        public async Task<List<BillingDetails>> GetAllBillingDetails()
+        {
+            try
+            {
+                // Obtener todas las facturas de la base de datos
+                var billings = await context.billings.Include(b => b.Client).ThenInclude(c => c.TypeClient).ToListAsync();
+
+                // Crear una lista para almacenar los detalles de facturación
+                var billingDetailsList = new List<BillingDetails>();
+
+                // Para cada factura, obtener los detalles de facturación y agregarlos a la lista
+                foreach (var billing in billings)
+                {
+                    var reading = context.readings.FirstOrDefault(r => r.idClient == billing.idClient && r.CurrentReadingDate == billing.BillingDate);
+                    var billingDetails = new BillingDetails
+                    {
+                        Billing = billing,
+                        Client = billing.Client,
+                        Reading = reading
+                    };
+                    billingDetailsList.Add(billingDetails);
+                }
+
+                return billingDetailsList;
+            }
+            catch (Exception ex)
+            {
+                // Imprimir el error y lanzar la excepción
+                Console.WriteLine("Error al obtener todos los detalles de facturación: " + ex.Message);
+                throw;
+            }
+        }
+
+
 
 
 
     }
-    
+
 }

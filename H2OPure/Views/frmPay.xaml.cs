@@ -156,7 +156,7 @@ namespace H2OPure.Views
                     }
                     else
                     {
-                        grd_Local.Background = new SolidColorBrush(Colors.White);
+                        grd_Local.Background = new SolidColorBrush(Color.FromRgb(45,45,45));
                     }
                 }
 
@@ -630,7 +630,7 @@ namespace H2OPure.Views
             txt_RateExc.Clear();
             txt_TypeClient.Clear();
             cmb_Client.Text = string.Empty;
-            grd_Local.Background = new SolidColorBrush(Colors.White);
+            grd_Local.Background = new SolidColorBrush(Color.FromRgb(45,45,45));
             exp_Facturas.IsExpanded = false;
         }
         #endregion

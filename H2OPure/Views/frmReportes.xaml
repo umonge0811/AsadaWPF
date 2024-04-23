@@ -88,7 +88,51 @@
 
                             </StackPanel>
                         </Expander.Header>
-                        <!-- Contenido del Expander -->
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock x:Name="txt_FilterTitleClient" Text="Todos los Clientes" Margin="10" HorizontalAlignment="Center" Foreground="WhiteSmoke" FontWeight="Heavy" FontSize="20"/>
+
+
+                            <StackPanel Margin="10">
+                                <DataGrid x:Name="dtg_Clientes" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" HorizontalAlignment="Center" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID" Binding="{Binding id}" />
+                                        <DataGridTextColumn Header="Nombre" Binding="{Binding name}" />
+                                        <DataGridTextColumn Header="Apellido 1" Binding="{Binding lastName}" />
+                                        <DataGridTextColumn Header="Apellido 2" Binding="{Binding secondSurname}" />
+                                        <DataGridTextColumn Header="DNI" Binding="{Binding DNI}" />
+                                        <DataGridTextColumn Header="Tipo de Cliente" Binding="{Binding TypeClient.name}" />
+                                        <DataGridTextColumn Header="No. Medidor" Binding="{Binding SubscriberNum}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+
+                            <!--<WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                                <Button Width="auto" Margin="10" Click="btn_FilterActiveUsers_Click" Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="AccountCheck" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar usuarios activos" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="auto" Margin="10" Click="btn_FilterInactiveUsers_Click"  Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="AccountRemove" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar usuarios inactivos" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="auto" Margin="10" Click="btn_FilterAdminUsers_Click"  Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="AccountStar" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar usuarios administradores" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="auto" Margin="10" Click="btn_FilterNormalUsers_Click"  Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar usuarios normales" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                            </WrapPanel>-->
+                        </StackPanel>
                     </Expander>
 
                 </Border>
@@ -102,7 +146,59 @@
 
                             </StackPanel>
                         </Expander.Header>
-                        <!-- Contenido del Expander -->
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock x:Name="txt_FilterTitleINV" Text="Todos los usuarios" Margin="10" HorizontalAlignment="Center" Foreground="WhiteSmoke" FontWeight="Heavy" FontSize="20"/>
+
+
+                            <StackPanel Margin="10">
+                                <DataGrid x:Name="dtg_Inventory" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" HorizontalAlignment="Center" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+                                        <DataGridTextColumn Header="Articulo" Binding="{Binding MaterialName}" />
+                                        <DataGridTextColumn Header="Cantidad" Binding="{Binding Quantity}" />
+                                        <DataGridTextColumn Header="Departamento" Binding="{Binding Department}" />
+                                        <DataGridTextColumn Header="Acción" Binding="{Binding Action}" />
+                                        <DataGridTextColumn Header="Usuario" Binding="{Binding User.Name}" />
+                                        <DataGridTextColumn Header="Fecha de Transacción" Binding="{Binding TransactionDate}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+
+                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                                <Button Width="auto" Margin="10" Click="btn_FilterEntryTransactions_Click" Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="ArrowUpBoldBox" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar transacciones de entrada" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="auto" Margin="10" Click="btn_FilterExitTransactions_Click"  Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="ArrowDownBoldBox" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar transacciones de salida" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="auto" Margin="10" Click="btn_ShowAllTransactions_Click" Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Database" VerticalAlignment="Center" />
+                                        <TextBlock Text="Mostrar todas las transacciones" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="auto" Margin="10" Click="btn_FilterZeroQuantity_Click" Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="MinusBox" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar materiales con cantidad 0" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="auto" Margin="10" Click="btn_FilterAvailableMaterials_Click" Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="PlusBox" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar materiales disponibles" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+
+
+                            </WrapPanel>
+                        </StackPanel>
                     </Expander>
 
                 </Border>
@@ -111,15 +207,66 @@
                     <Expander Background="Transparent">
                         <Expander.Header >
                             <StackPanel Orientation="Horizontal" >
-                                <iconPacks:PackIconMaterial Kind="Account" VerticalAlignment="Center" FontSize="30" Height="33" Width="30" Foreground="WhiteSmoke"></iconPacks:PackIconMaterial>
-                                <TextBlock Text="Cuentas" Margin="10,0,0,0" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
+                                <materialDesign:PackIcon Kind="InvoiceArrowLeft" VerticalAlignment="Center" FontSize="30" Height="33" Width="30" Foreground="WhiteSmoke"></materialDesign:PackIcon>
+                                <TextBlock Text="Reporte de Facturacion" Margin="10,0,0,0" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
 
                             </StackPanel>
                         </Expander.Header>
-                        <!-- Contenido del Expander -->
+
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock x:Name="txt_FilterTitleBILL" Text="Todos los usuarios" Margin="10" HorizontalAlignment="Center" Foreground="WhiteSmoke" FontWeight="Heavy" FontSize="20"/>
+
+
+                            <StackPanel Margin="10">
+                                <DataGrid x:Name="dtg_Billings" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" HorizontalAlignment="Center" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID" Binding="{Binding Billing.id}" />
+                                        <DataGridTextColumn Header="Fecha de Facturación" Binding="{Binding Billing.BillingDate}" />
+                                        <DataGridTextColumn Header="Monto Base" Binding="{Binding Billing.AmountBase}" />
+                                        <DataGridTextColumn Header="Monto Excedente" Binding="{Binding Billing.AmountExc}" />
+                                        <DataGridTextColumn Header="Monto Total" Binding="{Binding Billing.AmountTotal}" />
+                                        <DataGridTextColumn Header="IVA" Binding="{Binding Billing.AmountIva}" />
+                                        <DataGridTextColumn Header="Monto de Reconexión" Binding="{Binding Billing.AmountRec}" />
+                                        <DataGridTextColumn Header="Usuario" Binding="{Binding Billing.UserId}" />
+                                        <DataGridTextColumn Header="Observaciones" Binding="{Binding Billing.Remarks}" />
+                                        <DataGridTextColumn Header="Número de Factura" Binding="{Binding Billing.InvoiceNum}" />
+                                        <DataGridTextColumn Header="Nombre del Cliente" Binding="{Binding Billing.Client.name}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+
+                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                                <Button Width="auto" Margin="10" Click="btn_FilterUnpaidBillings_Click" Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="CheckCircle" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar facturas pagadas" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="auto" Margin="10" Click="btn_FilterPaidBillings_Click" Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="AlertCircle" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar facturas sin pagar" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <!--<Button Width="auto" Margin="10" Click="btn_FilterAdminUsers_Click"  Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="AccountStar" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar usuarios administradores" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="auto" Margin="10" Click="btn_FilterNormalUsers_Click"  Background="#FF588273" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" />
+                                        <TextBlock Text="Filtrar usuarios normales" Margin="10,0,0,0"/>
+                                    </StackPanel>
+                                </Button>-->
+                            </WrapPanel>
+                        </StackPanel>
                     </Expander>
 
                 </Border>
+
+
             </StackPanel>
             
             

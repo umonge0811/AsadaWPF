@@ -106,7 +106,7 @@ Background="#FF1D1D1D"      Title="frmPay" Loaded="Page_Loaded">
                 <Expander x:Name="exp_Facturas"  HorizontalAlignment="Center" Header="Facturas" IsExpanded="False" Foreground="WhiteSmoke">
                     <StackPanel Margin="24,8,24,16"  Orientation="Vertical"  TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                         <StackPanel Grid.Row="6" Margin="0,20,0,10">
-                            <TextBlock Text="Facturas Pendientes" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,0" FontFamily="Arial" FontWeight="Bold" Background="LightGray" />
+                            <TextBlock Text="Facturas Pendientes" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,0" FontFamily="Arial" FontWeight="Bold"  />
                             <ui:TextBlock Text="*Doble Click para cargar y editar informacion de Lecturas" FontSize="10" HorizontalAlignment="Center" Margin="0,0,0,0" />
 
                             <DataGrid x:Name="dtg_Facturas" CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True"  RowBackground="LightGray" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center" Margin="0,20,0,0"  SelectionChanged="dtg_Facturas_SelectionChanged" IsEnabled="True" >

@@ -312,7 +312,7 @@ namespace H2OPure.Views
             string newEmail = txt_NewEmail.Text;
             string newUser = txt_NewUser.Text;
             string newDNI = txt_NewId.Text;
-            string? puesto = cmb_Puesto.SelectedItem.ToString();
+            string? puesto = (cmb_Puesto.SelectedItem as ComboBoxItem).Content.ToString();
             int typeUser = cmb_TypeUser.SelectedIndex;
             bool isActive = chk_Activo.IsChecked.Value;
 
