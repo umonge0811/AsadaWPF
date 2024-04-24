@@ -1,5 +1,6 @@
 ﻿using H2OPure.Repository;
 using H2OPure.Utilities;
+using H2OPure.Views;
 using MaterialDesignThemes.Wpf;
 using System.Windows;
 using System.Windows.Controls;
@@ -148,8 +149,9 @@ namespace H2OPure
 
         private void NavigationViewItem_Click_8(object sender, RoutedEventArgs e)
         {
-            frmLoginUsers frmLoginUsers = new frmLoginUsers();
-            frmLoginUsers.show
+            LoginUsers loginUsers = new LoginUsers();
+            loginUsers.Show();  
+            this.Close();
         }
     }
 }

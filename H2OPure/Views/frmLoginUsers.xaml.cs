@@ -135,7 +135,21 @@ namespace H2OPure.Views
             var user = new NRecuperarPassword();
 
             var result = user.recoverPassword(txt_Username.Text);
-            MessageBox.Show(result);
+            messageSnackbar(result);
+            //MessageBox.Show(result);
         }
+
+        public void messageSnackbar(string message)
+        {
+            snackbarMessage.MessageQueue.Enqueue(message);
+            //snackbarMessage.Message.Content = message;
+            snackbarMessage.IsActive = true;
+        }
+
+        private void SnackbarMessage_ActionClick(object sender, RoutedEventArgs e)
+        {
+            snackbarMessage.IsActive = false;
+        }
+
     }
 }

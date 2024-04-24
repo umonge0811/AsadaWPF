@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:H2OPure.Views"
         mc:Ignorable="d"
-        Title="LoginUsers" Height="400" Width="500"
+        Title="LoginUsers" Height="423" Width="550"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -73,7 +73,7 @@
                          FontSize="16"
                          FontFamily="MS UI Gothic"
                          Cursor="Hand"
-                         Click="btnClose_Click" Grid.ColumnSpan="2" Margin="438,0,5,0">
+                         Click="btnClose_Click" Grid.ColumnSpan="2" Margin="480,0,5,0">
 
                         <Button.Style>
                             <Style TargetType="Button">
@@ -215,20 +215,20 @@
                     Cursor="Hand"
                             MouseEnter="TextBlock_MouseEnter"
                             MouseLeave="TextBlock_MouseLeave"/>-->
-                    <Button Content="Reset" Click="btnReset_Click" x:Name="btnReset"> </Button>
+                    <!--<Button Content="Reset" Click="btnReset_Click" x:Name="btnReset"> </Button>-->
+                    <Button  Click="btnReset_Click"  Content="Restablecer Contraseña"  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"   Style="{StaticResource MaterialDesignFlatLightButton}"  ToolTip="MaterialDesignFlatLightButton" Margin="0,0,0,0" Foreground="#FF9C9C9C" HorizontalAlignment="Left" FontSize="10" Height="25" />
+                    
                     <ProgressBar  x:Name="DeterminateCircularProgress"  Style="{StaticResource MaterialDesignCircularProgressBar}" Visibility="Visible" IsIndeterminate="False" Foreground="WhiteSmoke"/>
                     <Label x:Name="lbl_In" Content="Ingresando..."  Margin="0,2,0,0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
 
                 </StackPanel>
-                
 
+
+                <materialDesign:Snackbar Grid.Row="2" x:Name="snackbarMessage" IsActive="false" MessageQueue="{materialDesign:MessageQueue}" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+                    <materialDesign:SnackbarMessage  Content="Mensaje"  ActionContent="Aceptar" ActionClick="SnackbarMessage_ActionClick" />
+                </materialDesign:Snackbar>
 
             </Grid>
-
-
-
-
-
 
 
         </Border>
