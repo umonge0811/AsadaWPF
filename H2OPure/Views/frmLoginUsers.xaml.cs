@@ -130,5 +130,12 @@ namespace H2OPure.Views
             }
         }
 
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            var user = new NRecuperarPassword();
+
+            var result = user.recoverPassword(txt_Username.Text);
+            MessageBox.Show(result);
+        }
     }
 }

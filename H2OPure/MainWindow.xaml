@@ -52,9 +52,14 @@
                         <ui:SymbolIcon Symbol="Info12" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Ajustes" >
+                <!--<ui:NavigationViewItem Content="Ajustes" >
                     <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Settings24" />
+                        <ui:SymbolIcon Symbol="Settings24"/>
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem> -->
+                <ui:NavigationViewItem Content="Salir" Click="NavigationViewItem_Click_8">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="ArrowExit20" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
 

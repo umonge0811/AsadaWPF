@@ -206,7 +206,7 @@
                     FontFamily="MS UI Gothic"
                     Margin="0,10,0,0"/>
 
-                    <TextBlock x:Name="txtReset"  Text="Reset"
+                    <!--<TextBlock x:Name="txtReset"  Text="Reset"
                     Foreground="DarkGray"
                     FontSize="12"
                     FontWeight="Bold"
@@ -214,8 +214,8 @@
                     Margin="0,1,0,0"
                     Cursor="Hand"
                             MouseEnter="TextBlock_MouseEnter"
-                            MouseLeave="TextBlock_MouseLeave"/>
-
+                            MouseLeave="TextBlock_MouseLeave"/>-->
+                    <Button Content="Reset" Click="btnReset_Click" x:Name="btnReset"> </Button>
                     <ProgressBar  x:Name="DeterminateCircularProgress"  Style="{StaticResource MaterialDesignCircularProgressBar}" Visibility="Visible" IsIndeterminate="False" Foreground="WhiteSmoke"/>
                     <Label x:Name="lbl_In" Content="Ingresando..."  Margin="0,2,0,0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
 

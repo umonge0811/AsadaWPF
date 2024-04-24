@@ -145,5 +145,11 @@ namespace H2OPure
                 
 
         }
+
+        private void NavigationViewItem_Click_8(object sender, RoutedEventArgs e)
+        {
+            frmLoginUsers frmLoginUsers = new frmLoginUsers();
+            frmLoginUsers.show
+        }
     }
 }
