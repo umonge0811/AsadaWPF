@@ -30,7 +30,7 @@ namespace wpfASADACore
             //_ = CrearUsuario();
             lbl_FechaPrincipal.Text = DateTime.Now.ToString("U");
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            Loaded += OnLoaded;
+            
 
             // Crea un estilo personalizado para el Snackbar
             Style snackbarStyle = new Style(typeof(MaterialDesignThemes.Wpf.Snackbar));
@@ -80,13 +80,7 @@ namespace wpfASADACore
             RootNavigation.Navigate(typeof(Views.frmLectura));
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            // Crear los clientes por defecto
-            await typeclientRepository.CreateTypeClient("Local", "Cliente tarifa editable", 0, 0);
-            await typeclientRepository.CreateTypeClient("Residencial", "", 3200, 200);
-            await typeclientRepository.CreateTypeClient("Comercial", "", 3200, 400);
-        }
+       
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

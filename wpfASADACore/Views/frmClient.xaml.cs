@@ -102,11 +102,16 @@ namespace wpfASADACore.Views
         {
             ClearAllData();
         }
+
+        private TypeClientRepository GetTypeClientRepository()
+        {
+            return typeClientRepository;
+        }
         #endregion
 
         #region Metodo para cargar los datos de los tipos de clientes en el combobox
         //Este Metodo es para cargar los datos de los tipos de clientes en el combobox
-        private void cargarDatos() {
+        private void cargarDatos(TypeClientRepository typeClientRepository) {
             try {
 
                 List<clsTypeClient> lista = typeClientRepository.GetAllTypeCliente();
@@ -284,7 +289,7 @@ namespace wpfASADACore.Views
         #region Evento Load Para que se ejecute al cargar la pagina
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            cargarDatos();
+            cargarDatos(GetTypeClientRepository());
 
             loaddatagrid();
             btn_ModifyClient.IsEnabled = false;

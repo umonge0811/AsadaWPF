@@ -18,7 +18,7 @@
                 <ui:NavigationViewItem Content="Configuraciones" Icon="{ui:SymbolIcon Settings16}">
                     <ui:NavigationViewItem.MenuItems>
                         <ui:NavigationViewItem Content="Gestion de Clientes" Icon="{ui:SymbolIcon PersonAccounts24}" Click="NavigationViewItem_Click_1" ></ui:NavigationViewItem>
-                        <!--<ui:NavigationViewItem Content="Tipos de Cliente y Tarifas" Icon="{ui:SymbolIcon MoneySettings20}" Click="NavigationViewItem_Click_2"></ui:NavigationViewItem>-->
+                        <ui:NavigationViewItem Content="Tipos de Cliente y Tarifas" Icon="{ui:SymbolIcon MoneySettings20}" Click="NavigationViewItem_Click_2"></ui:NavigationViewItem>
                     </ui:NavigationViewItem.MenuItems>
                 </ui:NavigationViewItem>
             </ui:NavigationView.MenuItems>

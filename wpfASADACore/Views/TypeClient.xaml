@@ -66,7 +66,7 @@
                             </StackPanel>
                         </ui:Button>
 
-                        <!--<ui:Button x:Name="btn_ModifyTypeCli" Height="34" Appearance="Caution" Margin="10,0,0,0" Click="btn_ModifyTypeClient_Click" >
+                        <ui:Button x:Name="btn_ModifyTypeCli" Height="34" Appearance="Caution" Margin="10,0,0,0" Click="btn_ModifyTypeClient_Click" >
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconModern Kind="EditAdd" VerticalAlignment="Center" Margin="0,0,5,0" />
                                 <TextBlock Text="Editar" VerticalAlignment="Center" />
@@ -78,7 +78,7 @@
                                 <iconPacks:PackIconModern Kind="Delete" VerticalAlignment="Center" Margin="0,0,5,0" />
                                 <TextBlock Text="Eliminar" VerticalAlignment="Center"  />
                             </StackPanel>
-                        </ui:Button>-->
+                        </ui:Button>
 
                         <ui:Button x:Name="btn_CleanTxtCli" Height="34" Appearance="Info" Margin="10,0,0,0" Click="btn_CleanTxtCli_Click">
                             <StackPanel Orientation="Horizontal">
@@ -88,7 +88,7 @@
                         </ui:Button>
                     </StackPanel>
 
-                    <DataGrid x:Name="dgvTypeClient" CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="LightGray" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center" Margin="0,20,0,0" Height="Auto" >
+                    <DataGrid x:Name="dgvTypeClient" CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Extended" Padding="10" FontSize="14" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="LightGray" AlternatingRowBackground="White" GridLinesVisibility="None" HorizontalAlignment="Center" Margin="0,20,0,0" Height="Auto" MouseDoubleClick="dgvTypeClient_MouseDoubleClick">
                         <DataGrid.Resources>
                             <Style TargetType="{x:Type DataGridCell}">
                                 <Setter Property="BorderBrush" Value="Transparent" />
