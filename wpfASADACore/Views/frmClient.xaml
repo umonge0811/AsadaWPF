@@ -69,7 +69,9 @@
                             </StackPanel>
                         </ComboBoxItem>
                     </ComboBox>
-                    
+
+                    <TextBox x:Name="txt_NewDireccion"  TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Dirección Exacta" Style="{StaticResource MaterialDesignFloatingHintTextBox}" MinWidth="750" Margin="10" Padding="0,0,0,4"/>
+
                     <StackPanel Orientation="Vertical" Width="250" Margin="10">
                         <Label Content="Asignar Cedúla"  RenderTransformOrigin="-0.006,0.571" Margin="0" HorizontalAlignment="Center"  />
                         <ui:ToggleSwitch x:Name="copySwitch" OffContent="Off" OnContent="On" Width="67" Checked="copySwitch_Checked" Unchecked="copySwitch_Unchecked" VerticalAlignment="Center" Height="20" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Center"/>

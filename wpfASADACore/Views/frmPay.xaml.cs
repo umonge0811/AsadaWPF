@@ -12,6 +12,8 @@ using System.Windows.Threading;
 using wpfASADACore.Models;
 using wpfASADACore.Repository;
 using wpfASADACore.Utilities;
+using static wpfASADACore.Repository.BillingsRepository;
+using static wpfASADACore.Repository.ReadingRepository;
 using Document = iTextSharp.text.Document;
 
 
@@ -24,6 +26,7 @@ namespace wpfASADACore.Views
     {
         BillingsRepository billingsRepository = new BillingsRepository();
         ReadingRepository readingRepository = new ReadingRepository();
+        List<ClientWithBilling> clients = new();
         // Delegado vacío para forzar la actualización de la UI
         private static Action EmptyDelegate = delegate () { };
 
@@ -61,6 +64,16 @@ namespace wpfASADACore.Views
             }
         }
         #endregion
+
+        //Metodo para consultar direccion del cliente
+        private void cmb_Client_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ClientWithBilling client = cmb_Client.SelectedItem as ClientWithBilling;
+            if (client != null)
+            {
+                txb_Direccion.Text = client.Direction;
+            }
+        }
 
         #region Eventos loaded 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -598,6 +611,7 @@ namespace wpfASADACore.Views
                     htmlTemplate = htmlTemplate.Replace("{TotalConsumption}", totalConsumption);
                     htmlTemplate = htmlTemplate.Replace("{LastReading}", lastRead.ToString());
                     htmlTemplate = htmlTemplate.Replace("{CurrentReading}", currentRead.ToString());
+                    htmlTemplate = htmlTemplate.Replace("{ClientDirection}", billingDetails.Client.Direction);
 
                     using (FileStream stream = new FileStream(savefile.FileName, FileMode.Create))
                     {

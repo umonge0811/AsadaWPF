@@ -57,6 +57,7 @@ namespace wpfASADACore.Repository
             public string Name { get; set; }
             public string LastName { get; set; }
             public string SecondSurname { get; set; }
+            public string Direction { get; set; }
 
 
             public string DisplayText
@@ -79,7 +80,9 @@ namespace wpfASADACore.Repository
                         SubscriberNum = r.Client.SubscriberNum,
                         Name = r.Client.name,
                         LastName = r.Client.lastName,
-                        SecondSurname = r.Client.secondSurname
+                        SecondSurname = r.Client.secondSurname,
+                        Direction = r.Client.Direction
+
                     })
                     .Distinct()
                     .ToList();

@@ -30,7 +30,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-
+            <StackPanel Orientation="Vertical">
             <WrapPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <TextBlock Text="Seleccionar Cliente:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="30,10,20,9"/>
 
@@ -44,7 +44,8 @@
                         Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                         Margin="38,20,39,20" VerticalAlignment="Top" Grid.Column="2" Grid.RowSpan="2" Width="500" IsEditable="True"
                         PreviewTextInput="cmb_ClientRead_PreviewTextInput"
-                        KeyUp="cmb_Client_KeyUp">                    
+                        KeyUp="cmb_Client_KeyUp"
+                          SelectionChanged="cmb_Client_SelectionChanged">                    
                     <ComboBoxItem IsSelected="True">
                         <StackPanel Orientation="Horizontal">
                         </StackPanel>
@@ -55,6 +56,9 @@
                 <ui:Button x:Name="btnCargarLectura" Content="Cargar Lectura" Appearance="Dark"   Margin="0,0,10,0" Grid.Row="1" Click="btnCargarLectura_Click" />
 
             </WrapPanel>
+                <TextBlock x:Name="txb_Direccion" Text="Dirección:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="30,10,20,9"/>
+
+            </StackPanel>
 
 
             <WrapPanel Grid.Row="1"  HorizontalAlignment="Center">

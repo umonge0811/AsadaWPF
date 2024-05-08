@@ -36,35 +36,41 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical">
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <TextBlock Text="Seleccionar Cliente:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="30,10,20,9"/>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <TextBlock Text="Seleccionar Cliente:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="30,10,20,9"/>
 
-                <!--#region  Combo Cliente-->
-                <ComboBox x:Name="cmb_Client"  Height="39" Grid.Row="2" IsTextSearchEnabled="True"
-                            materialDesign:ColorZoneAssist.Mode="SecondaryLight"
-                            materialDesign:HintAssist.HelperText="Digita el Número de Abonado"
-                            materialDesign:HintAssist.Hint="Cliente"
-                            materialDesign:TextFieldAssist.HasClearButton="True"
-                            materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"                          
-                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                            Margin="38,20,39,20" VerticalAlignment="Top" Grid.Column="2" Grid.RowSpan="2" Width="500" IsEditable="True"
-                            PreviewTextInput="cmb_ClientPay_PreviewTextInput"
-                            KeyUp="cmb_Client_KeyUp">
-                </ComboBox>
-                <!--#endregion-->
+                    <!--#region  Combo Cliente-->
+                    <ComboBox x:Name="cmb_Client"  Height="39" Grid.Row="2" IsTextSearchEnabled="True"
+                                materialDesign:ColorZoneAssist.Mode="SecondaryLight"
+                                materialDesign:HintAssist.HelperText="Digita el Número de Abonado"
+                                materialDesign:HintAssist.Hint="Cliente"
+                                materialDesign:TextFieldAssist.HasClearButton="True"
+                                materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"                          
+                                Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                Margin="38,20,39,20" VerticalAlignment="Top" Grid.Column="2" Grid.RowSpan="2" Width="500" IsEditable="True"
+                                PreviewTextInput="cmb_ClientPay_PreviewTextInput"
+                                KeyUp="cmb_Client_KeyUp"
+                              SelectionChanged="cmb_Client_SelectionChanged">
+                    </ComboBox>
+                    <!--#endregion-->
 
-                <ui:Button x:Name="btnCargarFact" Content="Cargar Facturas" Appearance="Dark"   Margin="0,0,10,0" Grid.Row="1"  Click="btnCargarFact_Click" />
+                    <ui:Button x:Name="btnCargarFact" Content="Cargar Facturas" Appearance="Dark"   Margin="0,0,10,0" Grid.Row="1"  Click="btnCargarFact_Click" />
 
-                <materialDesign:Card  Width="80" Height="40" HorizontalAlignment="Center" Margin="0,0,10,0" >
-                    <StackPanel >
-                        <TextBlock Text="#Factura" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                        <TextBlock x:Name="lbl_InvoiceNum" Text="Número" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                    </StackPanel>
+                    <materialDesign:Card  Width="80" Height="40" HorizontalAlignment="Center" Margin="0,0,10,0" >
+                        <StackPanel  >
+                            <TextBlock Text="#Factura" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="lbl_InvoiceNum" Text="Número" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    
 
-                </materialDesign:Card>
+                    </materialDesign:Card>
 
 
+
+                </StackPanel>
+                <TextBlock x:Name="txb_Direccion" Text="Dirección:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="30,10,20,9"/>
 
             </StackPanel>
 
@@ -76,7 +82,7 @@
                         <TextBlock Text="Datos del Cliente" HorizontalAlignment="Center" Margin="10"/>
                         <StackPanel Orientation="Horizontal" Margin="20,0,20,10" HorizontalAlignment="Center">
 
-                            <TextBox x:Name="txt_TypeClient"  TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Tipo de Cliente" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="300" Grid.ColumnSpan="2" Margin="10,10,10,10" IsReadOnly="True"/>
+                            <TextBox x:Name="txt_TypeClient"  TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Tipo de Cliente" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="300" Grid.ColumnSpan="2" Margin="10,10,10,10" IsReadOnly="True" Padding="0,4,0,0"/>
                             <StackPanel Orientation="Vertical">
                                 <TextBox x:Name="txt_RateType"  TextWrapping="Wrap" Height="35" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Tarifa Base" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="300" Grid.ColumnSpan="2" Margin="10,10,10,0" IsReadOnly="True" Padding="0,4,0,2" TextChanged="TextBox_TextChanged"/>
                                 <TextBlock x:Name="lbl_txtRateType" Text="Debe Ingresar Precio Base del Cliente Local" FontSize="12" Margin="0" Padding="5,0,0,0" Foreground="Red" Visibility="Hidden" />

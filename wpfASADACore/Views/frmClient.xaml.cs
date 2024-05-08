@@ -12,6 +12,7 @@ using MessageBoxButton = System.Windows.MessageBoxButton;
 using MessageBoxResult = System.Windows.MessageBoxResult;
 
 namespace wpfASADACore.Views
+
 {
     /// <summary>
     /// Lógica de interacción para frmClient.xaml
@@ -47,6 +48,8 @@ namespace wpfASADACore.Views
             txt_NewDNICli.TextChanged += Input_Changed;
             txt_NewSubscribe.TextChanged += Input_Changed;
             cmb_TypeClient.SelectionChanged += Input_Changed;
+            txt_NewDireccion.TextChanged += Input_Changed;
+
             #endregion
 
         }       
@@ -93,7 +96,7 @@ namespace wpfASADACore.Views
             tgs_UltimaLectura.IsChecked = false;
             dtpk_DateReading.SelectedDate = null;
             txt_UltimaLectura.Clear();
-
+            txt_NewDireccion.Clear();
         }
         #endregion
 
@@ -146,6 +149,7 @@ namespace wpfASADACore.Views
                 string DNI = txt_NewDNICli.Text;
                 string SubscriberNum = txt_NewSubscribe.Text;
                 ClientType = int.Parse(cmb_TypeClient.SelectedValue.ToString() ?? "1");
+                string direction = txt_NewDireccion.Text;
 
                 // Validación de campos
                 // Obtén una referencia a tu MainWindow
@@ -211,7 +215,7 @@ namespace wpfASADACore.Views
 
 
                 // Crear cliente
-                int idClient = await clientsRepository.CreateClient(name, DNI, firstName, Surname, SubscriberNum, ClientType);
+                int idClient = await clientsRepository.CreateClient(name, DNI, firstName, Surname, SubscriberNum, ClientType,direction);
 
                 
                 // Mostrar mensaje de éxito o error
@@ -313,6 +317,7 @@ namespace wpfASADACore.Views
                 txt_NewDNICli.Text = client.DNI;
                 txt_NewSubscribe.Text = client.SubscriberNum;
                 cmb_TypeClient.SelectedValue = client.TypeClientId;
+                txt_NewDireccion.Text = client.Direction;
                 btn_CreateNewClient.IsEnabled = false;
                 btn_DeleteClient.IsEnabled = true;
                 isModified = true;
@@ -334,6 +339,7 @@ namespace wpfASADACore.Views
             string Surname = txt_NewsecondSurnameCli.Text;
             string DNI = txt_NewDNICli.Text;
             string SubscriberNum = txt_NewSubscribe.Text;
+            string direction = txt_NewDireccion.Text;
             int ClientType = int.Parse(cmb_TypeClient.SelectedValue.ToString() ?? "1");
 
 
@@ -388,7 +394,7 @@ namespace wpfASADACore.Views
 
 
             //await es para esperar a que la tarea termine, en este caso, la funcion/Metodo ejecute para que avance a la siguiente tarea 
-            bool estado = await clientsRepository.UpdateClient(idClient, name,DNI, lastName,Surname, SubscriberNum,ClientType);
+            bool estado = await clientsRepository.UpdateClient(idClient, name,DNI, lastName,Surname, SubscriberNum,ClientType,direction);
 
             if (estado)
             {
@@ -502,7 +508,7 @@ namespace wpfASADACore.Views
             string search = txtBuscarCli.Text;
             if (search != "")
             {
-                dtgClientes.ItemsSource = clientsRepository.GetAllClients().Where(c => c.name.ToLower().Contains(search.ToLower()) || c.lastName.ToLower().Contains(search.ToLower()) || c.secondSurname.ToLower().Contains(search.ToLower()) || c.DNI.ToLower().Contains(search.ToLower()) || c.SubscriberNum.ToLower().Contains(search.ToLower())).ToList();
+                dtgClientes.ItemsSource = clientsRepository.GetAllClients().Where(c => c.Direction.ToLower().Contains(search.ToLower())||c.name.ToLower().Contains(search.ToLower()) || c.lastName.ToLower().Contains(search.ToLower()) || c.secondSurname.ToLower().Contains(search.ToLower()) || c.DNI.ToLower().Contains(search.ToLower()) || c.SubscriberNum.ToLower().Contains(search.ToLower())).ToList();
             }
             else
             {

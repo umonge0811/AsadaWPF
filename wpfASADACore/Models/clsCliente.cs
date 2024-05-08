@@ -18,6 +18,7 @@ namespace wpfASADACore.Models
         public string? lastName { get; set; }
         public string? secondSurname { get; set; }
         public string? SubscriberNum { get; set; }
+        public string? Direction { get; set; }
         //public int IdtypeClient { get; set; }
 
         public int TypeClientId { get; set; }  //  La propiedad TypeClientId es la clave foránea que se relaciona con la tabla de tipos de cliente.
@@ -27,7 +28,7 @@ namespace wpfASADACore.Models
         {
         }
 
-        public clsCliente(string name, string lastName, string secondSurname, string dNI, string subscribernum, int typeClientId)
+        public clsCliente(string name, string lastName, string secondSurname, string dNI, string subscribernum, int typeClientId, string direction)
         {
             this.name = name;
             this.lastName = lastName;
@@ -35,6 +36,7 @@ namespace wpfASADACore.Models
             this.DNI = dNI;
             this.SubscriberNum = subscribernum;
             this.TypeClientId = typeClientId;
+            this.Direction = direction;
         }
            
 

@@ -16,14 +16,14 @@ namespace wpfASADACore.Repository
             context.Database.EnsureCreatedAsync().Wait();
         }
 
-        public async Task<int> CreateClient(string name, string DNI, string lastName, string secondSurname, string subscribernum, int IdtypeClient)
+        public async Task<int> CreateClient(string name, string DNI, string lastName, string secondSurname, string subscribernum, int IdtypeClient, string direction)
         {
 
             try
             {
                 using (var db = new ContextDataBase())
                 {
-                    clsCliente client1 = new clsCliente(name, lastName, secondSurname, DNI, subscribernum, IdtypeClient);
+                    clsCliente client1 = new clsCliente(name, lastName, secondSurname, DNI, subscribernum, IdtypeClient, direction);
 
                     db.clientes.Add(client1);
 
@@ -82,7 +82,7 @@ namespace wpfASADACore.Repository
         }
 
         //Metodo para modificar un cliente llamado UpdateClient
-        public async Task<bool> UpdateClient(int? id, string name, string DNI, string lastName, string secondSurname, string subscribernum, int IdtypeClient)
+        public async Task<bool> UpdateClient(int? id, string name, string DNI, string lastName, string secondSurname, string subscribernum, int IdtypeClient, string direction)
         {
             bool estado = false;
             try
@@ -98,6 +98,7 @@ namespace wpfASADACore.Repository
                         client.secondSurname = secondSurname;
                         client.SubscriberNum = subscribernum;
                         client.TypeClientId = IdtypeClient;
+                        client.Direction = direction;
 
                         await db.SaveChangesAsync();
                         estado = true;

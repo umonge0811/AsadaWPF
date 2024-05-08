@@ -16,6 +16,7 @@ using wpfASADACore.Models;
 using wpfASADACore.Repository;
 using wpfASADACore.Services;
 using wpfASADACore.Utilities;
+using static wpfASADACore.Repository.ReadingRepository;
 
 namespace wpfASADACore.Views
 {
@@ -25,6 +26,7 @@ namespace wpfASADACore.Views
     public partial class frmLectura : Page
     {
         ReadingRepository readingRepository =new ReadingRepository();
+        List<ClientWithReading> clients = new (); 
 
         public frmLectura()
         {
@@ -46,7 +48,7 @@ namespace wpfASADACore.Views
         {
 
                 var db = new ReadingRepository();
-                var clients = db.GetClientsWithReadings();
+            clients = db.GetClientsWithReadings();
                 if (clients.Count > 0)
                 {
                     cmb_Client.Items.Clear(); // Vacía la colección Items
@@ -99,6 +101,20 @@ namespace wpfASADACore.Views
                 txtLecturaActual.Focus();   
             }
         }
+
+        //Metodo para consultar direccion del cliente
+        private void cmb_Client_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ClientWithReading client = cmb_Client.SelectedItem as ClientWithReading;
+            if (client != null)
+            {
+                selectedClientId = client.Id;
+                txb_Direccion.Text = client.Direction;
+            }
+        }
+
+
+
 
         private async void btnGenerarLectura_Click(object sender, RoutedEventArgs e)
         {
