@@ -2,6 +2,7 @@
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
 using Microsoft.Win32;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Windows;
@@ -497,7 +498,7 @@ namespace wpfASADACore.Views
                         string dateLastReading = selectedReading.DateLastReading.ToString("dd/MM/yyyy");
                         string currentReadingDate = selectedReading.CurrentReadingDate.ToString("dd/MM/yyyy");
                         string totalConsumption = selectedReading.TotalConsumption.ToString();
-                        string typeClient= txt_TypeClient.Text;
+                        string typeClient = txt_TypeClient.Text;
                         int lastRead = int.Parse(txt_LecturaAnt.Text);
                         int currentRead = int.Parse(txt_LecturaAct.Text);
                         // Eliminar el símbolo de moneda y los espacios en blanco
@@ -530,9 +531,6 @@ namespace wpfASADACore.Views
                             Remarks = "Pagada",
                             idClient = selectedReading.idClient,
                             AmountRec = totalRec,
-
-
-
                         };
 
                         // Guardar la nueva factura en la base de datos
@@ -559,8 +557,21 @@ namespace wpfASADACore.Views
 
                         // Mostrar un mensaje de éxito
                         await clsUtilities.ShowSnackbarAsync("La factura se ha generado correctamente.", new SolidColorBrush(Colors.LightGreen));
-                        // Generar el PDF de la factura
-                        GenerarFacturaPdf(newBilling, dateLastReading, currentReadingDate, totalConsumption, typeClient,lastRead,currentRead);
+
+                        // Preguntar al usuario qué tamaño de papel desea utilizar
+                        var messageBox = new clsMessageBox("¿Desea utilizar papel de 80mm?", "OK", "CANCEL", "PrinterPosPlus", "Seleccionar tamaño de papel", Brushes.LightBlue);
+                        bool? result = messageBox.ShowDialog();
+
+                        if (result == true)
+                        {
+                            // Generar el PDF de la factura utilizando la plantilla para papel de 80mm
+                            GenerarFacturaPdf(newBilling, dateLastReading, currentReadingDate, totalConsumption, typeClient, lastRead, currentRead, "80mm");
+                        }
+                        else
+                        {
+                            // Generar el PDF de la factura utilizando la plantilla para papel tamaño carta
+                            GenerarFacturaPdf(newBilling, dateLastReading, currentReadingDate, totalConsumption, typeClient, lastRead, currentRead, "letter");
+                        }
                     }
                 }
                 else
@@ -576,7 +587,7 @@ namespace wpfASADACore.Views
         #endregion
 
         #region Metodo para imprimir la factura en PDF
-        private void GenerarFacturaPdf(clsBilling billing, string dateLastReading, string currentReadingDate,string totalConsumption, string typeClient, int lastRead, int currentRead)
+        private void GenerarFacturaPdf(clsBilling billing, string dateLastReading, string currentReadingDate, string totalConsumption, string typeClient, int lastRead, int currentRead, string paperSize)
         {
             var billingDetails = billingsRepository.GetBillingDetails(billing.id);
             SaveFileDialog savefile = new SaveFileDialog();
@@ -584,56 +595,100 @@ namespace wpfASADACore.Views
             if (savefile.ShowDialog() == true)
             {
                 var billingsRepository = new BillingsRepository();
-               
 
-                string htmlTemplate = Properties.Resources.facturaAsada5.ToString();
+                string htmlTemplate;
+                if (paperSize == "80mm")
+                {
+                    // Usar la plantilla para papel de 80mm
+                    htmlTemplate = Properties.Resources.facturaAsada5_80mm.ToString();
+                }
+                else
+                {
+                    // Usar la plantilla para papel tamaño carta
+                    htmlTemplate = Properties.Resources.facturaAsada5.ToString();
+                }
 
-                if (billing != null && billingDetails != null)
-                {                  
+                // El resto del código para reemplazar los marcadores de posición en la plantilla y generar el PDF
+                htmlTemplate = htmlTemplate.Replace("{InvoiceNum}", billing.InvoiceNum);
+                htmlTemplate = htmlTemplate.Replace("{BillingDate}", billing.BillingDate.ToString());
+                //htmlTemplate = htmlTemplate.Replace("{AmountIva}", billing.AmountIva.ToString());
+                htmlTemplate = htmlTemplate.Replace("{AmountBase}", billing.AmountBase.ToString());
+                htmlTemplate = htmlTemplate.Replace("{AmountExc}", billing.AmountExc.ToString());
+                htmlTemplate = htmlTemplate.Replace("{AmountTotal}", billing.AmountTotal.ToString());
+                htmlTemplate = htmlTemplate.Replace("{AmountRec}", billing.AmountRec.ToString());
+                htmlTemplate = htmlTemplate.Replace("{Remarks}", billing.Remarks);
+                htmlTemplate = htmlTemplate.Replace("{idClient}", billing.idClient.ToString());
+                htmlTemplate = htmlTemplate.Replace("{ClientName}", billingDetails.Client.name);
+                htmlTemplate = htmlTemplate.Replace("{ClientLastName}", billingDetails.Client.lastName);
+                htmlTemplate = htmlTemplate.Replace("{ClientSecondSurname}", billingDetails.Client.secondSurname);
+                htmlTemplate = htmlTemplate.Replace("{ClientDNI}", billingDetails.Client.DNI);
+                htmlTemplate = htmlTemplate.Replace("{ClientSubscriberNum}", billingDetails.Client.SubscriberNum);
+                htmlTemplate = htmlTemplate.Replace("{TypeClientId}", typeClient);
+                htmlTemplate = htmlTemplate.Replace("{DateLastReading}", dateLastReading);
+                htmlTemplate = htmlTemplate.Replace("{CurrentReadingDate}", currentReadingDate);
+                htmlTemplate = htmlTemplate.Replace("{TotalConsumption}", totalConsumption);
+                htmlTemplate = htmlTemplate.Replace("{LastReading}", lastRead.ToString());
+                htmlTemplate = htmlTemplate.Replace("{CurrentReading}", currentRead.ToString());
+                htmlTemplate = htmlTemplate.Replace("{ClientDirection}", billingDetails.Client.Direction);
 
-                    htmlTemplate = htmlTemplate.Replace("{InvoiceNum}", billing.InvoiceNum);
-                    htmlTemplate = htmlTemplate.Replace("{BillingDate}", billing.BillingDate.ToString());
-                    //htmlTemplate = htmlTemplate.Replace("{AmountIva}", billing.AmountIva.ToString());
-                    htmlTemplate = htmlTemplate.Replace("{AmountBase}",billing.AmountBase.ToString());
-                    htmlTemplate = htmlTemplate.Replace("{AmountExc}", billing.AmountExc.ToString());
-                    htmlTemplate = htmlTemplate.Replace("{AmountTotal}",  billing.AmountTotal.ToString());
-                    htmlTemplate = htmlTemplate.Replace("{AmountRec}", billing.AmountRec.ToString());
-                    htmlTemplate = htmlTemplate.Replace("{Remarks}", billing.Remarks);
-                    htmlTemplate = htmlTemplate.Replace("{idClient}", billing.idClient.ToString());
-                    htmlTemplate = htmlTemplate.Replace("{ClientName}", billingDetails.Client.name);
-                    htmlTemplate = htmlTemplate.Replace("{ClientLastName}", billingDetails.Client.lastName);
-                    htmlTemplate = htmlTemplate.Replace("{ClientSecondSurname}", billingDetails.Client.secondSurname);
-                    htmlTemplate = htmlTemplate.Replace("{ClientDNI}", billingDetails.Client.DNI);
-                    htmlTemplate = htmlTemplate.Replace("{ClientSubscriberNum}", billingDetails.Client.SubscriberNum);
-                    htmlTemplate = htmlTemplate.Replace("{TypeClientId}",typeClient);
-                    htmlTemplate = htmlTemplate.Replace("{DateLastReading}", dateLastReading);
-                    htmlTemplate = htmlTemplate.Replace("{CurrentReadingDate}", currentReadingDate);
-                    htmlTemplate = htmlTemplate.Replace("{TotalConsumption}", totalConsumption);
-                    htmlTemplate = htmlTemplate.Replace("{LastReading}", lastRead.ToString());
-                    htmlTemplate = htmlTemplate.Replace("{CurrentReading}", currentRead.ToString());
-                    htmlTemplate = htmlTemplate.Replace("{ClientDirection}", billingDetails.Client.Direction);
+                // Definir el tamaño del documento en base a la selección del usuario
+                iTextSharp.text.Rectangle pageSize;
+                if (paperSize == "80mm")
+                {
+                    // Usar el tamaño de papel de 80mm
+                    pageSize = new iTextSharp.text.Rectangle(230, 842);
+                }
+                else
+                {
+                    // Usar el tamaño de papel tamaño carta
+                    pageSize = PageSize.LETTER;
+                }
 
-                    using (FileStream stream = new FileStream(savefile.FileName, FileMode.Create))
+                using (FileStream stream = new FileStream(savefile.FileName, FileMode.Create))
+                {
+                    Document pdfDoc = new Document(pageSize);
+                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
+                    pdfDoc.Open();
+
+                    // Añadir una página al documento
+                    pdfDoc.NewPage();
+
+                    pdfDoc.Add(new Phrase(""));
+
+                    using (StringReader sr = new StringReader(htmlTemplate))
                     {
-                        Document pdfDoc = new Document(PageSize.A4);
-                        PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
-                        pdfDoc.Open();
-                        pdfDoc.Add(new Phrase(""));
-
-                        
-                        using (StringReader sr = new StringReader(htmlTemplate))
-                        {
-                            XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
-                        }
-
-                        pdfDoc.Close();
-                        stream.Close();
+                        XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
                     }
+
+                    pdfDoc.Close();
+                    stream.Close();
+                }
+
+
+                // Imprimir la factura
+                PrintDialog printDialog = new PrintDialog();
+                if (printDialog.ShowDialog() == true)
+                {
+                    string pdfPath = savefile.FileName; // La ruta al archivo PDF que generaste
+                    string printerName = printDialog.PrintQueue.Name; // El nombre de la impresora seleccionada por el usuario
+
+                    // El comando para abrir Adobe Reader y imprimir el PDF
+                    string command = $"/s /o /h /t \"{pdfPath}\" \"{printerName}\"";
+
+                    // Iniciar un nuevo proceso para ejecutar el comando
+                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    {
+                        FileName = "AcroRd32.exe", // La ruta al ejecutable de Adobe Reader
+                        Arguments = command,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    };
+                    Process.Start(startInfo);
                 }
             }
         }
-
         #endregion
+
 
         #region Metodo para  Limpiar gatagrid y textbox tipo cliente, expander cerrado
         private void Clear()

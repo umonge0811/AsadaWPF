@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Factura</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            width: 72mm; /* Ajustar el ancho al tamaño del papel */
+            font-size: 10px; /* Ajustar el tamaño de la fuente para que sea legible en un papel pequeño */
+        }
+        .container {
+            display: block; /* Cambiar a diseño de bloque para ajustarse al papel estrecho */
+        }
+        .details {
+            width: 100%; /* Ajustar el ancho al tamaño del papel */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px; /* Reducir el relleno para ajustarse al papel estrecho */
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: center; /* Centrar el texto de los encabezados */
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">Factura No: <strong>{InvoiceNum}</strong></h2>
+    <p style="text-align: center;">Fecha: <strong>{BillingDate}</strong></p>
+    <div class="container">
+        <div class="details">
+            <h3>Detalles del Cliente</h3>
+            <p><strong>ID del Cliente:</strong> {idClient}</p>
+            <p><strong>Nombre del Cliente:</strong> {ClientName} {ClientLastName} {ClientSecondSurname}</p>
+            <p><strong>Dirección del Cliente:</strong> {ClientDirection}</p>
+            <p><strong>Número de Abonado:</strong> {ClientSubscriberNum}</p>
+            <p><strong>Tipo de Cliente:</strong> {TypeClientId}</p>
+        </div>
+        <div class="details">
+            <h3>Detalles de la Lectura</h3>
+            <p><strong>Fecha de la Lectura Anterior:</strong> {DateLastReading}  Lectura: {LastReading}</p>
+            <p><strong>Fecha de la Lectura Actual:</strong> {CurrentReadingDate}  Lectura: {CurrentReading}</p>
+            <p><strong>Cantidad de M³ Consumidos:</strong> {TotalConsumption}</p>
+        </div>
+    </div>
+    <h3 style="text-align: center;">Detalles de la Factura</h3>
+    <table>
+        <tr>
+            <th>Descripción</th>
+            <th>Monto</th>
+        </tr>
+        <tr>
+            <td>Tarifa Base</td>
+            <td>¢{AmountBase}</td>
+        </tr>
+        <tr>
+            <td>Tarifa Excedente</td>
+            <td>¢{AmountExc}</td>
+        </tr>
+        <tr>
+            <td>Tarifa x Reconexión</td>
+            <td>¢{AmountRec}</td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td>¢{AmountTotal}</td>
+        </tr>
+    </table>
+</body>
+</html>

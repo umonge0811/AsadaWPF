@@ -77,6 +77,11 @@ namespace wpfASADACore.Views
         // En el controlador del evento del botón
         private async void btnCargarLectura_Click(object sender, RoutedEventArgs e)
         {
+            if (cmb_Client.SelectedIndex == -1)
+            {
+                await clsUtilities.ShowSnackbarAsync("Debe seleccionar un cliente", new SolidColorBrush(Colors.Yellow));
+                return;
+            }
             LoadReadingsToDataGrid();
             var lastReading = readingRepository.GetLastReading(selectedClientId);
             if (lastReading != null)

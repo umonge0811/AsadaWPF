@@ -248,6 +248,30 @@ namespace wpfASADACore.Properties {
         ///    &lt;title&gt;Factura&lt;/title&gt;
         ///    &lt;style&gt;
         ///        body {
+        ///            font-family: Arial, sans-serif;
+        ///            width: 72mm; /* Ajustar el ancho al tamaño del papel */
+        ///            font-size: 12px; /* Ajustar el tamaño de la fuente para que sea legible en un papel pequeño */
+        ///        }
+        ///        .container {
+        ///            display: flex;
+        ///            flex-direction: column; /* Cambiar a diseño de columna para ajustarse al papel estrecho */
+        ///        }
+        ///        .details {
+        ///     [resto de la cadena truncado]&quot;;.
+        /// </summary>
+        internal static string facturaAsada5_80mm {
+            get {
+                return ResourceManager.GetString("facturaAsada5_80mm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///&lt;head&gt;
+        ///    &lt;title&gt;Factura&lt;/title&gt;
+        ///    &lt;style&gt;
+        ///        body {
         ///            text-align: center;
         ///        }
         ///        table {
