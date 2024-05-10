@@ -5,13 +5,15 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            width: 210mm; /* Ajustar el ancho al tamaño del papel */
+            font-size: 10px; /* Ajustar el tamaño de la fuente para que sea legible en un papel más grande */
         }
         .container {
-            display: flex;
+            display: flex; /* Cambiar a diseño de flexbox para que los detalles del cliente y los detalles de la lectura estén uno al lado del otro */
             justify-content: space-between;
         }
         .details {
-            width: 45%;
+            width: 45%; /* Ajustar el ancho al tamaño del papel */
         }
         table {
             width: 100%;
@@ -20,33 +22,43 @@
         }
         th, td {
             border: 1px solid black;
-            padding: 10px;
+            padding: 10px; /* Aumentar el relleno para ajustarse al papel más grande */
             text-align: left;
         }
         th {
             background-color: #f2f2f2;
+            text-align: center; /* Centrar el texto de los encabezados */
+        }
+        h3 {
+            border-top: 1px solid #000;
+            border-bottom: 2px solid #000;
+            padding: 5px 0;
+        }
+        .abonado {
+            font-size: 14px; /* Hacer que el número de abonado tenga un tamaño de letra mayor */
+            font-weight: bold; /* Hacer que el número de abonado esté en negrita */
         }
     </style>
 </head>
 <body>
-    <h2 style="text-align: center;">Factura No: {InvoiceNum}</h2>
-    <p style="text-align: center;">Fecha: {BillingDate}</p>
+    <h2 style="text-align: center;">Factura No: <strong>{InvoiceNum}</strong></h2>
+    <p style="text-align: center;"><strong>Fecha de Pago:</strong> {BillingDate}</p>
     <div class="container">
         <div class="details">
             <h3>Detalles del Cliente</h3>
-            <p>ID del Cliente: {idClient}</p>
-            <p>Nombre del Cliente: {ClientName} {ClientLastName} {ClientSecondSurname}</p>
-<p>Dirección del Cliente: {ClientDirection}</p>
-
-            <p>Identificación del Cliente: {ClientDNI}</p>
-            <p>Número de Abonado: {ClientSubscriberNum}</p>
-            <p>Tipo de Cliente: {TypeClientId}</p>
+            <p><strong>ID del Cliente: </strong> {idClient}</p>
+            <p><strong>Nombre del Cliente: </strong> {ClientName} {ClientLastName} {ClientSecondSurname}</p>
+            <p><strong>Dirección del Cliente: </strong> {ClientDirection}</p>
+           <p><strong>Número de Abonado:</strong> <span class="abonado">{ClientSubscriberNum}</span></p>
+            <p><strong>Tipo de Cliente: </strong> {TypeClientId}</p>
         </div>
         <div class="details">
             <h3>Detalles de la Lectura</h3>
-            <p>Fecha de la Lectura Anterior: {DateLastReading}  Lectura: {LastReading}</p>
-            <p>Fecha de la Lectura Actual: {CurrentReadingDate}  Lectura: {CurrentReading}</p>
-            <p>Cantidad de M³ Consumidos: {TotalConsumption}</p>
+            <p><strong>Fecha de la Lectura Anterior: </strong> {DateLastReading}</p>
+            <p><strong>Lectura Anterior: </strong> {LastReading}</p>
+            <p><strong>Fecha de la Lectura Actual: </strong> {CurrentReadingDate}</p>
+            <p><strong>Lectura Actual: </strong> {CurrentReading}</p>
+            <p><strong>Cantidad de M³ Consumidos: </strong> {TotalConsumption}</p>
         </div>
     </div>
     <h3 style="text-align: center;">Detalles de la Factura</h3>

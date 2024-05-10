@@ -218,22 +218,12 @@ namespace wpfASADACore.Properties {
         ///    &lt;style&gt;
         ///        body {
         ///            font-family: Arial, sans-serif;
+        ///            width: 210mm; /* Ajustar el ancho al tamaño del papel */
+        ///            font-size: 10px; /* Ajustar el tamaño de la fuente para que sea legible en un papel más grande */
         ///        }
         ///        .container {
-        ///            display: flex;
-        ///            justify-content: space-between;
-        ///        }
-        ///        .details {
-        ///            width: 45%;
-        ///        }
-        ///        table {
-        ///            width: 100%;
-        ///            border-collapse: collapse;
-        ///            margin-top: 20px;
-        ///        }
-        ///        th, td {
-        ///            border: 1px solid black;
-        ///            padding: 10 [resto de la cadena truncado]&quot;;.
+        ///            display: flex; /* Cambiar a diseño de flexbox para que los detalles del cliente y los detalles de la lectura estén uno al lado del otro */
+        ///            [resto de la cadena truncado]&quot;;.
         /// </summary>
         internal static string facturaAsada5 {
             get {
@@ -250,14 +240,13 @@ namespace wpfASADACore.Properties {
         ///        body {
         ///            font-family: Arial, sans-serif;
         ///            width: 72mm; /* Ajustar el ancho al tamaño del papel */
-        ///            font-size: 12px; /* Ajustar el tamaño de la fuente para que sea legible en un papel pequeño */
+        ///            font-size: 10px; /* Ajustar el tamaño de la fuente para que sea legible en un papel pequeño */
         ///        }
         ///        .container {
-        ///            display: flex;
-        ///            flex-direction: column; /* Cambiar a diseño de columna para ajustarse al papel estrecho */
+        ///            display: block; /* Cambiar a diseño de bloque para ajustarse al papel estrecho */
         ///        }
         ///        .details {
-        ///     [resto de la cadena truncado]&quot;;.
+        ///            width: 100%; /* Ajustar el an [resto de la cadena truncado]&quot;;.
         /// </summary>
         internal static string facturaAsada5_80mm {
             get {

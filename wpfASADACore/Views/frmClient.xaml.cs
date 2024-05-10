@@ -389,7 +389,14 @@ namespace wpfASADACore.Views
                 txt_NewDNICli.Focus();
                 return;
             }
-            
+            if (direction.Equals(""))
+            {
+                await clsUtilities.ShowSnackbarAsync("Debe de ingresar una dirección!", new SolidColorBrush(Colors.Yellow));
+                //MessageBox.Show("Debe de ingresar el segundo apellido del usuario");
+                txt_NewDireccion.Focus();
+                return;
+            }
+
 
 
 
@@ -399,7 +406,7 @@ namespace wpfASADACore.Views
             if (estado)
             {
                 // Utiliza tu MessageBox personalizado
-                var messageBox = new clsMessageBox("Cliente modificado con exito!!", "OK", "CANCEL", "CheckCircleOutline", "Éxito", Brushes.Green);
+                var messageBox = new clsMessageBox("Cliente modificado con exito!!", "OK", "CANCEL", "CheckCircleOutline", "Éxito", Brushes.LightGreen);
                 messageBox.ShowDialog();
 
                 ClearAllData();

@@ -69,8 +69,9 @@ namespace wpfASADACore.Views
             dtp_Lectura.SelectedDate = null;
             txtLecturaAnterior.Clear();
             txtLecturaActual.Clear();
+            txb_Direccion.Text = "Dirección:";
 
-            
+
         }
 
 

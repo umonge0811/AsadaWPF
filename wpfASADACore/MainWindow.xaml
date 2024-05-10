@@ -46,7 +46,7 @@
 
 
         <ProgressBar x:Name="ProgressBarPrincipal" IsIndeterminate="False" Visibility="Hidden" VerticalAlignment="Bottom" 
-       Foreground="Blue" Background="LightBlue" Margin="219,0,3,0" Height="8" RenderTransformOrigin="00,0.5">
+       Foreground="Blue" Background="LightBlue" Margin="248,0,0,0" Height="8" RenderTransformOrigin="00,0.5">
             <ProgressBar.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="-1" />

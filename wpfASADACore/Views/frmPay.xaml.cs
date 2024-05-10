@@ -1,8 +1,8 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.pdf;
-using iTextSharp.tool.xml;
+﻿using DinkToPdf.Contracts;
+using DinkToPdf;
 using Microsoft.Win32;
 using System.Diagnostics;
+using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
 using System.Windows;
@@ -15,7 +15,7 @@ using wpfASADACore.Repository;
 using wpfASADACore.Utilities;
 using static wpfASADACore.Repository.BillingsRepository;
 using static wpfASADACore.Repository.ReadingRepository;
-using Document = iTextSharp.text.Document;
+using PaperKind = DinkToPdf.PaperKind;
 
 
 namespace wpfASADACore.Views
@@ -559,7 +559,7 @@ namespace wpfASADACore.Views
                         await clsUtilities.ShowSnackbarAsync("La factura se ha generado correctamente.", new SolidColorBrush(Colors.LightGreen));
 
                         // Preguntar al usuario qué tamaño de papel desea utilizar
-                        var messageBox = new clsMessageBox("¿Desea utilizar papel de 80mm?", "OK", "CANCEL", "PrinterPosPlus", "Seleccionar tamaño de papel", Brushes.LightBlue);
+                        var messageBox = new clsMessageBox("Selecciona el Tamaño del Papel", "80mm", "Carta", "PrinterPosPlus", "Seleccionar tamaño de papel", Brushes.LightBlue);
                         bool? result = messageBox.ShowDialog();
 
                         if (result == true)
@@ -631,60 +631,43 @@ namespace wpfASADACore.Views
                 htmlTemplate = htmlTemplate.Replace("{CurrentReading}", currentRead.ToString());
                 htmlTemplate = htmlTemplate.Replace("{ClientDirection}", billingDetails.Client.Direction);
 
-                // Definir el tamaño del documento en base a la selección del usuario
-                iTextSharp.text.Rectangle pageSize;
-                if (paperSize == "80mm")
+                // Crear una nueva instancia de HtmlToPdfDocument
+                var doc = new HtmlToPdfDocument()
                 {
-                    // Usar el tamaño de papel de 80mm
-                    pageSize = new iTextSharp.text.Rectangle(230, 842);
-                }
-                else
-                {
-                    // Usar el tamaño de papel tamaño carta
-                    pageSize = PageSize.LETTER;
-                }
+                    GlobalSettings =
+         { ColorMode = ColorMode.Color, Orientation = DinkToPdf.Orientation.Portrait,  PaperSize = paperSize == "80mm" ? new PechkinPaperSize("80mm", "297mm") : PaperKind.Letter,
+          Margins = new PechkinPdfMargins
+             {
+                 Left = 1, // Margen izquierdo en milímetros
+                 Right = 1, // Margen derecho en milímetros
+                 Top = 5, // Margen superior en milímetros
+                 Bottom = 5 // Margen inferior en milímetros
+             }
+          },
+                    Objects =
+         {
+             new ObjectSettings()
+             {
+                 PagesCount = true,
+                 HtmlContent = htmlTemplate,
+                 WebSettings = { DefaultEncoding = "utf-8" },
+                 //HeaderSettings = { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 },
+                 //FooterSettings = { FontSize = 9, Line = true, Spacing = 2.812 }
+             }
+         }
+                };
 
-                using (FileStream stream = new FileStream(savefile.FileName, FileMode.Create))
-                {
-                    Document pdfDoc = new Document(pageSize);
-                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
-                    pdfDoc.Open();
+                // Crear una nueva instancia de IConverter
+                IConverter converter = new SynchronizedConverter(new PdfTools());
 
-                    // Añadir una página al documento
-                    pdfDoc.NewPage();
+                // Convertir el documento HTML a PDF
+                byte[] pdf = converter.Convert(doc);
 
-                    pdfDoc.Add(new Phrase(""));
-
-                    using (StringReader sr = new StringReader(htmlTemplate))
-                    {
-                        XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
-                    }
-
-                    pdfDoc.Close();
-                    stream.Close();
-                }
+                // Guardar el PDF en un archivo
+                File.WriteAllBytes(savefile.FileName, pdf);
 
 
-                // Imprimir la factura
-                PrintDialog printDialog = new PrintDialog();
-                if (printDialog.ShowDialog() == true)
-                {
-                    string pdfPath = savefile.FileName; // La ruta al archivo PDF que generaste
-                    string printerName = printDialog.PrintQueue.Name; // El nombre de la impresora seleccionada por el usuario
-
-                    // El comando para abrir Adobe Reader y imprimir el PDF
-                    string command = $"/s /o /h /t \"{pdfPath}\" \"{printerName}\"";
-
-                    // Iniciar un nuevo proceso para ejecutar el comando
-                    ProcessStartInfo startInfo = new ProcessStartInfo
-                    {
-                        FileName = "AcroRd32.exe", // La ruta al ejecutable de Adobe Reader
-                        Arguments = command,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    };
-                    Process.Start(startInfo);
-                }
+                
             }
         }
         #endregion
@@ -700,6 +683,7 @@ namespace wpfASADACore.Views
             cmb_Client.Text = string.Empty;
             grd_Local.Background = new SolidColorBrush(Colors.White);
             exp_Facturas.IsExpanded = false;
+            txb_Direccion.Text = "Dirección:";
         }
         #endregion
 
@@ -712,5 +696,13 @@ namespace wpfASADACore.Views
 
         }
         #endregion
+    }
+
+    internal class PechkinPdfMargins : MarginSettings
+    {
+        public int Left { get; set; }
+        public int Right { get; set; }
+        public int Top { get; set; }
+        public int Bottom { get; set; }
     }
 }

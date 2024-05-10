@@ -268,7 +268,7 @@ namespace wpfASADACore.Views
             if (estado)
             {
                 //MessageBox.Show("Usuario modificado con exito!!");
-                await clsUtilities.ShowSnackbarAsync("Tipo de Cliente modificado con Exito!", new SolidColorBrush(Colors.Green));
+                await clsUtilities.ShowSnackbarAsync("Tipo de Cliente modificado con Exito!", new SolidColorBrush(Colors.LightGreen));
                 ClearAllDataTypeCli();
                 CargarDatosTypeClient();
                 btn_ModifyTypeCli.IsEnabled = false;
@@ -305,7 +305,7 @@ namespace wpfASADACore.Views
             if (estado)
             {
                 //MessageBox.Show("Usuario eliminado con Exito!");
-                await clsUtilities.ShowSnackbarAsync("Usuario ELIMINADO con Exito!", new SolidColorBrush(Colors.Green));
+                await clsUtilities.ShowSnackbarAsync("Usuario ELIMINADO con Exito!", new SolidColorBrush(Colors.LightGreen));
                 ClearAllDataTypeCli();
                 CargarDatosTypeClient();
                 btn_DeleteTypeCli.IsEnabled = false;

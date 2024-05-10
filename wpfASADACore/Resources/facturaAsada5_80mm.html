@@ -28,6 +28,15 @@
             background-color: #f2f2f2;
             text-align: center; /* Centrar el texto de los encabezados */
         }
+        h3 {
+            border-top: 1px solid #000;
+            border-bottom: 2px solid #000;
+            padding: 5px 0;
+        }
+.abonado {
+            font-size: 14px; /* Hacer que el número de abonado tenga un tamaño de letra mayor */
+            font-weight: bold; /* Hacer que el número de abonado esté en negrita */
+        }
     </style>
 </head>
 <body>
@@ -36,17 +45,19 @@
     <div class="container">
         <div class="details">
             <h3>Detalles del Cliente</h3>
-            <p><strong>ID del Cliente:</strong> {idClient}</p>
-            <p><strong>Nombre del Cliente:</strong> {ClientName} {ClientLastName} {ClientSecondSurname}</p>
-            <p><strong>Dirección del Cliente:</strong> {ClientDirection}</p>
-            <p><strong>Número de Abonado:</strong> {ClientSubscriberNum}</p>
-            <p><strong>Tipo de Cliente:</strong> {TypeClientId}</p>
+            <p><strong>ID del Cliente: </strong> {idClient}</p>
+            <p><strong>Nombre del Cliente: </strong> {ClientName} {ClientLastName} {ClientSecondSurname}</p>
+            <p><strong>Dirección del Cliente: </strong> {ClientDirection}</p>
+           <p><strong>Número de Abonado:</strong> <span class="abonado">{ClientSubscriberNum}</span></p>
+            <p><strong>Tipo de Cliente: </strong> {TypeClientId}</p>
         </div>
         <div class="details">
             <h3>Detalles de la Lectura</h3>
-            <p><strong>Fecha de la Lectura Anterior:</strong> {DateLastReading}  Lectura: {LastReading}</p>
-            <p><strong>Fecha de la Lectura Actual:</strong> {CurrentReadingDate}  Lectura: {CurrentReading}</p>
-            <p><strong>Cantidad de M³ Consumidos:</strong> {TotalConsumption}</p>
+            <p><strong>Fecha de la Lectura Anterior: </strong> {DateLastReading}</p>
+            <p><strong>Lectura Anterior: </strong> {LastReading}</p>
+            <p><strong>Fecha de la Lectura Actual: </strong> {CurrentReadingDate}</p>
+            <p><strong>Lectura Actual: </strong> {CurrentReading}</p>
+            <p><strong>Cantidad de M³ Consumidos: </strong> {TotalConsumption}</p>
         </div>
     </div>
     <h3 style="text-align: center;">Detalles de la Factura</h3>
