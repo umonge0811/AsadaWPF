@@ -24,7 +24,7 @@ namespace H2OPure.Views
     {
         BillingsRepository billingsRepository = new BillingsRepository();
         ReadingRepository readingRepository = new ReadingRepository();
-        // Delegado vacío para forzar la actualización de la UI
+        // Delegado vacío para forzar la actualización de la UI/UX
         private static Action EmptyDelegate = delegate () { };
 
         bool isLocal = false;
